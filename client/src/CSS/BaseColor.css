@@ -1,0 +1,20 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+:root {
+  --main-color: #f18f1b;
+  /*! Search Color */
+  --border-color: #e3712d;
+  --search-bg-color: #fff3e5;
+  --search-font-color: #e99461;
+  --ic-down-color: #f38543;
+
+  --html-bg-color: #faf5f4;
+}
+
+html {
+  background-color: var(--html-bg-color);
+}
