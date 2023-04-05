@@ -1,0 +1,135 @@
+.card {
+  display: flex;
+  flex-direction: column;
+  gap: 0.7rem;
+  max-width: 260px;
+  width: 100%;
+  padding: 0.625rem;
+  background-color: var(--theme-color);
+  border-radius: 15px;
+  box-shadow: 2px 2px 20px rgba(0, 0, 0, 0.09);
+}
+
+.card .pet-img {
+  width: 100%;
+  height: 100%;
+  position: relative;
+}
+
+.card .pet-img img {
+  width: 100%;
+  height: 186px;
+  border-radius: 10px;
+  object-fit: cover;
+  object-position: center;
+  box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+.card .pet-img .bookmark {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 2rem;
+  height: 2rem;
+  position: absolute;
+  top: 0.7rem;
+  right: 0.5rem;
+  background: rgba(255, 255, 255, 0.18);
+  border-radius: 16px;
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(5px);
+  -webkit-backdrop-filter: blur(5px);
+  border-radius: 50%;
+  cursor: pointer;
+  transition: 0.2s ease-in;
+}
+
+.card .pet-img .bookmark .icon-bookmark,
+.card .pet-img .bookmark .icon-bookmark-active {
+  display: block;
+  font-size: 1.25rem;
+  color: var(--search-bg-color);
+  transition: all 0.2s ease-in;
+}
+
+.card .pet-img .bookmark:hover .icon-bookmark::before {
+  content: '\e801';
+}
+
+.card .pet-img .bookmark:hover .icon-bookmark-active::before {
+  content: '\e803';
+}
+
+.card .month_status {
+  display: flex;
+  justify-content: space-between;
+}
+
+.card .month_status .month {
+  font-weight: 500;
+  font-size: 1rem;
+  color: var(--month-gender);
+}
+
+.card .month_status .month span:first-child {
+  padding: 0 5px 0 0;
+  margin: 0 5px 0 0;
+  border-right: 1px solid var(--month-gender);
+  border-top-right-radius: 1px;
+  border-bottom-right-radius: 1px;
+}
+
+.card .month_status .status span {
+  text-transform: uppercase;
+  font-weight: 600;
+}
+
+.card .month_status .status span[status='already'] {
+  color: var(--status-already);
+}
+
+.card .month_status .status span[status='not yet'] {
+  color: var(--status-not-yet);
+}
+
+.card .name_breed {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.card .name_breed .name {
+  font-size: 1.5rem;
+  font-weight: 700;
+}
+
+.card .name_breed .breed {
+  font-weight: 600;
+  font-size: 1rem;
+  color: var(--breed-color);
+}
+
+.card .readMore-btn {
+  width: fit-content;
+  padding: 0.25rem 0.4rem;
+  border-radius: 99px;
+  border: 2px solid var(--main-color);
+  cursor: pointer;
+  transition: 0.2s ease-in;
+}
+
+.card .readMore-btn a {
+  text-decoration: none;
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: var(--main-color);
+  transition: 0.2s ease-in;
+}
+
+.card .readMore-btn:hover {
+  background-color: var(--main-color);
+}
+
+.card .readMore-btn:hover a {
+  color: var(--theme-color);
+}

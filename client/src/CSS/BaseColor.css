@@ -1,18 +1,19 @@
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
-
 :root {
   --main-color: #f18f1b;
+  --theme-color: white;
+
   /*! Search Color */
   --border-color: #e3712d;
   --search-bg-color: #fff3e5;
   --search-font-color: #e99461;
   --ic-down-color: #f38543;
-
   --html-bg-color: #faf5f4;
+
+  /*! Card Color  */
+  --month-gender: #c7c7c7;
+  --breed-color: #bbbbbb;
+  --status-already: #fd6e6e;
+  --status-not-yet: #42d463;
 }
 
 html {

@@ -1,5 +1,5 @@
 .NavHomePet {
-  background-color: white;
+  background-color: var(--theme-color);
   display: flex;
   padding: 0 2.5rem;
   justify-content: space-between;
@@ -122,7 +122,7 @@
   position: absolute;
   width: 100%;
   top: 3rem;
-  background-color: white;
+  background-color: var(--theme-color);
   border-radius: 0.6rem;
   box-shadow: 2px 2px 20px rgba(0, 0, 0, 0.09);
   z-index: -99;

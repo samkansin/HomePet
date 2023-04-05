@@ -1,0 +1,32 @@
+.Home {
+  border-radius: 20px;
+  background-color: var(--theme-color);
+}
+
+.Home-title {
+  font-size: 1.75rem;
+  font-weight: 700;
+  text-align: center;
+  color: var(--main-color);
+  padding: 1rem 0 1.5rem;
+}
+
+.Home-title span {
+  margin: 0 0.4rem;
+}
+
+.Home-title .icon-active {
+  display: inline-block;
+  transform: rotate(270deg);
+}
+
+.Home-title .icon-active:not(:first-child) {
+  transform: rotate(90deg);
+}
+
+.Home .card-list {
+  padding: 1rem 3.125rem;
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 1rem;
+}
