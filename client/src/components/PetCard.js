@@ -7,7 +7,7 @@ const BlogPostCard = (props) => {
     <div className='card-container'>
       <div className='pet-img'>
         <img
-          alt={props.image_alt}
+          alt={props.name}
           src={props.image_src}
           className='card-image'
         />

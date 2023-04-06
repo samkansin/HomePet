@@ -6,7 +6,6 @@ const PetData = [
   {
     image_src:
       'https://images.unsplash.com/photo-1554415707-6e8cfc93fe23?ixid=Mnw5MTMyMXwwfDF8c2VhcmNofDF8fHdvcmtpbmclMjBkZXNrfGVufDB8fHx8MTYyNjI1MDYwMg&ixlib=rb-1.2.1&w=600',
-    image_alt: 'Khunpan',
     name: 'Khunpan',
     breed: 'American Shorthair',
     details:
@@ -19,7 +18,6 @@ const PetData = [
   {
     image_src:
       'https://images.unsplash.com/photo-1554415707-6e8cfc93fe23?ixid=Mnw5MTMyMXwwfDF8c2VhcmNofDF8fHdvcmtpbmclMjBkZXNrfGVufDB8fHx8MTYyNjI1MDYwMg&ixlib=rb-1.2.1&w=600',
-    image_alt: 'Bella',
     name: 'Bella',
     breed: 'Thai Cat',
     details:
@@ -32,7 +30,6 @@ const PetData = [
   {
     image_src:
       'https://images.unsplash.com/photo-1554415707-6e8cfc93fe23?ixid=Mnw5MTMyMXwwfDF8c2VhcmNofDF8fHdvcmtpbmclMjBkZXNrfGVufDB8fHx8MTYyNjI1MDYwMg&ixlib=rb-1.2.1&w=600',
-    image_alt: 'Mumu',
     name: 'Mumu',
     breed: 'Bulldog',
     details:
@@ -45,7 +42,6 @@ const PetData = [
   {
     image_src:
       'https://images.unsplash.com/photo-1554415707-6e8cfc93fe23?ixid=Mnw5MTMyMXwwfDF8c2VhcmNofDF8fHdvcmtpbmclMjBkZXNrfGVufDB8fHx8MTYyNjI1MDYwMg&ixlib=rb-1.2.1&w=600',
-    image_alt: 'Mew',
     name: 'Mew',
     breed: 'Bengal',
     details:
@@ -70,7 +66,6 @@ const LatestPetsList = () => {
             <PetCard
               key={index}
               image_src={pet.image_src}
-              image_alt={pet.image_alt}
               name={pet.name}
               breed={pet.breed}
               detail={pet.details}
