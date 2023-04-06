@@ -10,7 +10,8 @@ const PetData = [
     breed: 'American Shorthair',
     details:
       'Lorem ipsum dolor sit amet, consectetur adipiscing elit adipiscing elit adipiscing elit. adipiscing elit adipiscing elit adipiscing elit. adipiscing elit adipiscing elit adipiscing elit.',
-    ageGender: '3 Months | Female',
+    age: '3 Months',
+    gender: 'Female',
     status: 'Available',
     owner: 'David C.',
     time: '6 hours ago',
@@ -22,7 +23,8 @@ const PetData = [
     breed: 'Thai Cat',
     details:
       'Lorem ipsum dolor sit amet, consectetur adipiscing elit adipiscing elit adipiscing elit. adipiscing elit adipiscing elit adipiscing elit. adipiscing elit adipiscing elit adipiscing elit.',
-    ageGender: '2 Months | Male',
+    age: '2 Months',
+    gender: 'Male',
     status: 'Adopted',
     owner: 'James B.',
     time: '1 day ago',
@@ -34,7 +36,8 @@ const PetData = [
     breed: 'Bulldog',
     details:
       'Lorem ipsum dolor sit amet, consectetur adipiscing elit adipiscing elit adipiscing elit. adipiscing elit adipiscing elit adipiscing elit. adipiscing elit adipiscing elit adipiscing elit.',
-    ageGender: '6 Months | Female',
+    age: '6 Months',
+    gender: 'Female',
     status: 'Available',
     owner: 'George D.',
     time: '2 days ago',
@@ -46,7 +49,8 @@ const PetData = [
     breed: 'Bengal',
     details:
       'Lorem ipsum dolor sit amet, consectetur adipiscing elit adipiscing elit adipiscing elit. adipiscing elit adipiscing elit adipiscing elit. adipiscing elit adipiscing elit adipiscing elit.',
-    ageGender: '10 Months | Male',
+    age: '10 Months',
+    gender: 'Male',
     status: 'Available',
     owner: 'Lily M. ',
     time: '3 days ago',
@@ -69,7 +73,8 @@ const LatestPetsList = () => {
               name={pet.name}
               breed={pet.breed}
               detail={pet.details}
-              ageGender={pet.ageGender}
+              age={pet.age}
+              gender={pet.gender}
               status={pet.status}
               owner={pet.owner}
               time={pet.time}

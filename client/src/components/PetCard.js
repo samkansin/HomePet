@@ -17,7 +17,7 @@ const BlogPostCard = (props) => {
       </div>
       <div className='card-body'>
         <div className='card-age-gender-status'>
-          <span className='age-gender'>{props.ageGender}</span>
+          <span className='age-gender'>{props.age} | {props.gender}</span>
           {props.status === 'Adopted' ? (
             <span className='status adopted'>{props.status}</span>
           ) : (
