@@ -1,6 +1,9 @@
 :root {
   --main-color: #f18f1b;
   --theme-color: white;
+  --input-field: #f3c79e;
+
+  --border-line-title: #ffefdd;
 
   /*! Search Color */
   --border-color: #e3712d;

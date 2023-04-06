@@ -233,6 +233,7 @@
 
 .NavHomePet .left .post,
 .NavHomePet .left .noti {
+  color: black;
   display: flex;
   align-items: center;
   justify-content: center;

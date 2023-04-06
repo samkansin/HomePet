@@ -1,4 +1,4 @@
-import { Form, NavLink } from 'react-router-dom';
+import { Form, Link, NavLink } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import '../CSS/NavBar.css';
 import '../CSS/BaseColor.css';
@@ -13,6 +13,16 @@ const NavBar = () => {
     let filterElement = document.querySelector(
       '.NavHomePet .search .filter .btn-filter'
     );
+
+    document.addEventListener('click', (e) => {
+      if (
+        filterElement.classList.contains('active') &&
+        !filterElement.contains(e.target)
+      ) {
+        filterElement.classList.remove('active');
+      }
+    });
+
     let elementUnActive = document.querySelector(
       '.NavHomePet li[select="true"]'
     );
@@ -42,7 +52,7 @@ const NavBar = () => {
       activeHidden.classList.remove('hidden');
     }
 
-    if (event._reactName === 'onMouseOver') {
+    if (menuActive && event._reactName === 'onMouseOver') {
       if (element.className !== 'active') {
         menuActive.classList.add('hidden');
         element.classList.add('active');
@@ -195,9 +205,9 @@ const NavBar = () => {
         </Form>
 
         <div className='left'>
-          <div className='post'>
+          <Link to='/post' className='post'>
             <i className='icon-post'></i>
-          </div>
+          </Link>
           <div className='noti'>
             <i className='icon-noti'></i>
           </div>

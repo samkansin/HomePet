@@ -1,0 +1,65 @@
+.post-container {
+  max-width: 960px;
+  width: 100%;
+  margin: 0 auto;
+  padding: 1.563rem 1.25rem;
+  background-color: var(--theme-color);
+  border-radius: 20px;
+}
+
+.post-container form {
+  display: flex;
+  gap: 1.25rem;
+  flex-direction: column;
+}
+
+form .information-pet {
+  margin-top: 1.25rem;
+}
+
+.information-pet .infor-field {
+  display: flex;
+  margin-top: 1rem;
+  padding: 0 15px;
+}
+
+.post-title {
+  padding-bottom: 1rem;
+  font-size: 1.15rem;
+  font-weight: 700;
+  border-bottom: 1px solid var(--border-line-title);
+}
+
+[class*='IndicatorsContainer'] span {
+  display: none;
+}
+
+[class*='-control'] {
+  border-color: var(--input-field) !important;
+  box-shadow: none !important;
+  transition: 0.2s ease-in;
+}
+
+[class*='petInfo-select'] {
+  cursor: pointer !important;
+}
+
+[class*='-control']:hover {
+  border-color: var(--main-color) !important;
+  transition: 0.2s ease-in;
+}
+
+[class*='-placeholder'] {
+  font-weight: 500;
+  color: black !important;
+}
+
+[class*='-control']:hover [class*='IndicatorsContainer'] i.icon-up {
+  color: var(--main-color);
+}
+
+[class*='IndicatorsContainer'] i.icon-up {
+  width: 16px;
+  color: var(--input-field);
+  transition: 0.2s ease-in;
+}
