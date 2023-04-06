@@ -24,6 +24,41 @@
   border-radius: 16px;
 }
 
+.card-container .pet-img .bookmark {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 2rem;
+  height: 2rem;
+  position: absolute;
+  top: 0.7rem;
+  right: 0.5rem;
+  background: rgba(241, 143, 27, 0.2);
+  border-radius: 16px;
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(5px);
+  -webkit-backdrop-filter: blur(5px);
+  border-radius: 50%;
+  cursor: pointer;
+  transition: 0.2s ease-in;
+}
+
+.card-container .pet-img .bookmark .icon-bookmark,
+.card-container .pet-img .bookmark .icon-bookmark-active {
+  display: block;
+  font-size: 1.25rem;
+  color: var(--theme-color);
+  transition: all 0.2s ease-in;
+}
+
+.card-container .pet-img .bookmark:hover .icon-bookmark::before {
+  content: '\e801';
+}
+
+.card-container .pet-img .bookmark:hover .icon-bookmark-active::before {
+  content: '\e803';
+}
+
 .card-body {
   gap: 16px;
   display: flex;

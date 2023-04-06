@@ -31,9 +31,17 @@ const NavBar = () => {
   }, [filterName]);
 
   const handleHover = (element, event) => {
+    const activeHidden = document.querySelector(
+      '.NavHomePet .first a .icon-active.hidden'
+    );
     const menuActive = document.querySelector(
       '.NavHomePet .first a[aria-current="page"]:not(:first-child) .icon-active'
     );
+
+    if (activeHidden) {
+      activeHidden.classList.remove('hidden');
+    }
+
     if (event._reactName === 'onMouseOver') {
       if (element.className !== 'active') {
         menuActive.classList.add('hidden');

@@ -11,6 +11,9 @@ const BlogPostCard = (props) => {
           src={props.image_src}
           className='card-image'
         />
+        <div className='bookmark'>
+          <i className='icon-bookmark'></i>
+        </div>
       </div>
       <div className='card-body'>
         <div className='card-age-gender-status'>
