@@ -81,6 +81,7 @@ const LatestPetsList = () => {
           return (
             <PetCard
               key={index}
+              id={pet.id}
               image_src={pet.image_src}
               name={pet.name}
               type={pet.type}
