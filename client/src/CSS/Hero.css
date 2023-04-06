@@ -68,7 +68,6 @@
   object-fit: cover;
 }
 
-
 /* MOBILE */
 @media (max-width: 479px) {
   .hero-container {
@@ -77,6 +76,7 @@
 
   .heading {
     font-size: 2rem;
+    text-align: center;
     margin: 0 32px;
   }
 
@@ -86,6 +86,7 @@
 
   .sub-heading {
     margin: 16px 32px 24px 32px;
+    text-align: center2;
   }
 
   .btn-group {

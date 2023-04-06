@@ -1,6 +1,9 @@
+const Post = () => {
+  return (
+    <>
+      <h1>Hello</h1>
+    </>
+  );
+};
 
-const Page = () => {
-    
-}
-
-export default Page
+export default Post;

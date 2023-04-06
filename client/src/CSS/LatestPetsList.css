@@ -1,38 +1,43 @@
 .lastestPets-title {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
 }
 
 .lastestPets-title > h1 {
-    font-size: 1.5rem;
-    font-weight: 500;
-    margin-bottom: 1rem;
+  font-size: 1.5rem;
+  font-weight: 500;
 }
 
 .lastestPets-title > a {
-    color: var(--main-color);
-    font-weight: 700;
-    text-decoration: none;
+  color: var(--main-color);
+  font-weight: 700;
+  text-decoration: none;
 }
 
 .lastestPets-title > a:hover {
-    cursor: pointer;
+  cursor: pointer;
 }
 
 .lastestPetsList-petList {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    gap: 1rem;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  gap: 1rem;
 }
 
 @media (max-width: 479px) {
-    .lastestPetsList-container {
-        padding: 40px 0;
-    }
+  .lastestPetsList-container {
+    padding: 40px 0;
+  }
 
-    .lastestPetsList-petList {
-        flex-direction: column;
-    }
+  .lastestPets-title {
+    margin-bottom: 2rem;
+  }
+
+  .lastestPetsList-petList {
+    flex-direction: column;
+    align-items: center;
+  }
 }
