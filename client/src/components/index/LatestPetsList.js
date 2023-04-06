@@ -7,6 +7,7 @@ const PetData = [
     image_src:
       'https://images.unsplash.com/photo-1554415707-6e8cfc93fe23?ixid=Mnw5MTMyMXwwfDF8c2VhcmNofDF8fHdvcmtpbmclMjBkZXNrfGVufDB8fHx8MTYyNjI1MDYwMg&ixlib=rb-1.2.1&w=600',
     name: 'Khunpan',
+    type: 'Cat',
     breed: 'American Shorthair',
     details:
       'Lorem ipsum dolor sit amet, consectetur adipiscing elit adipiscing elit adipiscing elit. adipiscing elit adipiscing elit adipiscing elit. adipiscing elit adipiscing elit adipiscing elit.',
@@ -20,6 +21,7 @@ const PetData = [
     image_src:
       'https://images.unsplash.com/photo-1554415707-6e8cfc93fe23?ixid=Mnw5MTMyMXwwfDF8c2VhcmNofDF8fHdvcmtpbmclMjBkZXNrfGVufDB8fHx8MTYyNjI1MDYwMg&ixlib=rb-1.2.1&w=600',
     name: 'Bella',
+    type: 'Cat',
     breed: 'Thai Cat',
     details:
       'Lorem ipsum dolor sit amet, consectetur adipiscing elit adipiscing elit adipiscing elit. adipiscing elit adipiscing elit adipiscing elit. adipiscing elit adipiscing elit adipiscing elit.',
@@ -33,6 +35,7 @@ const PetData = [
     image_src:
       'https://images.unsplash.com/photo-1554415707-6e8cfc93fe23?ixid=Mnw5MTMyMXwwfDF8c2VhcmNofDF8fHdvcmtpbmclMjBkZXNrfGVufDB8fHx8MTYyNjI1MDYwMg&ixlib=rb-1.2.1&w=600',
     name: 'Mumu',
+    type: 'Dog',
     breed: 'Bulldog',
     details:
       'Lorem ipsum dolor sit amet, consectetur adipiscing elit adipiscing elit adipiscing elit. adipiscing elit adipiscing elit adipiscing elit. adipiscing elit adipiscing elit adipiscing elit.',
@@ -46,6 +49,7 @@ const PetData = [
     image_src:
       'https://images.unsplash.com/photo-1554415707-6e8cfc93fe23?ixid=Mnw5MTMyMXwwfDF8c2VhcmNofDF8fHdvcmtpbmclMjBkZXNrfGVufDB8fHx8MTYyNjI1MDYwMg&ixlib=rb-1.2.1&w=600',
     name: 'Mew',
+    type: 'Cat',
     breed: 'Bengal',
     details:
       'Lorem ipsum dolor sit amet, consectetur adipiscing elit adipiscing elit adipiscing elit. adipiscing elit adipiscing elit adipiscing elit. adipiscing elit adipiscing elit adipiscing elit.',
@@ -71,6 +75,7 @@ const LatestPetsList = () => {
               key={index}
               image_src={pet.image_src}
               name={pet.name}
+              type={pet.type}
               breed={pet.breed}
               detail={pet.details}
               age={pet.age}
