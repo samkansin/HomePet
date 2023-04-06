@@ -6,12 +6,14 @@ import {
 } from 'react-router-dom';
 
 import MainLayout from './layouts/MainLayout';
-import Home from './pages/Home';
+import Adopt from './pages/Adopt';
+import Index from './pages/Index';
 
 const HomePetRouter = createBrowserRouter(
   createRoutesFromElements(
-    <Route path='/' element={<MainLayout />}>
-      <Route index element={<Home />} />
+    <Route path="/" element={<MainLayout />}>
+      <Route index element={<Index />} />
+      <Route path='adopt' element={<Adopt />} />
     </Route>
   )
 );

@@ -1,7 +1,7 @@
 import Card from '../components/Card';
-import '../CSS/Home.css';
+import '../CSS/Adopt.css';
 
-const Home = () => {
+const Adopt = () => {
   return (
     <div className='Home'>
       <div className='Home-title'>
@@ -22,4 +22,4 @@ const Home = () => {
   );
 };
 
-export default Home;
+export default Adopt;

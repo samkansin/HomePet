@@ -1,0 +1,38 @@
+.lastestPets-title {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.lastestPets-title > h1 {
+    font-size: 1.5rem;
+    font-weight: 500;
+    margin-bottom: 1rem;
+}
+
+.lastestPets-title > a {
+    color: var(--main-color);
+    font-weight: 700;
+    text-decoration: none;
+}
+
+.lastestPets-title > a:hover {
+    cursor: pointer;
+}
+
+.lastestPetsList-petList {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    gap: 1rem;
+}
+
+@media (max-width: 479px) {
+    .lastestPetsList-container {
+        padding: 40px 0;
+    }
+
+    .lastestPetsList-petList {
+        flex-direction: column;
+    }
+}

@@ -68,6 +68,16 @@ const NavBar = () => {
             </div>
           </NavLink>
           <NavLink
+            to='/adopt'
+            onMouseOver={(e) => handleHover(e.currentTarget, e)}
+            onMouseOut={(e) => handleHover(e.currentTarget, e)}
+          >
+            <div className='menu-nav'>
+              <span>Adopt</span>
+              <i className='icon-active'></i>
+            </div>
+          </NavLink>
+          <NavLink
             to='/chat'
             onMouseOver={(e) => handleHover(e.currentTarget, e)}
             onMouseOut={(e) => handleHover(e.currentTarget, e)}

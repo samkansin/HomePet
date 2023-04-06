@@ -1,0 +1,105 @@
+.card-container {
+    display: flex;
+    gap: 16px;
+    border-radius: 16px;
+    flex-direction: column;
+    padding: 16px;
+    background-color: #fff;
+    box-shadow: 2px 2px 20px rgba(0, 0, 0, 0.09);
+    max-width: 300px;
+    width: 100%;
+}
+
+.card-image {
+    height: 185px;
+    object-fit: cover;
+    border-radius: 16px;
+}
+
+.card-body {
+    gap: 16px;
+    display: flex;
+    flex-direction: column;
+}
+
+.card-age-gender-status {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    font-size: 16px;
+}
+
+.age-gender {
+    color: #595959;
+    font-style: normal;
+}
+
+.status {
+    color: #2ed408;
+    font-weight: 700;
+    text-transform: uppercase;
+}
+
+.adopted {
+    color: #bf2626;
+}
+
+.card-name-breed {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.pet-name {
+    font-size: 24px;
+}
+
+.pet-detail {
+    color: #595959;
+    margin-bottom: 8px;
+}
+
+.card-bottom {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.card-button {
+    color: var(--main-color);
+    padding: 12px 20px;
+    font-weight: 700;
+    border: 3px solid var(--main-color);
+    border-radius: 16px;
+    background-color: #fff;
+}
+
+.card-button:hover {
+    cursor: pointer;
+    background-color: var(--main-color);
+    color: #fff;
+    transition: 0.3s ease-in-out;
+}
+
+.card-owner-time {
+    display: flex;
+    flex-direction: column;
+}
+
+.pet-owner {
+    color: #595959;
+    font-weight: 400;
+}
+
+.three-line-ellipsis {
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+}
+
+@media (max-width: 479px) {
+    .card-button {
+        padding: 12px 40px;
+    }
+}

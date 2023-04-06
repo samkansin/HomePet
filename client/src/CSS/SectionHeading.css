@@ -1,0 +1,35 @@
+.sectionHeading-container {
+  display: flex;
+  font-weight: 700;
+  text-align: center;
+  flex-direction: column;
+  margin-top: 6rem;
+}
+
+.head {
+  display: flex;
+  margin-bottom: 0.5rem;
+  justify-content: center;
+  gap: 0.5rem;
+  font-size: 1.125rem;
+}
+
+.head p {
+  color: var(--main-color);
+}
+
+.subhead {
+  font-size: 1.5rem;
+  line-height: 1.75rem;
+}
+
+@media (max-width: 479px) {
+  .sectionHeading-container {
+    margin-top: 2rem;
+}
+
+.subhead {
+  font-size: 1.2rem;
+  line-height: 1.75rem;
+}
+}

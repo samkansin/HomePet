@@ -1,0 +1,56 @@
+.OurSuccess-container {
+    padding: 0 0 5rem 0;
+}
+
+/* .OurSuccess-title {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.OurSuccess-title > h1 {
+  font-size: 1.5rem;
+  font-weight: 500;
+  margin-bottom: 1rem;
+} */
+
+.OurSuccess-successList {
+  display: flex;
+  justify-content: center;
+  margin-top: 3rem;
+  gap: 10rem;
+}
+
+.Oursuccess-successCard {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+}
+
+.Oursuccess-successCard img {
+    width: 160px;
+}
+
+.Oursuccess-successCard > div {
+  text-align: center;
+}
+
+.Oursuccess-successCard > div > p:nth-child(1) {
+  font-size: 3rem;
+  line-height: 1;
+  font-weight: 800;
+  color: var(--main-color);
+}
+
+.Oursuccess-successCard > div > p:nth-child(2) {
+  margin-top: 0.25rem;
+  font-weight: 700;
+}
+
+@media (max-width: 479px) {
+  .OurSuccess-successList {
+    flex-direction: column;
+    gap: 3rem;
+  }
+}
