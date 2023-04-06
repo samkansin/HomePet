@@ -4,7 +4,6 @@
   align-items: center;
   flex-direction: row;
   justify-content: space-between;
-  background-color: var(--theme-color);
 }
 
 .hero-container a {
