@@ -84,11 +84,11 @@
   font-weight: 600;
 }
 
-.card .month_status .status span[status='already'] {
+.card .month_status .status span[status='available'] {
   color: var(--status-already);
 }
 
-.card .month_status .status span[status='not yet'] {
+.card .month_status .status span[status='adopted'] {
   color: var(--status-not-yet);
 }
 
