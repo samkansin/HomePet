@@ -3,6 +3,7 @@ import PetCard from '../components/PetCard';
 
 const PetData = [
   {
+    id: 1,
     image_src:
       'https://www.central.co.th/e-shopping/storage/2020/12/CUTE-KITTY.jpg',
     name: 'Khunpan',
@@ -10,13 +11,15 @@ const PetData = [
     breed: 'American Shorthair',
     details:
       'Lorem ipsum dolor sit amet, consectetur adipiscing elit adipiscing elit adipiscing elit. adipiscing elit adipiscing elit adipiscing elit. adipiscing elit adipiscing elit adipiscing elit.',
-    age: '3 Months',
+    ageMonth: 3,
+    ageYear: 0,
     gender: 'Female',
     status: 'Available',
     owner: 'David C.',
     time: '6 hours ago',
   },
   {
+    id: 2,
     image_src:
       'https://cdn.onemars.net/sites/whiskas_th_r81SA_mwh5/image/thumb_cat-breeds-01_1652358723718.jpeg',
     name: 'Bella',
@@ -24,13 +27,15 @@ const PetData = [
     breed: 'Thai Cat',
     details:
       'Lorem ipsum dolor sit amet, consectetur adipiscing elit adipiscing elit adipiscing elit. adipiscing elit adipiscing elit adipiscing elit. adipiscing elit adipiscing elit adipiscing elit.',
-    age: '2 Months',
+    ageMonth: 2,
+    ageYear: 0,
     gender: 'Male',
     status: 'Adopted',
     owner: 'James B.',
     time: '1 day ago',
   },
   {
+    id: 3,
     image_src:
       'https://images.unsplash.com/photo-1554415707-6e8cfc93fe23?ixid=Mnw5MTMyMXwwfDF8c2VhcmNofDF8fHdvcmtpbmclMjBkZXNrfGVufDB8fHx8MTYyNjI1MDYwMg&ixlib=rb-1.2.1&w=600',
     name: 'Mumu',
@@ -38,13 +43,15 @@ const PetData = [
     breed: 'Bulldog',
     details:
       'Lorem ipsum dolor sit amet, consectetur adipiscing elit adipiscing elit adipiscing elit. adipiscing elit adipiscing elit adipiscing elit. adipiscing elit adipiscing elit adipiscing elit.',
-    age: '6 Months',
+    ageMonth: 6,
+    ageYear: 0,
     gender: 'Female',
     status: 'Available',
     owner: 'George D.',
     time: '2 days ago',
   },
   {
+    id: 4,
     image_src:
       'https://images.unsplash.com/photo-1554415707-6e8cfc93fe23?ixid=Mnw5MTMyMXwwfDF8c2VhcmNofDF8fHdvcmtpbmclMjBkZXNrfGVufDB8fHx8MTYyNjI1MDYwMg&ixlib=rb-1.2.1&w=600',
     name: 'Mew',
@@ -52,7 +59,8 @@ const PetData = [
     breed: 'Bengal',
     details:
       'Lorem ipsum dolor sit amet, consectetur adipiscing elit adipiscing elit adipiscing elit. adipiscing elit adipiscing elit adipiscing elit. adipiscing elit adipiscing elit adipiscing elit.',
-    age: '10 Months',
+    ageMonth: 10,
+    ageYear: 0,
     gender: 'Male',
     status: 'Available',
     owner: 'Lily M. ',
@@ -73,12 +81,14 @@ const Adopt = () => {
           return (
             <PetCard
               key={index}
+              id={pet.id}
               image_src={pet.image_src}
               name={pet.name}
               type={pet.type}
               breed={pet.breed}
               detail={pet.details}
-              age={pet.age}
+              ageMonth={pet.ageMonth}
+              ageYear={pet.ageYear}
               gender={pet.gender}
               status={pet.status}
               owner={pet.owner}
