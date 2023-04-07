@@ -329,9 +329,21 @@ const Post = () => {
           <div className='gender'>
             <p className='title'>Gender</p>
             <div className='gender-select'>
-              <input type='radio' id='Male' name='gender' value='male' />
+              <input
+                type='radio'
+                id='Male'
+                name='gender'
+                value='male'
+                required
+              />
               <label htmlFor='Male'>Male</label>
-              <input type='radio' id='Female' name='gender' value='female' />
+              <input
+                type='radio'
+                id='Female'
+                name='gender'
+                value='female'
+                required
+              />
               <label htmlFor='Female'>Female</label>
             </div>
           </div>
@@ -387,6 +399,7 @@ const Post = () => {
               onChange={(e) => {
                 handleInputRange(e, 'details', 1000);
               }}
+              required
             />
             <p>{`${countDetails}/1000`}</p>
           </div>
