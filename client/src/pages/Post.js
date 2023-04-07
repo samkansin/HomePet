@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Form, redirect } from 'react-router-dom';
+import { Form, useNavigate } from 'react-router-dom';
 import '../CSS/Post.css';
 import Dropdown from '../components/Dropdown';
 import Select, { components } from 'react-select';
@@ -150,6 +150,7 @@ const Post = () => {
     petIcon: '',
     petType: 'Select Pet Type',
   });
+  const navigate = useNavigate();
 
   document.addEventListener('click', (e) => {
     let petType = document.querySelector('.selector-petType .selector.field');
@@ -251,7 +252,7 @@ const Post = () => {
       },
     ];
     console.log(await createPost(PetData));
-    e.history.push('/adopt');
+    navigate('/adopt');
   };
 
   return (

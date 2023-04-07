@@ -84,15 +84,16 @@ export async function getPetData(query) {
 }
 
 export async function createPost(newPet) {
+  console.log(newPet);
   await fakeNetwork();
   let pets = await getPetData();
-  if(!pets) pets = [];
-  if(!newPet || (newPet.id && pets.findIndex((e) => e.id === newPet.id))){
-    throw new Error(`Error add new pet ${newPet}`)
+  if (!pets) pets = [];
+  if (!newPet || (newPet.id && pets.findIndex((e) => e.id === newPet.id))) {
+    throw new Error(`Error add new pet ${newPet}`);
   }
-  pets.unshift(newPet);
-  await set(pets)
-  return newPet
+  pets.unshift(newPet[0]);
+  await set(pets);
+  return newPet;
 }
 
 async function getInitData() {
