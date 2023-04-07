@@ -71,7 +71,7 @@ const BlogPostCard = (props) => {
           <h1 className='pet-name'>{props.name}</h1>
           <span className='pet-breed'>{props.breed}</span>
         </div>
-        <span className='pet-detail three-line-ellipsis'>{props.detail}</span>
+        <span className='pet-detail one-line-ellipsis'>{props.detail}</span>
         <div className='card-bottom'>
           <button className='card-button'>READ MORE</button>
           <div className='card-owner-time'>

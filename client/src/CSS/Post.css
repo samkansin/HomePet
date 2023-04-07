@@ -1,6 +1,5 @@
 .post-container {
   max-width: 960px;
-  height: 1100px;
   width: 100%;
   margin: 0 auto;
   padding: 1.563rem 1.5rem;
@@ -497,7 +496,7 @@ form .uploadImg span {
 
 .btn-submit {
   margin: 0 auto;
-  margin-top: 5rem;
+  margin-top: 1rem;
 }
 
 .btn-submit .btn-submit-publish {
