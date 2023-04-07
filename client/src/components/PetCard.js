@@ -3,46 +3,49 @@ import React from 'react';
 import '../CSS/PetCard.css';
 
 const compareTime = (time) => {
-  // const lastestDate = new Date(time.replace(/-/g, '/'));
-  const datePart = time.split(', ');
-  var date = datePart[0].split('/');
-  var timepart = datePart[1].split(':');
-  date = date.map((num) => {
-    return parseInt(num);
-  });
-  var timepart = timepart.map((num) => {
-    return parseInt(num);
-  });
-  const lastestDate = new Date(
-    date[2],
-    date[0] - 1,
-    date[1],
-    timepart[0],
-    timepart[1],
-    timepart[2]
-  );
-  const currentDate = new Date();
-  const diffTime =
-    Math.abs(lastestDate.getTime() - currentDate.getTime()) / 1000;
+  if (time !== undefined) {
+    const datePart = time.split(', ');
+    var date = datePart[0].split('/');
+    var timepart = datePart[1].split(':');
+    date = date.map((num) => {
+      return parseInt(num);
+    });
+    var timepart = timepart.map((num) => {
+      return parseInt(num);
+    });
+    const lastestDate = new Date(
+      date[2],
+      date[0] - 1,
+      date[1],
+      timepart[0],
+      timepart[1],
+      timepart[2]
+    );
+    const currentDate = new Date();
+    const diffTime =
+      Math.abs(lastestDate.getTime() - currentDate.getTime()) / 1000;
 
-  const diffMonth =
-    currentDate.getMonth() +
-    12 * currentDate.getFullYear() -
-    (lastestDate.getMonth() + 12 * lastestDate.getFullYear());
-  const diffYear = currentDate.getFullYear() - lastestDate.getFullYear();
+    const diffMonth =
+      currentDate.getMonth() +
+      12 * currentDate.getFullYear() -
+      (lastestDate.getMonth() + 12 * lastestDate.getFullYear());
+    const diffYear = currentDate.getFullYear() - lastestDate.getFullYear();
 
-  if (diffTime >= 0 && diffTime < 60) {
-    return { unit: 'seconds ago', time: Math.floor(diffTime) };
-  } else if (diffTime >= 60 && diffTime < 3600) {
-    return { unit: 'mins ago', time: Math.floor(diffTime / 60) };
-  } else if (diffTime >= 3600 && diffTime <= 86400) {
-    return { unit: 'hours ago', time: Math.floor(diffTime / (60 * 60)) };
-  } else if (diffTime >= 86400 && diffTime <= 31556926) {
-    return { unit: 'days ago', time: Math.floor(diffTime / (60 * 60 * 24)) };
-  } else if (diffMonth >= 1 && diffMonth <= 12) {
-    return { unit: 'months ago', time: diffMonth };
-  } else if (diffYear >= 1 && diffYear <= 12) {
-    return { unit: 'years ago', time: diffYear };
+    if (diffTime >= 0 && diffTime < 60) {
+      return { unit: 'seconds ago', time: Math.floor(diffTime) };
+    } else if (diffTime >= 60 && diffTime < 3600) {
+      return { unit: 'mins ago', time: Math.floor(diffTime / 60) };
+    } else if (diffTime >= 3600 && diffTime <= 86400) {
+      return { unit: 'hours ago', time: Math.floor(diffTime / (60 * 60)) };
+    } else if (diffTime >= 86400 && diffTime <= 31556926) {
+      return { unit: 'days ago', time: Math.floor(diffTime / (60 * 60 * 24)) };
+    } else if (diffMonth >= 1 && diffMonth <= 12) {
+      return { unit: 'months ago', time: diffMonth };
+    } else if (diffYear >= 1 && diffYear <= 12) {
+      return { unit: 'years ago', time: diffYear };
+    }
+  } else {
+    return { unit: 'NAN', time: 'NAN' };
   }
 };
 
