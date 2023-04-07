@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Form } from 'react-router-dom';
 import '../CSS/Post.css';
 import Dropdown from '../components/Dropdown';
@@ -7,6 +7,12 @@ import Select, { components } from 'react-select';
 const PetType = [
   { icon: 'dog', name: 'dog' },
   { icon: 'cat', name: 'cat' },
+];
+
+var topic = [
+  { topic: 'Cat', used: '2,431' },
+  { topic: 'Dog', used: '3,694' },
+  { topic: 'น้องแมวหมาหาบ้าน', used: '2M' },
 ];
 
 const Breed = [
@@ -21,28 +27,20 @@ const Breed = [
   },
 ];
 
-const month = [
-  { value: '1', label: '1' },
-  { value: '2', label: '2' },
-  { value: '3', label: '3' },
-  { value: '4', label: '4' },
-  { value: '5', label: '5' },
-  { value: '6', label: '6' },
-  { value: '7', label: '7' },
-  { value: '8', label: '8' },
-  { value: '9', label: '9' },
-  { value: '10', label: '10' },
-  { value: '11', label: '11' },
-  { value: '12', label: '12' },
-];
-
-const manageYear = () => {
-  const lastYear = new Date().getFullYear();
-  var year = [];
-  for (let i = lastYear; i > lastYear - 15; i--) {
-    year.push({ value: i, label: i });
+const manageMonthYear = (fill) => {
+  if (fill === 'year') {
+    var year = [];
+    for (let i = 1; i <= 15; i++) {
+      year.push({ value: i, label: i });
+    }
+    return year;
+  } else {
+    var month = [];
+    for (let i = 1; i <= 12; i++) {
+      month.push({ value: i, label: i });
+    }
+    return month;
   }
-  return year;
 };
 
 const CustomDropdownIcon = (props) => {
@@ -50,6 +48,18 @@ const CustomDropdownIcon = (props) => {
     <components.DropdownIndicator {...props}>
       <i className='icon-up'></i>
     </components.DropdownIndicator>
+  );
+};
+
+const control = (props) => {
+  const selected = props.hasValue ? 'has-option' : '';
+  return (
+    <div className={selected}>
+      <components.Control
+        {...props}
+        classNamePrefix={selected}
+      ></components.Control>
+    </div>
   );
 };
 
@@ -73,7 +83,7 @@ const breedStyles = Object.assign({}, baseStyles, {
     fontWeight: '500',
     borderRadius: '8px',
     '&:hover': {
-      borderColor: state.isFocused ? '#F8E9D9' : '#000',
+      borderColor: state.isFocused ? '#F18F1B' : '#000',
     },
   }),
 
@@ -101,11 +111,12 @@ const breedStyles = Object.assign({}, baseStyles, {
 const ageStyle = Object.assign({}, baseStyles, {
   container: (provided) => ({
     ...provided,
-    width: '100px',
+    width: '90px',
   }),
 
   control: (provided, state) => ({
     ...provided,
+    height: '45px',
     fontWeight: '500',
     textAlign: 'center',
     borderRadius: '8px',
@@ -137,11 +148,27 @@ const Post = () => {
     petType: 'Select Pet Type',
   });
 
+  document.addEventListener('click', (e) => {
+    let petType = document.querySelector('.selector-petType .selector.field');
+    let Topic = document.querySelector('.topic-field');
+    if (petType) {
+      if (petType.classList.contains('active') && !petType.contains(e.target)) {
+        petType.classList.remove('active');
+      }
+      if (Topic.classList.contains('active') && !Topic.contains(e.target)) {
+        Topic.classList.remove('active');
+      }
+    }
+  });
+
   const [selectBreed, setBreed] = useState(null);
   const [selectMonth, setMonth] = useState(null);
   const [selectYear, setYear] = useState(null);
-
   const [recom, setRecom] = useState(true);
+  var [countName, setCountName] = useState(0);
+  var [countDetails, setCountDetails] = useState(0);
+  const [uploadImage, setUploadImage] = useState([]);
+  const [selectedTopic, setSelectTopic] = useState([]);
 
   const handleBreedChange = (selected) => {
     setBreed(selected);
@@ -151,6 +178,39 @@ const Post = () => {
   };
   const handleYearChange = (selected) => {
     setYear(selected);
+  };
+
+  const handleInputRange = (event, typeInput, limit) => {
+    const { value } = event.target;
+    if (typeInput === 'name')
+      event.target.value = value.replace(new RegExp('. ' + '$'), '');
+    if (value.length > limit) {
+      if (typeInput === 'name') {
+        setCountName(limit);
+      } else {
+        setCountDetails(limit);
+      }
+      event.target.value = value.slice(0, limit);
+    } else {
+      let length = value.length;
+      if (typeInput === 'name') {
+        if (value.includes('.')) length = length - 2;
+        setCountName(length);
+      } else {
+        setCountDetails(length);
+      }
+    }
+  };
+
+  const handleFileImage = (e) => {
+    console.log(uploadImage);
+    const uploadImgs = e.target.files;
+    const uploadImgsArray = Array.from(uploadImgs);
+    const images = uploadImgsArray.map((image) => {
+      return URL.createObjectURL(image);
+    });
+
+    setUploadImage((previousImage) => previousImage.concat(images));
   };
 
   const setPetTypeFunction = (icon, type) => {
@@ -168,20 +228,44 @@ const Post = () => {
           <div className='infor-field'>
             <label className='name-field'>
               <p>Name</p>
-              <input
-                type='text'
-                placeholder='Please enter name (required)'
-                name='name'
-                required
-              />
-              <span>0/20</span>
+              <div
+                className={`label-name field ${
+                  countName > 0 ? 'inputing' : ''
+                }`}
+              >
+                <input
+                  type='text'
+                  placeholder='Please enter name (required)'
+                  name='name'
+                  onChange={(e) => {
+                    handleInputRange(e, 'name', 20);
+                  }}
+                  onKeyDown={(e) => {
+                    const pattern = /^[a-zA-Zก-์]+$/;
+                    if (!pattern.test(e.key)) {
+                      e.preventDefault();
+                    }
+                  }}
+                  required
+                />
+                <span>{`${countName}/20`}</span>
+              </div>
             </label>
             <div className='line'></div>
             <div className='petType-field'>
               <p>Select Pet Type</p>
               <div className='selector-petType'>
-                <i className={`icon-${petIcon}`}></i>
-                <span>{petType}</span>
+                <div
+                  className='selector field'
+                  select={petIcon !== '' ? 'true' : 'false'}
+                  onClick={(e) => {
+                    e.currentTarget.classList.toggle('active');
+                  }}
+                >
+                  <i className={`icon-${petIcon}`}></i>
+                  <span className={petType}>{petType}</span>
+                  <i className='icon-up'></i>
+                </div>
                 <Dropdown data={PetType} setPetType={setPetTypeFunction} />
               </div>
             </div>
@@ -189,7 +273,10 @@ const Post = () => {
             <Select
               className='petInfo-select-container'
               classNamePrefix='petInfo-select'
-              components={{ DropdownIndicator: CustomDropdownIcon }}
+              components={{
+                Control: control,
+                DropdownIndicator: CustomDropdownIcon,
+              }}
               styles={breedStyles}
               value={selectBreed}
               placeholder='Select Pet Breed'
@@ -206,7 +293,6 @@ const Post = () => {
             <div className='gender-select'>
               <input type='radio' id='Male' name='gender' />
               <label htmlFor='Male'>Male</label>
-
               <input type='radio' id='Female' name='gender' />
               <label htmlFor='Female'>Female</label>
             </div>
@@ -218,24 +304,30 @@ const Post = () => {
               <Select
                 className='petInfo-select-container'
                 classNamePrefix='petInfo-select'
-                components={{ DropdownIndicator: CustomDropdownIcon }}
-                value={selectMonth}
-                placeholder='Month'
+                components={{
+                  Control: control,
+                  DropdownIndicator: CustomDropdownIcon,
+                }}
+                value={selectYear}
+                placeholder='Year'
                 styles={ageStyle}
-                onChange={handleMonthChange}
-                options={month}
+                onChange={handleYearChange}
+                options={manageMonthYear('year')}
                 menuPortalTarget={document.body}
                 isSearchable
               />
               <Select
                 className='petInfo-select-container'
                 classNamePrefix='petInfo-select'
-                components={{ DropdownIndicator: CustomDropdownIcon }}
-                value={selectYear}
-                placeholder='Year'
+                components={{
+                  Control: control,
+                  DropdownIndicator: CustomDropdownIcon,
+                }}
+                value={selectMonth}
+                placeholder='Month'
                 styles={ageStyle}
-                onChange={handleYearChange}
-                options={manageYear()}
+                onChange={handleMonthChange}
+                options={manageMonthYear('month')}
                 menuPortalTarget={document.body}
                 isSearchable
               />
@@ -244,8 +336,21 @@ const Post = () => {
         </div>
         <label className='description'>
           <p>Description</p>
-          <textarea rows={10} cols={100} placeholder='Please enter text' />
-          <p>0/1000</p>
+          <div className={`desc-input ${countDetails > 0 ? 'inputing' : ''}`}>
+            <textarea
+              // rows={5}
+              // cols={100}
+              placeholder='Please enter text'
+              onInput={(e) => {
+                e.target.style.height = '5px';
+                e.target.style.height = e.target.scrollHeight + 'px';
+              }}
+              onChange={(e) => {
+                handleInputRange(e, 'details', 1000);
+              }}
+            />
+            <p>{`${countDetails}/1000`}</p>
+          </div>
         </label>
         <div className='uploadImg'>
           <p>Upload an image</p>
@@ -254,12 +359,36 @@ const Post = () => {
             least ... pixels)
           </span>
           <div className='pet-img'>
-            <div className='upload'>
+            {uploadImage &&
+              uploadImage.map((image) => {
+                return (
+                  <div key={image} className='preview-img'>
+                    <div className='img'>
+                      <img src={image} alt='upload' />
+                      <i
+                        className='icon-delete'
+                        onClick={() =>
+                          setUploadImage(uploadImage.filter((e) => e !== image))
+                        }
+                      ></i>
+                    </div>
+                  </div>
+                );
+              })}
+            <label className='upload'>
+              <input
+                type='file'
+                name='images'
+                multiple
+                accept='image/jpg, image/png, image/jpeg, image/gif'
+                onChange={handleFileImage}
+                style={{ display: 'none' }}
+              />
               <img
                 src='https://knightsmsk.github.io/HomePetResource/default%20img/picture.png'
                 alt=''
               />
-            </div>
+            </label>
           </div>
           <ul className='list-img'></ul>
         </div>
@@ -267,16 +396,62 @@ const Post = () => {
           <p>Add topic</p>
           <div className='topic-field'>
             <ul className='list-topic'>
+              {selectedTopic &&
+                selectedTopic.map((topic, key) => {
+                  return (
+                    <li key={key} className='topic'>
+                      <span>{topic}</span>
+                      <i
+                        className='icon-close'
+                        onClick={() =>
+                          setSelectTopic(
+                            selectedTopic.filter((e) => e !== topic)
+                          )
+                        }
+                      ></i>
+                    </li>
+                  );
+                })}
               <div className='input-topic-field'>
-                <input type='text' />
+                <input
+                  type='text'
+                  name='topic'
+                  onFocus={(e) =>
+                    document
+                      .querySelector('.topic-field')
+                      .classList.add('active')
+                  }
+                />
               </div>
             </ul>
             <div className='filter-topic'>
               <p>{recom ? 'Recommended' : 'Search results'}</p>
+              <ul className='select-topic'>
+                {topic.map((item, key) => {
+                  return (
+                    <li
+                      key={key}
+                      onClick={(e) => {
+                        topic = topic.filter(
+                          (data) => data.topic !== item.topic
+                        );
+                        setSelectTopic(selectedTopic.concat(item.topic));
+                      }}
+                    >
+                      <span>{item.topic}</span>
+                      <span>{item.used}</span>
+                    </li>
+                  );
+                })}
+              </ul>
             </div>
           </div>
         </div>
-        <button type='submit'>Publish</button>
+        <div className='btn-submit'>
+          <button type='submit' className='btn-submit-publish'>
+            Publish
+          </button>
+        </div>
       </Form>
     </div>
   );

@@ -1,8 +1,9 @@
 .post-container {
   max-width: 960px;
+  height: 1100px;
   width: 100%;
   margin: 0 auto;
-  padding: 1.563rem 1.25rem;
+  padding: 1.563rem 1.5rem;
   background-color: var(--theme-color);
   border-radius: 20px;
 }
@@ -17,10 +18,159 @@ form .information-pet {
   margin-top: 1.25rem;
 }
 
+/*! Information Pet  */
+
 .information-pet .infor-field {
   display: flex;
+  align-items: flex-end;
   margin-top: 1rem;
   padding: 0 15px;
+  gap: 1rem;
+}
+
+.post-container form .line {
+  position: relative;
+  height: 1px;
+  bottom: 1.5rem;
+  width: 14px;
+  background-color: var(--line-color);
+}
+
+.information-pet .infor-field .name-field {
+  width: 33%;
+}
+
+.information-pet .infor-field .name-field .label-name {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 10px;
+  transition: 0.2s ease-in;
+}
+
+.information-pet .field {
+  padding: 12px 5px 12px 15px;
+  border: 1px solid var(--input-field);
+  border-radius: 8px;
+}
+
+.information-pet .infor-field .name-field input {
+  font-weight: 500;
+  width: 85%;
+  outline: none;
+  border: none;
+  font-size: 1rem;
+}
+
+.information-pet .infor-field .name-field .label-name.inputing {
+  border-color: var(--main-color);
+  transition: 0.2s ease-in;
+}
+
+.information-pet .infor-field .name-field .label-name.inputing span {
+  color: var(--main-color);
+  transition: 0.2s ease-in;
+}
+
+.information-pet .infor-field .name-field input::placeholder,
+.label-name span {
+  font-weight: 400;
+  color: var(--place-holder-color);
+}
+
+.information-pet .petType-field .selector-petType {
+  width: 164.08px;
+  margin-top: 10px;
+  position: relative;
+}
+
+.selector.field[select='true'] {
+  border-color: var(--main-color);
+}
+
+.selector.field[select='true'] .icon-up {
+  color: var(--main-color) !important;
+}
+
+.information-pet .petType-field .selector-petType .selector.field {
+  display: flex;
+  align-items: center;
+  padding-right: 10px !important;
+  cursor: pointer;
+  transition: 0.2s ease-in;
+}
+
+.selector-petType .selector.field.active ~ .dropdown-petType {
+  opacity: 1;
+  z-index: 99;
+  pointer-events: auto;
+  transition: 0.2s ease-in;
+}
+
+.selector-petType .selector.field span {
+  color: var(--place-holder-color);
+}
+
+.selector-petType .selector.field span.Select.Pet.Type {
+  height: 22px;
+}
+
+.selector-petType .selector.field span.dog,
+.selector-petType .selector.field span.cat {
+  text-transform: capitalize;
+  color: black;
+  font-weight: 500;
+}
+
+.selector-petType .selector.field .icon-up {
+  display: inline-block;
+  color: var(--place-holder-color);
+  width: 1rem;
+  font-size: 0.55rem;
+  margin-left: auto;
+  transition: 0.25s ease-in;
+}
+
+.selector-petType .dropdown-petType {
+  pointer-events: none;
+  z-index: -99;
+  opacity: 0;
+  width: 100%;
+  position: absolute;
+  padding: 5px;
+  box-shadow: 0px 2px 15px rgba(0, 0, 0, 0.15);
+  background-color: white;
+  border-radius: 8px;
+  margin-top: 5px;
+  transition: 0.2s ease-in;
+}
+
+.selector-petType .icon-dog,
+.selector-petType .icon-cat {
+  font-size: 1.15rem;
+}
+
+.selector-petType .dropdown-petType ul li {
+  align-items: center;
+  display: flex;
+  gap: 5px;
+  list-style: none;
+  font-weight: 500;
+  padding: 10px 12px;
+  text-transform: capitalize;
+  transition: 0.2s ease-in;
+  cursor: pointer;
+  border-radius: 5px;
+}
+
+.selector-petType .dropdown-petType ul li:hover {
+  background-color: var(--select-hover);
+  color: var(--main-color);
+  transition: 0.2s ease-in;
+}
+
+.selector.field.active .icon-up {
+  transform: rotate(180deg);
+  transition: 0.2s ease-in;
 }
 
 .post-title {
@@ -28,6 +178,14 @@ form .information-pet {
   font-size: 1.15rem;
   font-weight: 700;
   border-bottom: 1px solid var(--border-line-title);
+}
+
+.infor-field .petInfo-select__value-container {
+  padding: 9px 5px 9px 15px !important;
+}
+
+.age-select [class*='-placeholder'] {
+  text-align: start;
 }
 
 [class*='IndicatorsContainer'] span {
@@ -50,8 +208,8 @@ form .information-pet {
 }
 
 [class*='-placeholder'] {
-  font-weight: 500;
-  color: black !important;
+  font-weight: 400;
+  color: var(--place-holder-color) !important;
 }
 
 [class*='-control']:hover [class*='IndicatorsContainer'] i.icon-up {
@@ -61,5 +219,302 @@ form .information-pet {
 [class*='IndicatorsContainer'] i.icon-up {
   width: 16px;
   color: var(--input-field);
+  transition: 0.2s ease-in;
+}
+
+.has-option [class$='-control'] {
+  border-color: var(--main-color) !important;
+}
+
+.has-option [class$='-control'] .icon-up {
+  color: var(--main-color);
+}
+
+/*! Gender Age */
+
+.gender_age {
+  display: flex;
+  gap: 1rem;
+  margin-top: 1rem;
+  align-items: flex-end;
+  padding: 0 15px;
+}
+
+.gender_age .gender .gender-select {
+  display: flex;
+  align-items: center;
+  margin-top: 10px;
+  height: 45px;
+}
+
+.gender-select input[type='radio'] {
+  display: none;
+}
+
+.gender-select label {
+  position: relative;
+  cursor: pointer;
+  padding-right: 1rem;
+}
+
+.gender-select label:last-child {
+  padding-right: 0;
+}
+
+.gender-select label::before {
+  content: '';
+  border: 1px solid var(--input-field);
+  display: inline-block;
+  width: 12px;
+  height: 12px;
+  margin-right: 10px;
+  border-radius: 50%;
+}
+
+.gender-select label::after {
+  content: '';
+  display: inline-block;
+  position: absolute;
+  width: 8px;
+  height: 8px;
+  background: var(--main-color);
+  left: 3px;
+  top: 4px;
+  border-radius: 50%;
+  opacity: 0;
+  transition: 0.2s ease-in;
+}
+
+.gender-select input[type='radio']:checked + label::after {
+  opacity: 1;
+}
+
+.gender_age .age-select {
+  display: flex;
+  margin-top: 10px;
+  gap: 1rem;
+}
+
+/*! Description  */
+
+.description .desc-input {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  min-height: 126px;
+  height: auto;
+  margin-top: 10px;
+  padding: 15px;
+  border: 1px solid var(--input-field);
+  border-radius: 8px;
+  transition: 0.2s ease-in;
+}
+
+.description .desc-input.inputing {
+  border-color: var(--main-color);
+  transition: 0.2s ease-in;
+}
+
+.description .desc-input.inputing p {
+  color: var(--main-color);
+  transition: 0.2s ease-in;
+}
+
+.description .desc-input p {
+  color: var(--place-holder-color);
+  text-align: right;
+}
+.description textarea {
+  line-height: 1.5;
+  width: 100%;
+  font-size: 1rem;
+  font-weight: 500;
+  outline: none;
+  border: none;
+  resize: none;
+  margin-bottom: 5px;
+}
+
+.description textarea::placeholder {
+  font-weight: 400;
+  font-size: 1rem;
+  color: var(--place-holder-color);
+}
+
+/*! upload Img  */
+
+form .uploadImg span {
+  display: inline-block;
+  margin: 10px 0;
+  font-size: 0.938rem;
+  color: var(--subtitle);
+}
+
+.uploadImg .pet-img {
+  margin-top: 10px;
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.uploadImg .pet-img img {
+  width: 160px;
+  height: 160px;
+  object-fit: cover;
+  object-position: center;
+}
+
+.uploadImg .pet-img .upload img {
+  cursor: pointer;
+}
+
+.pet-img .preview-img {
+  position: relative;
+}
+
+.pet-img .preview-img .icon-delete::before {
+  margin: 0;
+  border: 1px solid var(--main-color);
+  border-radius: 50%;
+}
+.pet-img .preview-img .icon-delete {
+  display: inline-block;
+  position: absolute;
+  font-size: 1.5rem;
+  width: 1.5rem;
+  height: 1.5rem;
+  color: var(--theme-color);
+  top: 5px;
+  right: 5px;
+  cursor: pointer;
+}
+.pet-img .preview-img .img img {
+  border-radius: 10px;
+}
+
+/*! Topic  */
+
+.addTopic .topic-field {
+  margin-top: 10px;
+  position: relative;
+}
+
+.topic-field .list-topic {
+  list-style: none;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 10px;
+  border: 1px solid var(--input-field);
+  border-radius: 8px;
+}
+
+.topic-field .list-topic .input-topic-field {
+  flex-grow: 0;
+  height: fit-content;
+}
+
+.topic-field .list-topic .input-topic-field input {
+  width: auto;
+}
+
+.topic-field .list-topic .topic {
+  display: flex;
+  gap: 5px;
+  font-weight: 600;
+  align-items: center;
+  color: var(--main-color);
+  border-radius: 99px;
+  background-color: var(--select-hover);
+  width: auto;
+  padding: 8px 10px;
+}
+
+.topic-field .list-topic .topic .icon-close {
+  font-size: 0.7rem;
+  cursor: pointer;
+}
+
+.addTopic .topic-field .list-topic input {
+  width: 100%;
+  border: none;
+  font-size: 1rem;
+  font-weight: 500;
+  outline: none;
+}
+
+.topic-field .filter-topic {
+  width: 100%;
+  position: absolute;
+  opacity: 0;
+  z-index: 99;
+  pointer-events: none;
+  margin-top: 5px;
+  padding: 15px;
+  box-shadow: 0 2px 15px rgba(0, 0, 0, 0.09);
+  border-radius: 8px;
+  background-color: var(--theme-color);
+  transition: 0.2s ease-in;
+}
+
+.topic-field.active .filter-topic {
+  opacity: 1;
+  z-index: 1;
+  pointer-events: auto;
+  transition: 0.2s ease-in;
+}
+
+.topic-field .filter-topic .select-topic {
+  max-height: 162px;
+  height: 100%;
+  overflow: auto;
+  margin-top: 5px;
+}
+
+.topic-field .filter-topic .select-topic li {
+  display: flex;
+  border-radius: 5px;
+  font-weight: 600;
+  list-style: none;
+  padding: 10px 15px;
+  align-items: center;
+  justify-content: space-between;
+  cursor: pointer;
+  transition: 0.2s ease-in;
+  flex-grow: 1;
+}
+
+.topic-field .filter-topic .select-topic li span:last-child {
+  font-size: 0.8rem;
+  font-weight: 400;
+}
+
+.topic-field .filter-topic .select-topic li:hover {
+  background-color: var(--select-hover);
+  color: var(--main-color);
+  transition: 0.2s ease-in;
+}
+
+.btn-submit {
+  margin: 0 auto;
+  margin-top: 2rem;
+}
+
+.btn-submit .btn-submit-publish {
+  padding: 1rem 6rem;
+  background-color: var(--select-hover);
+  border: none;
+  outline: none;
+  border-radius: 99px;
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--main-color);
+  cursor: pointer;
+  transition: 0.2s ease-in;
+}
+
+.btn-submit .btn-submit-publish:hover {
+  background-color: var(--main-color);
+  color: var(--theme-color);
   transition: 0.2s ease-in;
 }
