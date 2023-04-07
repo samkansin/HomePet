@@ -15,7 +15,7 @@ const PetData = [
     gender: 'Female',
     status: 'Available',
     owner: 'David C.',
-    time: '6 hours ago',
+    dateTime: '6 hours ago',
   },
   {
     id: 2,
@@ -31,7 +31,7 @@ const PetData = [
     gender: 'Male',
     status: 'Adopted',
     owner: 'James B.',
-    time: '1 day ago',
+    dateTime: '1 day ago',
   },
   {
     id: 3,
@@ -47,7 +47,7 @@ const PetData = [
     gender: 'Female',
     status: 'Available',
     owner: 'George D.',
-    time: '2 days ago',
+    dateTime: '2 days ago',
   },
   {
     id: 4,
@@ -63,7 +63,7 @@ const PetData = [
     gender: 'Male',
     status: 'Available',
     owner: 'Lily M. ',
-    time: '3 days ago',
+    dateTime: '3 days ago',
   },
 ];
 

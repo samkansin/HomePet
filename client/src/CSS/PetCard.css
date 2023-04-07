@@ -73,6 +73,7 @@
 }
 
 .age-gender {
+  text-transform: capitalize;
   color: #595959;
   font-style: normal;
 }

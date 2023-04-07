@@ -33,13 +33,13 @@ const createID = () => Math.random().toString(36).substring(2, 17);
 const manageMonthYear = (fill) => {
   if (fill === 'year') {
     var year = [];
-    for (let i = 1; i <= 15; i++) {
+    for (let i = 0; i <= 15; i++) {
       year.push({ value: i, label: i });
     }
     return year;
   } else {
     var month = [];
-    for (let i = 1; i <= 12; i++) {
+    for (let i = 0; i < 12; i++) {
       month.push({ value: i, label: i });
     }
     return month;

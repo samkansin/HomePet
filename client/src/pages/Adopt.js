@@ -31,7 +31,7 @@ const Adopt = () => {
               gender={pet.gender}
               status={pet.status}
               owner={pet.owner}
-              time={pet.time}
+              dateTime={pet.dateTime}
             />
           );
         })}
