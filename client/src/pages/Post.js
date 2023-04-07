@@ -203,7 +203,6 @@ const Post = () => {
   };
 
   const handleFileImage = (e) => {
-    console.log(uploadImage);
     const uploadImgs = e.target.files;
     const uploadImgsArray = Array.from(uploadImgs);
     const images = uploadImgsArray.map((image) => {
@@ -217,12 +216,46 @@ const Post = () => {
     setPetType({ petIcon: icon, petType: type });
   };
 
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    const currentDate = new Date();
+    const formatteDate = new Intl.DateTimeFormat('en-US', {
+      year: 'numeric',
+      month: '2-digit',
+      day: '2-digit',
+      hour: '2-digit',
+      minute: '2-digit',
+      second: '2-digit',
+      hour12: false,
+    }).format(currentDate);
+    const formData = new FormData(e.target);
+    const PetData = [
+      {
+        id: 1,
+        image_src:
+          'https://images.unsplash.com/photo-1554415707-6e8cfc93fe23?ixid=Mnw5MTMyMXwwfDF8c2VhcmNofDF8fHdvcmtpbmclMjBkZXNrfGVufDB8fHx8MTYyNjI1MDYwMg&ixlib=rb-1.2.1&w=600',
+        name: formData.get('name'),
+        type: petType,
+        breed: selectBreed['value'],
+        details: formData.get('details'),
+        ageMonth: selectMonth['value'],
+        ageYear: selectYear['value'],
+        gender: formData.get('gender'),
+        status: 'available',
+        owner: 'David C.',
+        dateTime: formatteDate,
+        topic: selectedTopic,
+      },
+    ];
+    console.log(PetData);
+  };
+
   return (
     <div className='post-container'>
       <div className='post-title'>
         <span>Pet Details</span>
       </div>
-      <Form>
+      <Form onSubmit={handleSubmit}>
         <div className='information-pet'>
           <p className='Heading'>Information Pet</p>
           <div className='infor-field'>
@@ -291,9 +324,9 @@ const Post = () => {
           <div className='gender'>
             <p className='title'>Gender</p>
             <div className='gender-select'>
-              <input type='radio' id='Male' name='gender' />
+              <input type='radio' id='Male' name='gender' value='male' />
               <label htmlFor='Male'>Male</label>
-              <input type='radio' id='Female' name='gender' />
+              <input type='radio' id='Female' name='gender' value='female' />
               <label htmlFor='Female'>Female</label>
             </div>
           </div>
@@ -338,6 +371,7 @@ const Post = () => {
           <p>Description</p>
           <div className={`desc-input ${countDetails > 0 ? 'inputing' : ''}`}>
             <textarea
+              name='details'
               // rows={5}
               // cols={100}
               placeholder='Please enter text'
