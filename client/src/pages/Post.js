@@ -1,8 +1,9 @@
-import { useState, useEffect } from 'react';
-import { Form } from 'react-router-dom';
+import { useState } from 'react';
+import { Form, redirect } from 'react-router-dom';
 import '../CSS/Post.css';
 import Dropdown from '../components/Dropdown';
 import Select, { components } from 'react-select';
+import { createPost } from '../petsData';
 
 const PetType = [
   { icon: 'dog', name: 'dog' },
@@ -26,6 +27,8 @@ const Breed = [
     label: 'Persian (Traditional Persian Cat)',
   },
 ];
+
+const createID = () => Math.random().toString(36).substring(2, 17);
 
 const manageMonthYear = (fill) => {
   if (fill === 'year') {
@@ -216,7 +219,7 @@ const Post = () => {
     setPetType({ petIcon: icon, petType: type });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     const currentDate = new Date();
     const formatteDate = new Intl.DateTimeFormat('en-US', {
@@ -231,7 +234,7 @@ const Post = () => {
     const formData = new FormData(e.target);
     const PetData = [
       {
-        id: 1,
+        id: createID(),
         image_src:
           'https://images.unsplash.com/photo-1554415707-6e8cfc93fe23?ixid=Mnw5MTMyMXwwfDF8c2VhcmNofDF8fHdvcmtpbmclMjBkZXNrfGVufDB8fHx8MTYyNjI1MDYwMg&ixlib=rb-1.2.1&w=600',
         name: formData.get('name'),
@@ -247,7 +250,8 @@ const Post = () => {
         topic: selectedTopic,
       },
     ];
-    console.log(PetData);
+    console.log(await createPost(PetData));
+    e.history.push('/adopt');
   };
 
   return (

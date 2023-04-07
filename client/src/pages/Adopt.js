@@ -6,6 +6,8 @@ import { getPetData } from '../petsData';
 const Adopt = () => {
   const PetData = useLoaderData();
 
+  console.log(PetData);
+
   return (
     <div className='Home'>
       <div className='Home-title'>
