@@ -222,16 +222,7 @@ const Post = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const currentDate = new Date();
-    const formatteDate = new Intl.DateTimeFormat('en-US', {
-      year: 'numeric',
-      month: '2-digit',
-      day: '2-digit',
-      hour: '2-digit',
-      minute: '2-digit',
-      second: '2-digit',
-      hour12: false,
-    }).format(currentDate);
+    const currentDate = new Date().toISOString();
     const formData = new FormData(e.target);
     const PetData = [
       {
@@ -247,7 +238,7 @@ const Post = () => {
         gender: formData.get('gender'),
         status: 'available',
         owner: 'David C.',
-        dateTime: formatteDate,
+        dateTime: currentDate,
         topic: selectedTopic,
       },
     ];

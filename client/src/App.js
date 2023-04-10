@@ -13,8 +13,8 @@ import Post from './pages/Post';
 const HomePetRouter = createBrowserRouter(
   createRoutesFromElements(
     <Route path='/' element={<MainLayout />}>
-      <Route index element={<Index />} loader={petsLoader}/>
-      <Route path='adopt' element={<Adopt />} loader={petsLoader}/>
+      <Route index element={<Index />} loader={petsLoader} />
+      <Route path='adopt' element={<Adopt />} loader={petsLoader} />
       <Route path='post' element={<Post />} />
     </Route>
   )

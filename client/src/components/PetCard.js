@@ -4,23 +4,7 @@ import '../CSS/PetCard.css';
 
 const compareTime = (time) => {
   if (time !== undefined) {
-    const datePart = time.split(', ');
-    var date = datePart[0].split('/');
-    var timepart = datePart[1].split(':');
-    date = date.map((num) => {
-      return parseInt(num);
-    });
-    var timepart = timepart.map((num) => {
-      return parseInt(num);
-    });
-    const lastestDate = new Date(
-      date[2],
-      date[0] - 1,
-      date[1],
-      timepart[0],
-      timepart[1],
-      timepart[2]
-    );
+    const lastestDate = new Date(time);
     const currentDate = new Date();
     const diffTime =
       Math.abs(lastestDate.getTime() - currentDate.getTime()) / 1000;

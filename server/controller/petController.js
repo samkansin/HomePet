@@ -61,7 +61,7 @@ export const remove = (req, res) => {
 }
 
 export const lastPost = (req, res) => {
-    Pet.threeLastPet().then(result => res.json(result));
+    Pet.LastFourPet().then((result) => res.json(result));
 }
 
 

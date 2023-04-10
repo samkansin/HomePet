@@ -15,7 +15,7 @@ const PetData = [
     gender: 'Female',
     status: 'Available',
     owner: 'David C.',
-    dateTime: '04/08/2023, 01:36:40',
+    dateTime: '2023-04-07T13:11:24.309Z',
   },
   {
     id: 2,
@@ -31,7 +31,7 @@ const PetData = [
     gender: 'Male',
     status: 'Adopted',
     owner: 'James B.',
-    dateTime: '04/08/2023, 01:36:40',
+    dateTime: '2023-04-07T13:11:24.309Z',
   },
   {
     id: 3,
@@ -47,7 +47,7 @@ const PetData = [
     gender: 'Female',
     status: 'Available',
     owner: 'George D.',
-    dateTime: '04/08/2023, 01:36:40',
+    dateTime: '2023-04-07T13:11:24.309Z',
   },
   {
     id: 4,
@@ -63,7 +63,7 @@ const PetData = [
     gender: 'Male',
     status: 'Available',
     owner: 'Lily M. ',
-    dateTime: '04/08/2023, 01:36:40',
+    dateTime: '2023-04-07T13:11:24.309Z',
   },
 ];
 
@@ -103,6 +103,10 @@ async function getInitData() {
 
 async function set(data) {
   return localforage.setItem('petData', data);
+}
+
+async function clear() {
+  return localforage.clear();
 }
 
 let fakeCache = {};
