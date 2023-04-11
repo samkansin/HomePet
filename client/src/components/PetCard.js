@@ -21,7 +21,7 @@ const compareTime = (time) => {
       return { unit: 'mins ago', time: Math.floor(diffTime / 60) };
     } else if (diffTime >= 3600 && diffTime <= 86400) {
       return { unit: 'hours ago', time: Math.floor(diffTime / (60 * 60)) };
-    } else if (diffTime >= 86400 && diffTime <= 31556926) {
+    } else if (diffTime >= 86400 && diffMonth <= 0) {
       return { unit: 'days ago', time: Math.floor(diffTime / (60 * 60 * 24)) };
     } else if (diffMonth >= 1 && diffMonth <= 12) {
       return { unit: 'months ago', time: diffMonth };
@@ -46,7 +46,14 @@ const BlogPostCard = (props) => {
       <div className='card-body'>
         <div className='card-age-gender-status'>
           <span className='age-gender'>
-            {props.ageMonth} Months | {props.gender}
+            {props.ageYear !== '0' && props.ageMonth !== '0'
+              ? `${props.ageYear}.${props.ageMonth} Years `
+              : props.ageMonth === '0'
+              ? `${props.ageYear} Years `
+              : props.ageYear === '0'
+              ? `${props.ageMonth} Months `
+              : null}
+            | {props.gender}
           </span>
           {props.status === 'Adopted' ? (
             <span className='status adopted'>{props.status}</span>

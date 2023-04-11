@@ -1,0 +1,75 @@
+/*! CARD */
+
+.skeleton.card-image,
+.skeleton.card-body {
+  animation: skeleton 1s ease infinite alternate;
+}
+
+@keyframes skeleton {
+  to {
+    opacity: 0.5;
+  }
+}
+
+.skeleton.card-container .skeleton.card-image {
+  background-color: var(--skeleton-color);
+}
+
+.skeleton.card-container .skeleton.card-age-gender-status {
+  height: 19px;
+}
+
+.skeleton.card-age-gender-status .skeleton-age-gender {
+  max-width: 100px;
+  width: 100%;
+  height: 100%;
+}
+
+.skeleton.card-age-gender-status .skeleton-status {
+  max-width: 80px;
+  width: 100%;
+  height: 100%;
+}
+
+.skeleton.card-container .skeleton-text {
+  border-radius: 99px;
+  background-color: var(--skeleton-color);
+}
+
+.skeleton.card-name-breed {
+  height: 29px;
+}
+
+.skeleton.card-name-breed .skeleton-pet-name {
+  max-width: 115px;
+  width: 100%;
+  height: 80%;
+}
+.skeleton.card-name-breed .skeleton-pet-breed {
+  max-width: 80px;
+  width: 100%;
+  height: 66%;
+}
+
+.skeleton-pet-detail {
+  height: 19px;
+  width: 100%;
+}
+
+.skeleton.card-bottom {
+  height: 45px;
+}
+
+.skeleton.card-bottom .skeleton.card-button {
+  max-width: 111.297px;
+  width: 100%;
+  height: 100%;
+  border: none;
+  background-color: var(--skeleton-color);
+}
+
+.skeleton.card-bottom .skeleton-card-owner-time {
+  height: 19px;
+  max-width: 100px;
+  width: 100%;
+}

@@ -12,6 +12,8 @@
     "react-router-dom": "^6.10.0",
     "react-scripts": "5.0.1",
     "react-select": "^5.7.2",
+    "react-spinners": "^0.13.8",
+    "react-toastify": "^9.1.2",
     "web-vitals": "^2.1.4"
   },
   "scripts": {
@@ -37,5 +39,6 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
-  }
+  },
+  "proxy": "http://localhost:4000/"
 }

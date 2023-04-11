@@ -1,11 +1,13 @@
 import { useState } from 'react';
+import { toast } from 'react-toastify';
 import { Form, useNavigate } from 'react-router-dom';
 import '../CSS/Post.css';
 import Dropdown from '../components/Dropdown';
 import Select, { components } from 'react-select';
+import ClipLoader from 'react-spinners/ClipLoader';
 import { createPost } from '../petsData';
 
-const PetType = [
+const TypeoFPet = [
   { icon: 'dog', name: 'dog' },
   { icon: 'cat', name: 'cat' },
 ];
@@ -16,19 +18,8 @@ var topic = [
   { topic: 'น้องแมวหมาหาบ้าน', used: '2M' },
 ];
 
-const Breed = [
-  { value: 'Abyssinian', label: 'Abyssinian' },
-  { value: 'Aegean', label: 'Aegean' },
-  { value: 'American Curl', label: 'American Curl' },
-  { value: 'American Bobtail', label: 'American Bobtail' },
-  { value: 'American Shorthair', label: 'American Shorthair' },
-  {
-    value: 'Persian (Traditional Persian Cat)',
-    label: 'Persian (Traditional Persian Cat)',
-  },
-];
-
-const createID = () => Math.random().toString(36).substring(2, 17);
+const createID = () =>
+  Math.random().toString(36).substring(2, 17).toUpperCase();
 
 const manageMonthYear = (fill) => {
   if (fill === 'year') {
@@ -92,7 +83,7 @@ const breedStyles = Object.assign({}, baseStyles, {
 
   container: (provided) => ({
     ...provided,
-    width: '290px',
+    width: '320px',
   }),
 
   option: (provided, state) => ({
@@ -145,6 +136,19 @@ const ageStyle = Object.assign({}, baseStyles, {
   }),
 });
 
+const toastError = (message) => {
+  toast.error(message, {
+    position: 'top-center',
+    autoClose: 4000,
+    hideProgressBar: false,
+    closeOnClick: true,
+    pauseOnHover: true,
+    draggable: true,
+    progress: undefined,
+    theme: 'colored',
+  });
+};
+
 const Post = () => {
   const [{ petIcon, petType }, setPetType] = useState({
     petIcon: '',
@@ -159,6 +163,8 @@ const Post = () => {
       if (petType.classList.contains('active') && !petType.contains(e.target)) {
         petType.classList.remove('active');
       }
+    }
+    if (Topic) {
       if (Topic.classList.contains('active') && !Topic.contains(e.target)) {
         Topic.classList.remove('active');
       }
@@ -173,6 +179,8 @@ const Post = () => {
   var [countDetails, setCountDetails] = useState(0);
   const [uploadImage, setUploadImage] = useState([]);
   const [selectedTopic, setSelectTopic] = useState([]);
+  const [Loading, setLoading] = useState(false);
+  const [breeds, setDataBreeds] = useState([]);
 
   const handleBreedChange = (selected) => {
     setBreed(selected);
@@ -187,7 +195,7 @@ const Post = () => {
   const handleInputRange = (event, typeInput, limit) => {
     const { value } = event.target;
     if (typeInput === 'name')
-      event.target.value = value.replace(new RegExp('. ' + '$'), '');
+      event.target.value = value.replace(new RegExp('. $'), '');
     if (value.length > limit) {
       if (typeInput === 'name') {
         setCountName(limit);
@@ -216,34 +224,64 @@ const Post = () => {
     setUploadImage((previousImage) => previousImage.concat(images));
   };
 
-  const setPetTypeFunction = (icon, type) => {
-    setPetType({ petIcon: icon, petType: type });
+  const fetchBreeds = async (value) => {
+    setLoading(true);
+    const res = await fetch(`/api/${value}/breeds`);
+    let breeds = await res.json();
+    if (!res.ok) {
+      throw Error(breeds.error);
+    }
+    setTimeout(() => {
+      setLoading(false);
+    }, 500);
+    setDataBreeds(breeds);
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
     const currentDate = new Date().toISOString();
     const formData = new FormData(e.target);
-    const PetData = [
-      {
-        id: createID(),
-        image_src:
-          'https://images.unsplash.com/photo-1554415707-6e8cfc93fe23?ixid=Mnw5MTMyMXwwfDF8c2VhcmNofDF8fHdvcmtpbmclMjBkZXNrfGVufDB8fHx8MTYyNjI1MDYwMg&ixlib=rb-1.2.1&w=600',
-        name: formData.get('name'),
-        type: petType,
-        breed: selectBreed['value'],
-        details: formData.get('details'),
-        ageMonth: selectMonth['value'],
-        ageYear: selectYear['value'],
-        gender: formData.get('gender'),
-        status: 'available',
-        owner: 'David C.',
-        dateTime: currentDate,
-        topic: selectedTopic,
-      },
-    ];
-    console.log(await createPost(PetData));
-    navigate('/adopt');
+
+    if (!formData.get('name')) {
+      toastError('Please enter a name pet!');
+    } else if (!petIcon) {
+      toastError('Please select a type of pet!');
+    } else if (!selectBreed) {
+      toastError(`Please select a ${petType}'s breed`);
+    } else if (!formData.get('gender')) {
+      toastError("Please select a pet's gender!");
+    } else if (!selectYear || !selectMonth) {
+      toastError('Please select the age of the pet!');
+    } else if (selectYear['value'] === 0 && selectMonth['value'] === 0) {
+      toastError("Age's pet invalid. ERROR: year is 0 and month is 0");
+    } else if (!formData.get('details')) {
+      toastError('Please enter the description');
+    } else if (uploadImage.length === 0) {
+      toastError('Please upload a picture of your pet');
+    } else {
+      const PetData = [
+        {
+          id: createID(),
+          image_src:
+            'https://images.unsplash.com/photo-1554415707-6e8cfc93fe23?ixid=Mnw5MTMyMXwwfDF8c2VhcmNofDF8fHdvcmtpbmclMjBkZXNrfGVufDB8fHx8MTYyNjI1MDYwMg&ixlib=rb-1.2.1&w=600',
+          name: formData.get('name'),
+          type: petType,
+          breed: selectBreed['value'],
+          details: formData.get('details'),
+          ageMonth: selectMonth['value'],
+          ageYear: selectYear['value'],
+          gender: formData.get('gender'),
+          status: 'available',
+          owner: 'David C.',
+          dateTime: currentDate,
+          topic: selectedTopic,
+        },
+      ];
+
+      console.log(await createPost(PetData));
+      navigate('/adopt');
+    }
   };
 
   return (
@@ -275,13 +313,12 @@ const Post = () => {
                       e.preventDefault();
                     }
                   }}
-                  required
                 />
                 <span>{`${countName}/20`}</span>
               </div>
             </label>
             <div className='line'></div>
-            <div className='petType-field'>
+            <div className='petType-field' pet={petIcon}>
               <p>Select Pet Type</p>
               <div className='selector-petType'>
                 <div
@@ -295,46 +332,73 @@ const Post = () => {
                   <span className={petType}>{petType}</span>
                   <i className='icon-up'></i>
                 </div>
-                <Dropdown data={PetType} setPetType={setPetTypeFunction} />
+                <div className='dropdown-petType'>
+                  <ul>
+                    {TypeoFPet.map((data, key) => {
+                      return (
+                        <li
+                          key={key}
+                          dropdown-name={data.name}
+                          onClick={async (e) => {
+                            let valueType =
+                              e.currentTarget.children[1].innerHTML;
+                            setPetType({
+                              petIcon: valueType,
+                              petType: valueType,
+                            });
+                            fetchBreeds(valueType);
+                          }}
+                        >
+                          <i className={`icon-${data.icon}`}></i>
+                          <span className='pet-text'>{data.name}</span>
+                        </li>
+                      );
+                    })}
+                  </ul>
+                </div>
               </div>
             </div>
-            <div className='line'></div>
-            <Select
-              className='petInfo-select-container'
-              classNamePrefix='petInfo-select'
-              components={{
-                Control: control,
-                DropdownIndicator: CustomDropdownIcon,
-              }}
-              styles={breedStyles}
-              value={selectBreed}
-              placeholder='Select Pet Breed'
-              onChange={handleBreedChange}
-              options={Breed}
-              menuPortalTarget={document.body}
-              isSearchable
-            />
+            {Loading ? (
+              <ClipLoader
+                color='#f3c79e'
+                loading
+                size={24}
+                cssOverride={{
+                  bottom: '0.6rem',
+                  margin: '0 5rem',
+                  display: 'block',
+                  position: 'relative',
+                }}
+              />
+            ) : (
+              <>
+                <div className='line'></div>
+                <Select
+                  className='petInfo-select-container'
+                  classNamePrefix='petInfo-select'
+                  components={{
+                    Control: control,
+                    DropdownIndicator: CustomDropdownIcon,
+                  }}
+                  styles={breedStyles}
+                  value={selectBreed}
+                  placeholder='Select Pet Breed'
+                  onChange={handleBreedChange}
+                  options={breeds}
+                  menuPortalTarget={document.body}
+                  isSearchable
+                />
+              </>
+            )}
           </div>
         </div>
         <div className='gender_age'>
           <div className='gender'>
             <p className='title'>Gender</p>
             <div className='gender-select'>
-              <input
-                type='radio'
-                id='Male'
-                name='gender'
-                value='male'
-                required
-              />
+              <input type='radio' id='Male' name='gender' value='male' />
               <label htmlFor='Male'>Male</label>
-              <input
-                type='radio'
-                id='Female'
-                name='gender'
-                value='female'
-                required
-              />
+              <input type='radio' id='Female' name='gender' value='female' />
               <label htmlFor='Female'>Female</label>
             </div>
           </div>
@@ -390,7 +454,6 @@ const Post = () => {
               onChange={(e) => {
                 handleInputRange(e, 'details', 1000);
               }}
-              required
             />
             <p>{`${countDetails}/1000`}</p>
           </div>
@@ -440,17 +503,18 @@ const Post = () => {
           <div className='topic-field'>
             <ul className='list-topic'>
               {selectedTopic &&
-                selectedTopic.map((topic, key) => {
+                selectedTopic.map((item, key) => {
                   return (
                     <li key={key} className='topic'>
-                      <span>{topic}</span>
+                      <span>{item.topic}</span>
                       <i
                         className='icon-close'
-                        onClick={() =>
+                        onClick={() => {
+                          topic.push(item);
                           setSelectTopic(
-                            selectedTopic.filter((e) => e !== topic)
-                          )
-                        }
+                            selectedTopic.filter((e) => e.topic !== item.topic)
+                          );
+                        }}
                       ></i>
                     </li>
                   );
@@ -475,10 +539,10 @@ const Post = () => {
                     <li
                       key={key}
                       onClick={(e) => {
+                        setSelectTopic(selectedTopic.concat(item));
                         topic = topic.filter(
                           (data) => data.topic !== item.topic
                         );
-                        setSelectTopic(selectedTopic.concat(item.topic));
                       }}
                     >
                       <span>{item.topic}</span>

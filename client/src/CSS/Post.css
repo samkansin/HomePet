@@ -76,6 +76,16 @@ form .information-pet {
   color: var(--place-holder-color);
 }
 
+.infor-field .petType-field[pet=''] ~ .line,
+.infor-field .petType-field[pet=''] ~ .petInfo-select-container {
+  display: none;
+}
+
+.infor-field .petType-field:not([pet='']) ~ .line,
+.infor-field .petType-field:not([pet='']) ~ .petInfo-select-container {
+  display: block;
+}
+
 .information-pet .petType-field .selector-petType {
   width: 164.08px;
   margin-top: 10px;
@@ -403,22 +413,23 @@ form .uploadImg span {
   display: flex;
   align-items: center;
   gap: 1rem;
-  padding: 10px;
+  height: 45px;
+  padding: 5px;
   border: 1px solid var(--input-field);
   border-radius: 8px;
 }
 
 .topic-field .list-topic .input-topic-field {
-  flex-grow: 0;
-  height: fit-content;
+  flex-grow: 1;
 }
 
 .topic-field .list-topic .input-topic-field input {
-  width: auto;
+  width: 100%;
 }
 
 .topic-field .list-topic .topic {
   display: flex;
+  height: 100%;
   gap: 5px;
   font-weight: 600;
   align-items: center;
