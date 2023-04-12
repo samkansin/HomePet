@@ -8,7 +8,7 @@ export const showListPet = (req, res) => {
 //add pet
 export const createNewPet = (req, res) => {
   Pet.addPet(req.body).then(() => {
-    return res.send('Create Pet Successfully');
+    return res.send({ status: 'Create Pet Successfully' });
   });
 };
 
@@ -66,7 +66,8 @@ export const remove = (req, res) => {
 
 //get last pet
 export const lastPost = (req, res) => {
-  Pet.LastFourPet().then((result) => res.json(result));
+  const { type } = req.params;
+  Pet.LastFourPet(type).then((result) => res.json(result));
 };
 
 //get breeds

@@ -4,12 +4,12 @@ let data = [
     image_src:
       'https://knightsmsk.github.io/HomePetResource/imgPet/Cat/delta.jpg',
     name: 'Delta',
-    type: 'Cat',
+    type: 'cat',
     breed: 'Thai cat',
     details:
       'Lorem ipsum dolor sit amet, consectetur adipiscing elit adipiscing elit adipiscing elit. adipiscing elit adipiscing elit adipiscing elit. adipiscing elit adipiscing elit adipiscing elit.',
-    ageMonth: '8',
-    ageYear: '0',
+    ageMonth: 8,
+    ageYear: 0,
     gender: 'Male',
     status: 'Available',
     ownerID: '6QXC2EFRQY',
@@ -21,12 +21,12 @@ let data = [
     image_src:
       'https://knightsmsk.github.io/HomePetResource/imgPet/Cat/khunpan.jpeg',
     name: 'Khunpan',
-    type: 'Cat',
+    type: 'cat',
     breed: 'Thai cat',
     details:
       'Lorem ipsum dolor sit amet, consectetur adipiscing elit adipiscing elit adipiscing elit. adipiscing elit adipiscing elit adipiscing elit. adipiscing elit adipiscing elit adipiscing elit.',
-    ageMonth: '6',
-    ageYear: '0',
+    ageMonth: 6,
+    ageYear: 0,
     gender: 'Male',
     status: 'Available',
     ownerID: 'PNBX298UD9',
@@ -38,12 +38,12 @@ let data = [
     image_src:
       'https://knightsmsk.github.io/HomePetResource/imgPet/Dog/boo.jpg',
     name: 'Boo',
-    type: 'Dog',
+    type: 'dog',
     breed: 'Thai dog',
     details:
       'Lorem ipsum dolor sit amet, consectetur adipiscing elit adipiscing elit adipiscing elit. adipiscing elit adipiscing elit adipiscing elit. adipiscing elit adipiscing elit adipiscing elit.',
-    ageMonth: '8',
-    ageYear: '0',
+    ageMonth: 8,
+    ageYear: 0,
     gender: 'Female',
     status: 'Adopted',
     ownerID: '1RMLITO815',
@@ -55,12 +55,12 @@ let data = [
     image_src:
       'https://knightsmsk.github.io/HomePetResource/imgPet/Cat/mew.jpeg',
     name: 'Mew',
-    type: 'Cat',
+    type: 'cat',
     breed: 'Siamese cat',
     details:
       'Lorem ipsum dolor sit amet, consectetur adipiscing elit adipiscing elit adipiscing elit. adipiscing elit adipiscing elit adipiscing elit. adipiscing elit adipiscing elit adipiscing elit.',
-    ageMonth: '3',
-    ageYear: '0',
+    ageMonth: 3,
+    ageYear: 0,
     gender: 'Male',
     status: 'Available',
     ownerID: '86YAN308E2',
@@ -72,12 +72,12 @@ let data = [
     image_src:
       'https://knightsmsk.github.io/HomePetResource/imgPet/Dog/lulu.jpg',
     name: 'Lulu',
-    type: 'Dog',
+    type: 'dog',
     breed: 'Pit Bull',
     details:
       'Lorem ipsum dolor sit amet, consectetur adipiscing elit adipiscing elit adipiscing elit. adipiscing elit adipiscing elit adipiscing elit. adipiscing elit adipiscing elit adipiscing elit.',
-    ageMonth: '0',
-    ageYear: '1',
+    ageMonth: 0,
+    ageYear: 1,
     gender: 'Male',
     status: 'Adopted',
     ownerID: 'NBABQ2P8YS',
@@ -89,12 +89,12 @@ let data = [
     image_src:
       'https://knightsmsk.github.io/HomePetResource/imgPet/Dog/kankaew.jpeg',
     name: 'Kankaew',
-    type: 'Dog',
+    type: 'dog',
     breed: 'Thai dog',
     details:
       'Lorem ipsum dolor sit amet, consectetur adipiscing elit adipiscing elit adipiscing elit. adipiscing elit adipiscing elit adipiscing elit. adipiscing elit adipiscing elit adipiscing elit.',
-    ageMonth: '2',
-    ageYear: '0',
+    ageMonth: 2,
+    ageYear: 0,
     gender: 'Male',
     status: 'Available',
     ownerID: '1QJ0PQJC6I',
@@ -106,12 +106,12 @@ let data = [
     image_src:
       'https://knightsmsk.github.io/HomePetResource/imgPet/Dog/joe.jpg',
     name: 'Joe',
-    type: 'Dog',
+    type: 'dog',
     breed: 'Jack Russell',
     details:
       'Lorem ipsum dolor sit amet, consectetur adipiscing elit adipiscing elit adipiscing elit. adipiscing elit adipiscing elit adipiscing elit. adipiscing elit adipiscing elit adipiscing elit.',
-    ageMonth: '0',
-    ageYear: '8',
+    ageMonth: 0,
+    ageYear: 8,
     gender: 'Male',
     status: 'Adopted',
     ownerID: '3K74J15EPJ',
@@ -123,12 +123,12 @@ let data = [
     image_src:
       'https://knightsmsk.github.io/HomePetResource/imgPet/Cat/milo.jpg',
     name: 'Milo',
-    type: 'Cat',
+    type: 'cat',
     breed: 'Thai cat',
     details:
       'Lorem ipsum dolor sit amet, consectetur adipiscing elit adipiscing elit adipiscing elit. adipiscing elit adipiscing elit adipiscing elit. adipiscing elit adipiscing elit adipiscing elit.',
-    ageMonth: '3',
-    ageYear: '0',
+    ageMonth: 3,
+    ageYear: 0,
     gender: 'Male',
     status: 'Available',
     ownerID: 'CM3B0OGEI6',
@@ -138,7 +138,6 @@ let data = [
 ];
 
 let catBreeds = [
-  { value: 'Thai', label: 'Thai' },
   {
     value: 'Abyssinian',
     label: 'Abyssinian',
@@ -2532,15 +2531,21 @@ let Pet = {
       resolve(1);
     });
   },
-  LastFourPet: () => {
+  LastFourPet: (type) => {
     return new Promise((resolve, reject) => {
-      let index = data.length;
+      var filter = data;
+      if (type === 'Dog' || type === 'Cat') {
+        filter = filter.filter((post) => {
+          return post.type === type.toLowerCase();
+        });
+      }
+      let index = filter.length;
       let lastFourIndex = [];
       if (index <= 4) {
-        resolve(data);
+        resolve(filter);
       } else {
         for (let i = 0; i < 4; i++) {
-          lastFourIndex.push(data[i]);
+          lastFourIndex.push(filter[i]);
         }
         resolve(lastFourIndex);
       }
