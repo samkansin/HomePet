@@ -7,7 +7,7 @@ const Errorpage = () => {
     <div className='error-container'>
       <img
         className='error-img'
-        src='https://knightsmsk.github.io/HomePetResource/default%20img/dog-sad.png'
+        src='https://knightsmsk.github.io/HomePetResource/default%20img/error-page.gif'
         alt=''
       />
       <p>Sorry, an unexpected error has occurred.</p>

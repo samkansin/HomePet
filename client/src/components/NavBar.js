@@ -1,13 +1,11 @@
 import { Form, Link, NavLink } from 'react-router-dom';
-import { useState, useEffect } from 'react';
+import { useEffect, useContext } from 'react';
+import { FilterContext } from '../layouts/MainLayout';
 import '../CSS/NavBar.css';
 import '../CSS/BaseColor.css';
 
 const NavBar = () => {
-  const [{ filterName, filterImg }, setfilterImg] = useState({
-    filterName: 'All',
-    filterImg: 'https://knightsmsk.github.io/HomePetResource/filter/all.png',
-  });
+  const { filterState, setfilterImg } = useContext(FilterContext);
 
   useEffect(() => {
     let filterElement = document.querySelector(
@@ -27,7 +25,7 @@ const NavBar = () => {
       '.NavHomePet li[select="true"]'
     );
     let elementActive = document.querySelector(
-      `.NavHomePet li[filter-name="${filterName}"]`
+      `.NavHomePet li[filter-name="${filterState[0].filterName}"]`
     );
 
     if (filterElement.classList.contains('active')) {
@@ -38,7 +36,7 @@ const NavBar = () => {
       elementUnActive.removeAttribute('select');
       elementActive.setAttribute('select', 'true');
     }
-  }, [filterName]);
+  }, [filterState[0].filterName]);
 
   const handleHover = (element, event) => {
     const activeHidden = document.querySelector(
@@ -127,7 +125,7 @@ const NavBar = () => {
                 }}
               >
                 <div className='img-filter'>
-                  <img src={filterImg} alt='' />
+                  <img src={filterState[0].filterImg} alt='' />
                 </div>
                 <i className='icon-up'></i>
                 <span className='line'></span>
@@ -138,10 +136,14 @@ const NavBar = () => {
                     filter-name='All'
                     select='true'
                     onClick={(e) => {
-                      setfilterImg({
-                        filterName: e.currentTarget.getAttribute('filter-name'),
-                        filterImg: e.currentTarget.children[0].children[0].src,
-                      });
+                      setfilterImg([
+                        {
+                          filterName:
+                            e.currentTarget.getAttribute('filter-name'),
+                          filterImg:
+                            e.currentTarget.children[0].children[0].src,
+                        },
+                      ]);
                     }}
                   >
                     <div className='img-filter'>
@@ -155,10 +157,14 @@ const NavBar = () => {
                   <li
                     filter-name='Dog'
                     onClick={(e) => {
-                      setfilterImg({
-                        filterName: e.currentTarget.getAttribute('filter-name'),
-                        filterImg: e.currentTarget.children[0].children[0].src,
-                      });
+                      setfilterImg([
+                        {
+                          filterName:
+                            e.currentTarget.getAttribute('filter-name'),
+                          filterImg:
+                            e.currentTarget.children[0].children[0].src,
+                        },
+                      ]);
                     }}
                   >
                     <div className='img-filter'>
@@ -172,10 +178,14 @@ const NavBar = () => {
                   <li
                     filter-name='Cat'
                     onClick={(e) => {
-                      setfilterImg({
-                        filterName: e.currentTarget.getAttribute('filter-name'),
-                        filterImg: e.currentTarget.children[0].children[0].src,
-                      });
+                      setfilterImg([
+                        {
+                          filterName:
+                            e.currentTarget.getAttribute('filter-name'),
+                          filterImg:
+                            e.currentTarget.children[0].children[0].src,
+                        },
+                      ]);
                     }}
                   >
                     <div className='img-filter'>

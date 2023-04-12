@@ -2,10 +2,8 @@ import { useState } from 'react';
 import { toast } from 'react-toastify';
 import { Form, useNavigate } from 'react-router-dom';
 import '../CSS/Post.css';
-import Dropdown from '../components/Dropdown';
 import Select, { components } from 'react-select';
 import ClipLoader from 'react-spinners/ClipLoader';
-import { createPost } from '../petsData';
 
 const TypeoFPet = [
   { icon: 'dog', name: 'dog' },
@@ -150,11 +148,11 @@ const toastError = (message) => {
 };
 
 const Post = () => {
+  const navigate = useNavigate();
   const [{ petIcon, petType }, setPetType] = useState({
     petIcon: '',
     petType: 'Select Pet Type',
   });
-  const navigate = useNavigate();
 
   document.addEventListener('click', (e) => {
     let petType = document.querySelector('.selector-petType .selector.field');
@@ -238,8 +236,6 @@ const Post = () => {
   };
 
   const handleSubmit = async (e) => {
-    e.preventDefault();
-
     const currentDate = new Date().toISOString();
     const formData = new FormData(e.target);
 
@@ -260,26 +256,25 @@ const Post = () => {
     } else if (uploadImage.length === 0) {
       toastError('Please upload a picture of your pet');
     } else {
-      const PetData = [
-        {
-          id: createID(),
-          image_src:
-            'https://images.unsplash.com/photo-1554415707-6e8cfc93fe23?ixid=Mnw5MTMyMXwwfDF8c2VhcmNofDF8fHdvcmtpbmclMjBkZXNrfGVufDB8fHx8MTYyNjI1MDYwMg&ixlib=rb-1.2.1&w=600',
-          name: formData.get('name'),
-          type: petType,
-          breed: selectBreed['value'],
-          details: formData.get('details'),
-          ageMonth: selectMonth['value'],
-          ageYear: selectYear['value'],
-          gender: formData.get('gender'),
-          status: 'available',
-          owner: 'David C.',
-          dateTime: currentDate,
-          topic: selectedTopic,
-        },
-      ];
-
-      console.log(await createPost(PetData));
+      const PetData = {
+        id: createID(),
+        image_src:
+          'https://images.unsplash.com/photo-1554415707-6e8cfc93fe23?ixid=Mnw5MTMyMXwwfDF8c2VhcmNofDF8fHdvcmtpbmclMjBkZXNrfGVufDB8fHx8MTYyNjI1MDYwMg&ixlib=rb-1.2.1&w=600',
+        name: formData.get('name'),
+        type: petType,
+        breed: selectBreed['value'],
+        details: formData.get('details'),
+        ageMonth: selectMonth['value'],
+        ageYear: selectYear['value'],
+        gender: formData.get('gender'),
+        status: 'available',
+        owner: 'David C.',
+        dateTime: currentDate,
+        topic: selectedTopic.map((topic) => {
+          return topic.topic;
+        }),
+      };
+      await AddNewPost(PetData);
       navigate('/adopt');
     }
   };
@@ -289,7 +284,7 @@ const Post = () => {
       <div className='post-title'>
         <span>Pet Details</span>
       </div>
-      <Form onSubmit={handleSubmit}>
+      <Form replace onSubmit={handleSubmit}>
         <div className='information-pet'>
           <p className='Heading'>Information Pet</p>
           <div className='infor-field'>
@@ -565,3 +560,21 @@ const Post = () => {
 };
 
 export default Post;
+
+const AddNewPost = async (newPet) => {
+  try {
+    let response = await fetch('/api/pages/Post', {
+      method: 'POST',
+      body: JSON.stringify(newPet),
+      headers: new Headers({ 'Content-Type': 'application/json' }),
+    }).then((res) => {
+      if (!res.ok) {
+        throw Error({ error: `Could not add new post: ${newPet.name}` });
+      }
+      return res.json();
+    });
+    return response;
+  } catch (error) {
+    console.error('Error adding new post!', error);
+  }
+};

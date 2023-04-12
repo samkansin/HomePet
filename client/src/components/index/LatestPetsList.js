@@ -1,11 +1,29 @@
-import React from 'react';
+import React, { useState } from 'react';
 import PetCard from '../PetCard';
 import '../../CSS/LatestPetsList.css';
-import { useLoaderData, Link, useNavigation } from 'react-router-dom';
+import { Link, useNavigation } from 'react-router-dom';
 import Skeleton from '../Skeleton';
 
 const LatestPetsList = () => {
-  var PetData = useLoaderData();
+  const PetData = [
+    {
+      id: '1',
+      image_src:
+        'https://knightsmsk.github.io/HomePetResource/imgPet/Cat/delta.jpg',
+      name: 'Delta',
+      type: 'Cat',
+      breed: 'Thai cat',
+      details:
+        'Lorem ipsum dolor sit amet, consectetur adipiscing elit adipiscing elit adipiscing elit. adipiscing elit adipiscing elit adipiscing elit. adipiscing elit adipiscing elit adipiscing elit.',
+      ageMonth: 8,
+      ageYear: 0,
+      gender: 'Male',
+      status: 'Available',
+      ownerID: '6QXC2EFRQY',
+      dateTime: '2023-04-10T13:11:24.309Z',
+      topic: 'cat',
+    },
+  ];
   const navigation = useNavigation();
   if (PetData.length > 4) {
     PetData = PetData.slice(0, 4);
@@ -48,11 +66,11 @@ const LatestPetsList = () => {
 
 export default LatestPetsList;
 
-export const getLastPet = async () => {
+const getLastPet = async (filter) => {
   const res = await fetch('/api/pages/lastPost');
-  var LastPet = await res.json();
+  let petData = await res.json();
   if (!res.ok) {
-    throw Error(LastPet.error);
+    throw Error(`Could not filter ${filter}`);
   }
-  return LastPet;
+  return petData;
 };

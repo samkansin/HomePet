@@ -7,7 +7,6 @@ import {
 
 import MainLayout from './layouts/MainLayout';
 import Adopt, { petsLoader } from './pages/Adopt';
-import { getLastPet } from './components/index/LatestPetsList';
 import Index from './pages/Index';
 import Post from './pages/Post';
 import Errorpage from './pages/Errorpage';
@@ -15,7 +14,7 @@ import Errorpage from './pages/Errorpage';
 const HomePetRouter = createBrowserRouter(
   createRoutesFromElements(
     <Route path='/' element={<MainLayout />} errorElement={<Errorpage />}>
-      <Route index element={<Index />} loader={getLastPet} />
+      <Route index element={<Index />} />
       <Route path='adopt' element={<Adopt />} loader={petsLoader} />
       <Route path='post' element={<Post />} />
     </Route>

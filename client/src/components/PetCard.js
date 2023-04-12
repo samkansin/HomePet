@@ -46,11 +46,11 @@ const BlogPostCard = (props) => {
       <div className='card-body'>
         <div className='card-age-gender-status'>
           <span className='age-gender'>
-            {props.ageYear !== '0' && props.ageMonth !== '0'
+            {props.ageYear !== 0 && props.ageMonth !== 0
               ? `${props.ageYear}.${props.ageMonth} Years `
-              : props.ageMonth === '0'
+              : props.ageMonth === 0
               ? `${props.ageYear} Years `
-              : props.ageYear === '0'
+              : props.ageYear === 0
               ? `${props.ageMonth} Months `
               : null}
             | {props.gender}
