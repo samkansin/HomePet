@@ -414,7 +414,7 @@ form .uploadImg span {
   align-items: center;
   gap: 1rem;
   height: 45px;
-  padding: 5px;
+  padding: 5px 10px;
   border: 1px solid var(--input-field);
   border-radius: 8px;
 }
@@ -474,11 +474,19 @@ form .uploadImg span {
   transition: 0.2s ease-in;
 }
 
+.topic-field.active .filter-topic p.filter-title::after {
+  content: 'Recommended';
+}
+
+.topic-field.active .filter-topic[searching='true'] p.filter-title::after {
+  content: 'Search results';
+}
+
 .topic-field .filter-topic .select-topic {
   max-height: 162px;
   height: 100%;
   overflow: auto;
-  margin-top: 5px;
+  margin-top: 10px;
 }
 
 .topic-field .filter-topic .select-topic li {
@@ -494,7 +502,11 @@ form .uploadImg span {
   flex-grow: 1;
 }
 
-.topic-field .filter-topic .select-topic li span:last-child {
+.topic-field .filter-topic .select-topic li .topic-name span.mark {
+  color: var(--main-color);
+}
+
+.topic-field .filter-topic .select-topic li .topic-used span {
   font-size: 0.8rem;
   font-weight: 400;
 }

@@ -1,42 +1,41 @@
-import React, { useEffect, useState, useContext } from 'react';
-import { Link } from 'react-router-dom';
+import React, { useEffect, useState } from 'react';
+import { Link, useLoaderData, useSearchParams } from 'react-router-dom';
 import '../../CSS/LatestPetsList.css';
 import PetCard from '../PetCard';
 import Skeleton from '../Skeleton';
-import { FilterContext } from '../../layouts/MainLayout';
 
 const LatestPostList = () => {
-  const { filterState } = useContext(FilterContext);
   const [loading, setLoading] = useState(false);
-  const [lastPet, setLastPet] = useState([]);
-
-  async function getLast(filter) {
-    setLoading(true);
-    const res = await fetch(`api/pages/lastPost/${filterState[0].filterName}`);
-    if (!res.ok) {
-      throw Error(`Could not filter ${filter}`);
-    }
-    setLastPet(await res.json());
-    setTimeout(() => {
-      setLoading(false);
-    }, 500);
-  }
+  const [filterParams] = useSearchParams();
+  const PetData = useLoaderData();
 
   useEffect(() => {
-    getLast();
-  }, [filterState[0].filterName]);
+    setLoading(true);
+    if (PetData)
+      setTimeout(() => {
+        setLoading(false);
+      }, 500);
+  }, [PetData]);
 
   return (
     <div className='lastestPetsList-container'>
       <div className='lastestPets-title'>
         <h1>Latest Pets</h1>
-        <Link to='/adopt'>View all &gt;</Link>
+        <Link
+          to={
+            filterParams.get('f')
+              ? `/adopt?f=${filterParams.get('f')}`
+              : '/adopt'
+          }
+        >
+          View all &gt;
+        </Link>
       </div>
       <div className='lastestPetsList-petList'>
         {loading ? (
           <Skeleton num='4' />
         ) : (
-          lastPet.map((pet, index) => {
+          PetData.map((pet, index) => {
             return (
               <PetCard
                 key={index}
@@ -62,3 +61,14 @@ const LatestPostList = () => {
 };
 
 export default LatestPostList;
+
+export const getLastestPost = async ({ request }) => {
+  const filter = new URLSearchParams(
+    request.url.split('http://localhost:3000/')[1]
+  ).get('f');
+  const res = await fetch(`/api/pages/lastPost/${filter}`);
+  if (!res.ok) {
+    throw Error(`Could not load last post`);
+  }
+  return await res.json();
+};

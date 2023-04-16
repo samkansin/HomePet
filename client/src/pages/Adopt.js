@@ -1,11 +1,23 @@
 import '../CSS/Adopt.css';
 import PetCard from '../components/PetCard';
-import { useLoaderData, useNavigation } from 'react-router-dom';
+import { useState, useEffect } from 'react';
+import { useLoaderData } from 'react-router-dom';
 import Skeleton from '../components/Skeleton';
 
 const Adopt = () => {
+  const [loading, setLoading] = useState(false);
+  const [skeletonLenght, setSkeletonLenght] = useState(8);
+
   const PetData = useLoaderData();
-  const navigation = useNavigation();
+  useEffect(() => {
+    setLoading(true);
+    if (PetData) {
+      setSkeletonLenght(PetData.length);
+      setTimeout(() => {
+        setLoading(false);
+      }, 500);
+    }
+  }, [PetData]);
 
   return (
     <div className='Home'>
@@ -15,8 +27,8 @@ const Adopt = () => {
         <i className='icon-active' />
       </div>
       <div className='card-list'>
-        {navigation.state === 'loading' ? (
-          <Skeleton num='8' />
+        {loading ? (
+          <Skeleton num={skeletonLenght} />
         ) : (
           PetData.map((pet, index) => {
             return (
@@ -45,8 +57,11 @@ const Adopt = () => {
 
 export default Adopt;
 
-export const petsLoader = async () => {
-  const res = await fetch('api/pages/Adopt');
+export const petsLoader = async ({ request }) => {
+  const filter = new URLSearchParams(
+    request.url.split('http://localhost:3000/adopt')[1]
+  ).get('f');
+  const res = await fetch(`api/pages/Adopt/${filter}`);
   let petList = await res.json();
   if (!res.ok) {
     throw Error(petList.error);

@@ -2502,7 +2502,16 @@ let dogBreeds = [
 ];
 
 let Pet = {
-  list: () => new Promise((resolve, reject) => resolve(data)),
+  list: (type) =>
+    new Promise((resolve, reject) => {
+      var filter = data;
+      if (type === 'Dog' || type === 'Cat') {
+        filter = filter.filter((post) => {
+          return post.type === type.toLowerCase();
+        });
+      }
+      resolve(filter);
+    }),
   findPet: (id) => {
     return new Promise((resolve, reject) => {
       let index = data.findIndex((e) => e.id === id);
@@ -2532,23 +2541,9 @@ let Pet = {
     });
   },
   LastFourPet: (type) => {
-    return new Promise((resolve, reject) => {
-      var filter = data;
-      if (type === 'Dog' || type === 'Cat') {
-        filter = filter.filter((post) => {
-          return post.type === type.toLowerCase();
-        });
-      }
-      let index = filter.length;
-      let lastFourIndex = [];
-      if (index <= 4) {
-        resolve(filter);
-      } else {
-        for (let i = 0; i < 4; i++) {
-          lastFourIndex.push(filter[i]);
-        }
-        resolve(lastFourIndex);
-      }
+    return new Promise(async (resolve, reject) => {
+      var filter = await Pet.list(type);
+      resolve(filter.slice(0, 4));
     });
   },
 };

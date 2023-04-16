@@ -2,6 +2,7 @@ import express from 'express';
 import logger from 'morgan';
 // routers
 import petRouter from './router/petRouter.js';
+import topicRouter from './router/topicRouter.js';
 
 const app = express();
 const PORT = 4000;
@@ -11,7 +12,7 @@ app.use(logger('short'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
-app.use('/api', petRouter);
+app.use('/api', petRouter, topicRouter);
 
 app.get('/', (req, res) => {
   res.status(401).send({ error: 'Invalid Endport' });

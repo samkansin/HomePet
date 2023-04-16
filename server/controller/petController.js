@@ -1,8 +1,37 @@
 import Pet, { PetBreeds } from '../model/pet.js';
+import fs from 'fs';
+import path, { dirname } from 'path';
+
+//upload image
+export const uploadImage = (req, res) => {
+  res.json({ status: 'upload successfully' });
+};
+
+//get image pet
+export const getProfileCard = (req, res) => {
+  const { id } = req.params;
+  console.log(req.body);
+  const dir = `uploads/${id}/`;
+  const filepath = path.join(path.resolve(path.dirname('')), dir);
+  fs.readdir(filepath, (err, files) => {
+    if (err) {
+      res.json({ status: `Error find image ${err}` });
+    } else {
+      const findFile = files.find((file) => {
+        return file.startsWith('1');
+      });
+      if (findFile) {
+        const image = path.join(filepath, findFile);
+        res.sendFile(image);
+      }
+    }
+  });
+};
 
 //show pet list
 export const showListPet = (req, res) => {
-  Pet.list().then((result) => res.json(result));
+  const { type } = req.params;
+  Pet.list(type).then((result) => res.json(result));
 };
 
 //add pet
