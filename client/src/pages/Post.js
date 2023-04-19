@@ -146,7 +146,6 @@ const Post = () => {
     const uploadImgs = e.target.files;
 
     const uploadImgsArray = Array.from(uploadImgs);
-    console.log(uploadImgsArray);
     const images = uploadImgsArray.map((image) => {
       return URL.createObjectURL(image);
     });
@@ -172,6 +171,8 @@ const Post = () => {
   const handleSubmit = async (e) => {
     const currentDate = new Date().toISOString();
     const formData = new FormData(e.target);
+
+    console.log(userImage);
 
     if (!formData.get('name')) {
       toastError('Please enter a name pet!');
@@ -424,9 +425,17 @@ const Post = () => {
                       <img src={image} alt='upload' />
                       <i
                         className='icon-delete'
-                        onClick={() =>
-                          setUploadImage(uploadImage.filter((e) => e !== image))
-                        }
+                        onClick={() => {
+                          let index = uploadImage.findIndex((e) => e === image);
+                          if (index > -1) {
+                            setUploadImage(
+                              uploadImage.filter((e, i) => i !== index)
+                            );
+                            setUserImage(
+                              userImage.filter((e, i) => i != index)
+                            );
+                          }
+                        }}
                       ></i>
                     </div>
                   </div>
