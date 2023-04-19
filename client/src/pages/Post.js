@@ -1,14 +1,22 @@
-import { useState, useEffect } from 'react';
-import useSynState from '../custom hooks/useSynState';
+import { useState, useEffect, useRef } from 'react';
+import useSynState from '../hooks/useSynState';
+import useDebounce from '../hooks/useDebounce';
 import { toast } from 'react-toastify';
 import { Form, useNavigate, useLoaderData } from 'react-router-dom';
+import {
+  CustomDropdownIcon,
+  control,
+  breedStyles,
+  ageStyle,
+} from '../components/post/selectStyle';
 import '../CSS/Post.css';
-import Select, { components } from 'react-select';
+import Select from 'react-select';
 import ClipLoader from 'react-spinners/ClipLoader';
-import { debounce, throttle } from 'lodash';
+import NotFound from '../components/NotFound';
 
 const Post = () => {
   const navigate = useNavigate();
+  const searchInputElement = useRef();
   const [{ petIcon, petType }, setPetType] = useState({
     petIcon: '',
     petType: 'Select Pet Type',
@@ -41,8 +49,19 @@ const Post = () => {
   const selectedTopic = useSynState([]);
   const AllTopic = useSynState(useLoaderData());
   const [searchInput, setSearchInput] = useState('');
+  const debouncedSearch = useDebounce(searchInput, 500);
 
-  const [Loading, setLoading] = useState(false);
+  const [listImage, setListImage] = useState([]);
+
+  useEffect(() => {
+    SearchTopic(debouncedSearch);
+    // eslint-disable-next-line
+  }, [debouncedSearch]);
+
+  const [{ breedsLoading, searchLoading }, setLoading] = useState({
+    breedsLoading: false,
+    searchLoading: false,
+  });
   const [breeds, setDataBreeds] = useState([]);
 
   const handleBreedChange = (selected) => {
@@ -53,6 +72,30 @@ const Post = () => {
   };
   const handleYearChange = (selected) => {
     setYear(selected);
+  };
+
+  const handleSetListImage = (index, imageName, id) => {
+    const date = new Date();
+    let url = `/api/img/${date.getFullYear()}/${date
+      .toLocaleString('default', { month: 'long' })
+      .toLocaleUpperCase()}/${id}`;
+    setListImage(
+      listImage.push(`${url}/${index + 1}.${imageName.split('.')[1]}`)
+    );
+  };
+
+  const handleSelectTopic = (topic) => {
+    if (selectedTopic.get().length < 3) {
+      selectedTopic.set(selectedTopic.get().concat(topic));
+      if (!topic.new) {
+        AllTopic.set(
+          AllTopic.get().filter((data) => data.topic !== topic.topic)
+        );
+      }
+      if (searchInput !== '') setSearchInput('');
+    } else {
+      toastError('The maximum number of topics that can be added is 3.');
+    }
   };
 
   const handleInputRange = (event, typeInput, limit) => {
@@ -77,7 +120,7 @@ const Post = () => {
     }
   };
 
-  const debounceSearch = debounce(async (search) => {
+  const SearchTopic = async (search) => {
     try {
       await fetch(`api/topic?search=${search}`, {
         method: 'POST',
@@ -95,18 +138,7 @@ const Post = () => {
       console.error('Error search topic', error);
     }
 
-    setLoading(false);
-  }, 500);
-
-  const throttleSearch = throttle((search) => {
-    setSearchInput(search);
-    debounceSearch(search);
-  }, 100);
-
-  const handleSearchChange = (input) => {
-    var search = input.replace(new RegExp('. $'), '');
-    setLoading(true);
-    throttleSearch(search);
+    setLoading({ searchLoading: false });
   };
 
   const handleFileImage = (e) => {
@@ -120,14 +152,14 @@ const Post = () => {
   };
 
   const fetchBreeds = async (value) => {
-    setLoading(true);
+    setLoading({ breedsLoading: true });
     const res = await fetch(`/api/${value}/breeds`);
     let breeds = await res.json();
     if (!res.ok) {
       throw Error(breeds.error);
     }
     setTimeout(() => {
-      setLoading(false);
+      setLoading({ breedsLoading: false });
     }, 500);
     setDataBreeds(breeds);
   };
@@ -135,6 +167,8 @@ const Post = () => {
   const handleSubmit = async (e) => {
     const currentDate = new Date().toISOString();
     const formData = new FormData(e.target);
+
+    const files = document.querySelector('.upload-image');
 
     if (!formData.get('name')) {
       toastError('Please enter a name pet!');
@@ -159,13 +193,14 @@ const Post = () => {
 
       for (let i = 0; i < files.files.length; i++) {
         imgData.append('files', files.files[i]);
+        handleSetListImage(i, files.files[i].name, id);
       }
 
       await uploadImageToServer(id, imgData);
 
       const PetData = {
         id: id,
-        image_src: `http://localhost:4000/api/img/${id}/`,
+        image_src: listImage,
         name: formData.get('name'),
         type: petType,
         breed: selectBreed['value'],
@@ -180,18 +215,18 @@ const Post = () => {
           return topic.topic;
         }),
       };
-
+      await AddTopic(selectedTopic.get());
       await AddNewPost(PetData);
       navigate('/adopt');
     }
   };
 
   return (
-    <div className='post-container'>
-      <div className='post-title'>
-        <span>Pet Details</span>
+    <div className='pages-container'>
+      <div className='page-title'>
+        <span>Post</span>
       </div>
-      <Form replace onSubmit={handleSubmit}>
+      <Form className='post-form' replace onSubmit={handleSubmit}>
         <div className='information-pet'>
           <p className='Heading'>Information Pet</p>
           <div className='infor-field'>
@@ -206,6 +241,7 @@ const Post = () => {
                   type='text'
                   placeholder='Please enter name (required)'
                   name='name'
+                  autoComplete='off'
                   onChange={(e) => {
                     handleInputRange(e, 'name', 15);
                   }}
@@ -236,7 +272,7 @@ const Post = () => {
                     {TypeoFPet.map((data, key) => {
                       return (
                         <li
-                          key={key}
+                          key={`typePet${key}`}
                           dropdown-name={data.name}
                           onClick={async (e) => {
                             let valueType =
@@ -245,6 +281,7 @@ const Post = () => {
                               petIcon: valueType,
                               petType: valueType,
                             });
+                            if (selectBreed) setBreed(null);
                             fetchBreeds(valueType);
                           }}
                         >
@@ -257,7 +294,7 @@ const Post = () => {
                 </div>
               </div>
             </div>
-            {Loading ? (
+            {breedsLoading ? (
               <ClipLoader
                 color='#f3c79e'
                 loading
@@ -303,7 +340,9 @@ const Post = () => {
           </div>
           <div className='line'></div>
           <div className='age'>
-            <p className='title'>Age</p>
+            <p className='title'>
+              Age <span className='subtitle'>Year - Month</span>
+            </p>
             <div className='age-select'>
               <Select
                 className='petInfo-select-container'
@@ -359,15 +398,15 @@ const Post = () => {
         </label>
         <div className='uploadImg'>
           <p>Upload an image</p>
-          <span>
+          <span className='subtitle'>
             We will use first image to profile of card | require image (JPG,
             PNG, JPEG, GIF, with a width and height of at least 160 pixels)
           </span>
           <div className='pet-img'>
             {uploadImage &&
-              uploadImage.map((image) => {
+              uploadImage.map((image, key) => {
                 return (
-                  <div key={image} className='preview-img'>
+                  <div key={`${image}_${key}`} className='preview-img'>
                     <div className='img'>
                       <img src={image} alt='upload' />
                       <i
@@ -405,12 +444,13 @@ const Post = () => {
               {selectedTopic.get() &&
                 selectedTopic.get().map((item, key) => {
                   return (
-                    <li key={key} className='topic'>
+                    <li key={`selectTopic_${key}`} className='topic'>
                       <span>{item.topic}</span>
                       <i
                         className='icon-close'
                         onClick={() => {
-                          AllTopic.set(AllTopic.get().concat(item));
+                          if (!item.new)
+                            AllTopic.set(AllTopic.get().concat(item));
                           selectedTopic.set(
                             selectedTopic
                               .get()
@@ -424,16 +464,21 @@ const Post = () => {
                 })}
               <div className='input-topic-field'>
                 <input
+                  ref={searchInputElement}
                   type='text'
                   name='topic'
-                  value={searchInput}
                   autoComplete='off'
                   onFocus={(e) =>
                     document
                       .querySelector('.topic-field')
                       .classList.add('active')
                   }
-                  onChange={(e) => handleSearchChange(e.target.value)}
+                  onChange={(e) => {
+                    setSearchInput(
+                      e.target.value.replace(new RegExp('. $'), '')
+                    );
+                    setLoading({ searchLoading: true });
+                  }}
                   onKeyDown={(e) => {
                     manageInput(e);
                   }}
@@ -446,7 +491,7 @@ const Post = () => {
             >
               <p className='filter-title'></p>
               <ul className='select-topic'>
-                {Loading ? (
+                {searchLoading ? (
                   <ClipLoader
                     color='#f3c79e'
                     loading
@@ -457,52 +502,76 @@ const Post = () => {
                       position: 'relative',
                     }}
                   />
-                ) : AllTopic.get().length > 0 ? (
-                  AllTopic.get().map((item, key) => {
-                    return (
-                      <li
-                        key={key}
-                        onClick={(e) => {
-                          if (selectedTopic.get().length < 3) {
-                            selectedTopic.set(selectedTopic.get().concat(item));
-                            AllTopic.set(
-                              AllTopic.get().filter(
-                                (data) => data.topic !== item.topic
-                              )
-                            );
-                            if (searchInput !== '') handleSearchChange('');
-                          } else {
-                            toastError(
-                              'The maximum number of topics that can be added is 3.'
-                            );
-                          }
-                        }}
-                      >
-                        <div className='topic-name'>
-                          {searchInput.length > 0 ? (
-                            <>
-                              <span className='mark'>
-                                {item.topic.slice(0, searchInput.length)}
-                              </span>
-                              <span>
-                                {item.topic.slice(
-                                  searchInput.length,
-                                  item.topic.length
-                                )}
-                              </span>
-                            </>
-                          ) : (
-                            <span>{item.topic}</span>
-                          )}
-                        </div>
-                        <div className='topic-used'>
-                          <span>{formatNumber(item.used)}</span>
-                        </div>
-                      </li>
-                    );
-                  })
+                ) : searchInput.length >= 0 && searchInput.length <= 15 ? (
+                  <>
+                    {AllTopic.get().filter(
+                      (topic) => topic.topic === searchInput
+                    ).length === 0 &&
+                      searchInput !== '' && (
+                        <li
+                          key={searchInput}
+                          className='new'
+                          onClick={(e) => {
+                            handleSelectTopic({
+                              topic: searchInput,
+                              used: 0,
+                              new: true,
+                            });
+                            setSearchInput('');
+                            searchInputElement.current.value = '';
+                          }}
+                        >
+                          <div className='new-topic'>
+                            <span>{searchInput}</span>
+                            <i className='icon-plus'></i>
+                          </div>
+                        </li>
+                      )}
+                    {AllTopic.get().length > 0 &&
+                      AllTopic.get().map((item, key) => {
+                        return (
+                          <li
+                            key={`list_topic_${key}`}
+                            onClick={(e) => {
+                              handleSelectTopic(item);
+                              setSearchInput('');
+                              searchInputElement.current.value = '';
+                            }}
+                          >
+                            <div className='topic-name'>
+                              {searchInput.length > 0 ? (
+                                <>
+                                  {splitSentencesByWord(
+                                    item.topic,
+                                    searchInput
+                                  ).map((word, key) => {
+                                    if (word !== '') {
+                                      return (
+                                        <span
+                                          key={`word_${key}`}
+                                          className={
+                                            word === searchInput ? 'mark' : null
+                                          }
+                                        >
+                                          {word}
+                                        </span>
+                                      );
+                                    } else return null;
+                                  })}
+                                </>
+                              ) : (
+                                <span>{item.topic}</span>
+                              )}
+                            </div>
+                            <div className='topic-used'>
+                              <span>{formatNumber(item.used)}</span>
+                            </div>
+                          </li>
+                        );
+                      })}
+                  </>
                 ) : (
-                  <p>not found</p>
+                  <NotFound />
                 )}
               </ul>
             </div>
@@ -519,6 +588,24 @@ const Post = () => {
 };
 
 export default Post;
+
+const AddTopic = async (newTopic) => {
+  try {
+    let response = await fetch('/api/topic/add', {
+      method: 'POST',
+      body: JSON.stringify(newTopic.map((item) => item.topic)),
+      headers: new Headers({ 'Content-Type': 'application/json' }),
+    }).then((res) => {
+      if (!res.ok) {
+        throw Error({ error: `Could not add new topic: ${newTopic}` });
+      }
+      return res.json();
+    });
+    return response;
+  } catch (error) {
+    console.error('Error adding new topic', error);
+  }
+};
 
 const AddNewPost = async (newPet) => {
   try {
@@ -552,7 +639,7 @@ const uploadImageToServer = async (id, images) => {
 };
 
 export const LoadTopicData = async () => {
-  const res = await fetch('api/topic');
+  const res = await fetch('/api/topic');
   if (!res.ok) {
     throw Error('Could not fetch topic');
   }
@@ -583,105 +670,6 @@ const manageMonthYear = (fill) => {
   }
 };
 
-const CustomDropdownIcon = (props) => {
-  return (
-    <components.DropdownIndicator {...props}>
-      <i className='icon-up'></i>
-    </components.DropdownIndicator>
-  );
-};
-
-const control = (props) => {
-  const selected = props.hasValue ? 'has-option' : '';
-  return (
-    <div className={selected}>
-      <components.Control
-        {...props}
-        classNamePrefix={selected}
-      ></components.Control>
-    </div>
-  );
-};
-
-const baseStyles = {
-  dropdownIndicator: (base, state) => ({
-    ...base,
-    fontSize: '0.55rem',
-    transition: 'all .2s ease-in',
-    transform: state.selectProps.menuIsOpen ? 'rotate(180deg)' : null,
-  }),
-
-  singleValue: (base) => ({
-    ...base,
-    fontWeight: '500',
-  }),
-};
-
-const breedStyles = Object.assign({}, baseStyles, {
-  control: (provided, state) => ({
-    ...provided,
-    fontWeight: '500',
-    borderRadius: '8px',
-    '&:hover': {
-      borderColor: state.isFocused ? '#F18F1B' : '#000',
-    },
-  }),
-
-  container: (provided) => ({
-    ...provided,
-    width: '320px',
-  }),
-
-  option: (provided, state) => ({
-    ...provided,
-    fontWeight: '500',
-    backgroundColor: state.isFocused ? '#F8E9D9' : null,
-    color: state.isFocused ? '#F18F1B' : 'black',
-    ':active': {
-      ...provided[':active'],
-      backgroundColor: !state.isDisabled
-        ? state.isSelected
-          ? '#F8E9D9'
-          : null
-        : undefined,
-    },
-  }),
-});
-
-const ageStyle = Object.assign({}, baseStyles, {
-  container: (provided) => ({
-    ...provided,
-    width: '90px',
-  }),
-
-  control: (provided, state) => ({
-    ...provided,
-    height: '45px',
-    fontWeight: '500',
-    textAlign: 'center',
-    borderRadius: '8px',
-    '&:hover': {
-      borderColor: state.isFocused ? '#F8E9D9' : '#000',
-    },
-  }),
-
-  option: (provided, state) => ({
-    ...provided,
-    textAlign: 'center',
-    fontWeight: '500',
-    backgroundColor: state.isFocused ? '#F8E9D9' : null,
-    color: state.isFocused ? '#F18F1B' : 'black',
-    ':active': {
-      ...provided[':active'],
-      backgroundColor: !state.isDisabled
-        ? state.isSelected
-          ? '#F8E9D9'
-          : null
-        : undefined,
-    },
-  }),
-});
-
 const toastError = (message) => {
   toast.warn(message, {
     position: 'top-center',
@@ -700,6 +688,11 @@ const manageInput = (e) => {
   if (!pattern.test(e.key)) {
     e.preventDefault();
   }
+};
+
+const splitSentencesByWord = (sentence, word) => {
+  const pattern = new RegExp(`(${word})`);
+  return sentence.split(pattern);
 };
 
 function formatNumber(num) {

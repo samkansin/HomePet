@@ -94,7 +94,7 @@
   align-items: center;
 }
 
-.pet-name {
+.card-name-breed .pet-name {
   font-size: 24px;
 }
 
@@ -110,6 +110,7 @@
 }
 
 .card-button {
+  text-decoration: none;
   color: var(--main-color);
   padding: 12px 20px;
   font-weight: 700;

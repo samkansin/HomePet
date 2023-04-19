@@ -8,22 +8,19 @@ export const uploadImage = (req, res) => {
 };
 
 //get image pet
-export const getProfileCard = (req, res) => {
-  const { id } = req.params;
-  console.log(req.body);
-  const dir = `uploads/${id}/`;
+export const getImageFiles = (req, res) => {
+  const { id, year, month, fileName } = req.params;
+  console.log(req.url);
+  const dir = `uploads/${year}/${month}/${id}/${fileName}`;
   const filepath = path.join(path.resolve(path.dirname('')), dir);
-  fs.readdir(filepath, (err, files) => {
+  fs.readFile(filepath, (err, data) => {
     if (err) {
-      res.json({ status: `Error find image ${err}` });
+      console.error(err);
+      res.writeHead(500);
+      res.end('Internal Server Error');
     } else {
-      const findFile = files.find((file) => {
-        return file.startsWith('1');
-      });
-      if (findFile) {
-        const image = path.join(filepath, findFile);
-        res.sendFile(image);
-      }
+      res.writeHead(200, { 'Content-Type': `image/jpeg` });
+      res.end(data);
     }
   });
 };

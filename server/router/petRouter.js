@@ -3,7 +3,7 @@ import multer from 'multer';
 import fs from 'fs';
 import path from 'path';
 import {
-  getProfileCard,
+  getImageFiles,
   uploadImage,
   showListPet,
   createNewPet,
@@ -20,7 +20,10 @@ let router = express.Router();
 const storage = multer.diskStorage({
   destination: (req, file, callback) => {
     const { id } = req.params;
-    const dir = `uploads/${id}`;
+    const date = new Date();
+    const dir = `uploads/${date.getFullYear()}/${date
+      .toLocaleString('default', { month: 'long' })
+      .toUpperCase()}/${id}`;
     if (!fs.existsSync(dir)) {
       fs.mkdirSync(dir, { recursive: true });
     }
@@ -44,6 +47,6 @@ router.delete('/pet/:id', remove);
 router.get('/dog/breeds', dogBreeds);
 router.get('/cat/breeds', catBreeds);
 router.post('/uploads/:id', upload.array('files'), uploadImage);
-router.get('/img/:id', getProfileCard);
+router.get('/img/:year/:month/:id/:fileName', getImageFiles);
 
 export default router;

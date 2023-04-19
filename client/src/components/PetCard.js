@@ -1,8 +1,7 @@
-import React from 'react';
-
+import { Link } from 'react-router-dom';
 import '../CSS/PetCard.css';
 
-const compareTime = (time) => {
+export const compareTime = (time) => {
   if (time !== undefined) {
     const lastestDate = new Date(time);
     const currentDate = new Date();
@@ -38,7 +37,7 @@ const BlogPostCard = (props) => {
   return (
     <div className='card-container'>
       <div className='pet-img'>
-        <img alt={props.name} src={props.image_src} className='card-image' />
+        <img alt={props.name} src={props.image_src[0]} className='card-image' />
         <div className='bookmark'>
           <i className='icon-bookmark'></i>
         </div>
@@ -67,7 +66,9 @@ const BlogPostCard = (props) => {
         </div>
         <span className='pet-detail one-line-ellipsis'>{props.detail}</span>
         <div className='card-bottom'>
-          <button className='card-button'>READ MORE</button>
+          <Link to={`/post/${props.id}`} className='card-button'>
+            READ MORE
+          </Link>
           <div className='card-owner-time'>
             {/* <span className="pet-owner">{props.owner}</span> */}
             <span className='time'>{`${compare.time} ${compare.unit}`}</span>

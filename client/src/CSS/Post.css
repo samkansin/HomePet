@@ -1,5 +1,7 @@
-.post-container {
+.pages-container {
   max-width: 960px;
+  min-height: 1040px;
+  height: 100%;
   width: 100%;
   margin: 0 auto;
   padding: 1.563rem 1.5rem;
@@ -7,14 +9,20 @@
   border-radius: 20px;
 }
 
-.post-container form {
+.pages-container form.post-form {
   display: flex;
   gap: 1.25rem;
   flex-direction: column;
 }
 
-form .information-pet {
+form.post-form .information-pet {
   margin-top: 1.25rem;
+}
+
+form.post-form span.subtitle {
+  display: inline-block;
+  font-size: 0.938rem;
+  color: var(--subtitle);
 }
 
 /*! Information Pet  */
@@ -27,7 +35,7 @@ form .information-pet {
   gap: 1rem;
 }
 
-.post-container form .line {
+.post-container form.post-form .line {
   position: relative;
   height: 1px;
   bottom: 1.5rem;
@@ -182,7 +190,7 @@ form .information-pet {
   transition: 0.2s ease-in;
 }
 
-.post-title {
+.page-title {
   padding-bottom: 1rem;
   font-size: 1.15rem;
   font-weight: 700;
@@ -240,6 +248,10 @@ form .information-pet {
 }
 
 /*! Gender Age */
+
+.age .title span {
+  margin-left: 5px;
+}
 
 .gender_age {
   display: flex;
@@ -353,10 +365,7 @@ form .information-pet {
 /*! upload Img  */
 
 form .uploadImg span {
-  display: inline-block;
   margin: 10px 0;
-  font-size: 0.938rem;
-  color: var(--subtitle);
 }
 
 .uploadImg .pet-img {
@@ -383,8 +392,6 @@ form .uploadImg span {
 
 .pet-img .preview-img .icon-delete::before {
   margin: 0;
-  border: 1px solid var(--main-color);
-  border-radius: 50%;
 }
 .pet-img .preview-img .icon-delete {
   display: inline-block;
@@ -392,7 +399,7 @@ form .uploadImg span {
   font-size: 1.5rem;
   width: 1.5rem;
   height: 1.5rem;
-  color: var(--theme-color);
+  color: var(--main-color);
   top: 5px;
   right: 5px;
   cursor: pointer;
@@ -425,6 +432,7 @@ form .uploadImg span {
 
 .topic-field .list-topic .input-topic-field input {
   width: 100%;
+  height: 1.5rem;
 }
 
 .topic-field .list-topic .topic {
@@ -502,6 +510,25 @@ form .uploadImg span {
   flex-grow: 1;
 }
 
+.topic-field .filter-topic .select-topic li.new .new-topic {
+  padding: 5px 10px;
+  border-radius: 99px;
+  color: var(--main-color);
+  background-color: var(--select-hover);
+  transition: 0.2s ease;
+}
+
+.topic-field .filter-topic .select-topic li.new i.icon-plus {
+  display: inline-block;
+  width: 1rem;
+  font-size: 1rem;
+}
+
+.topic-field .filter-topic .select-topic li.new:hover .new-topic {
+  background-color: var(--main-color);
+  color: var(--theme-color);
+}
+
 .topic-field .filter-topic .select-topic li .topic-name span.mark {
   color: var(--main-color);
 }
@@ -511,15 +538,17 @@ form .uploadImg span {
   font-weight: 400;
 }
 
-.topic-field .filter-topic .select-topic li:hover {
+.topic-field .filter-topic .select-topic li:not([class='new']):hover {
   background-color: var(--select-hover);
   color: var(--main-color);
   transition: 0.2s ease-in;
 }
 
 .btn-submit {
+  position: relative;
   margin: 0 auto;
-  margin-top: 1rem;
+  margin-top: 4rem;
+  bottom: 0;
 }
 
 .btn-submit .btn-submit-publish {

@@ -61,7 +61,7 @@ export const petsLoader = async ({ request }) => {
   const filter = new URLSearchParams(
     request.url.split('http://localhost:3000/adopt')[1]
   ).get('f');
-  const res = await fetch(`api/pages/Adopt/${filter}`);
+  const res = await fetch(`/api/pages/Adopt/${filter}`);
   let petList = await res.json();
   if (!res.ok) {
     throw Error(petList.error);

@@ -2,7 +2,7 @@ let data = [
   {
     id: '1',
     image_src:
-      'https://knightsmsk.github.io/HomePetResource/imgPet/Cat/delta.jpg',
+      ['https://knightsmsk.github.io/HomePetResource/imgPet/Cat/delta.jpg'],
     name: 'Delta',
     type: 'cat',
     breed: 'Thai cat',
@@ -14,12 +14,12 @@ let data = [
     status: 'Available',
     ownerID: '6QXC2EFRQY',
     dateTime: '2023-04-10T13:11:24.309Z',
-    topic: 'cat',
+    topic: ['cat'],
   },
   {
     id: '2',
     image_src:
-      'https://knightsmsk.github.io/HomePetResource/imgPet/Cat/khunpan.jpeg',
+      ['https://knightsmsk.github.io/HomePetResource/imgPet/Cat/khunpan.jpeg'],
     name: 'Khunpan',
     type: 'cat',
     breed: 'Thai cat',
@@ -31,12 +31,12 @@ let data = [
     status: 'Available',
     ownerID: 'PNBX298UD9',
     dateTime: '2023-04-10T09:11:24.309Z',
-    topic: 'cat',
+    topic: ['cat'],
   },
   {
     id: '3',
     image_src:
-      'https://knightsmsk.github.io/HomePetResource/imgPet/Dog/boo.jpg',
+      ['https://knightsmsk.github.io/HomePetResource/imgPet/Dog/boo.jpg'],
     name: 'Boo',
     type: 'dog',
     breed: 'Thai dog',
@@ -48,12 +48,12 @@ let data = [
     status: 'Adopted',
     ownerID: '1RMLITO815',
     dateTime: '2023-04-09T13:11:24.309Z',
-    topic: 'dog',
+    topic: ['dog'],
   },
   {
     id: '4',
     image_src:
-      'https://knightsmsk.github.io/HomePetResource/imgPet/Cat/mew.jpeg',
+      ['https://knightsmsk.github.io/HomePetResource/imgPet/Cat/mew.jpeg'],
     name: 'Mew',
     type: 'cat',
     breed: 'Siamese cat',
@@ -65,12 +65,12 @@ let data = [
     status: 'Available',
     ownerID: '86YAN308E2',
     dateTime: '2023-04-09T13:11:24.309Z',
-    topic: 'cat',
+    topic: ['cat'],
   },
   {
     id: '5',
     image_src:
-      'https://knightsmsk.github.io/HomePetResource/imgPet/Dog/lulu.jpg',
+      ['https://knightsmsk.github.io/HomePetResource/imgPet/Dog/lulu.jpg'],
     name: 'Lulu',
     type: 'dog',
     breed: 'Pit Bull',
@@ -82,12 +82,12 @@ let data = [
     status: 'Adopted',
     ownerID: 'NBABQ2P8YS',
     dateTime: '2023-04-01T13:11:24.309Z',
-    topic: 'dog',
+    topic: ['dog'],
   },
   {
     id: '6',
     image_src:
-      'https://knightsmsk.github.io/HomePetResource/imgPet/Dog/kankaew.jpeg',
+      ['https://knightsmsk.github.io/HomePetResource/imgPet/Dog/kankaew.jpeg'],
     name: 'Kankaew',
     type: 'dog',
     breed: 'Thai dog',
@@ -99,12 +99,12 @@ let data = [
     status: 'Available',
     ownerID: '1QJ0PQJC6I',
     dateTime: '2023-01-07T13:11:24.309Z',
-    topic: 'dog',
+    topic: ['dog'],
   },
   {
     id: '7',
     image_src:
-      'https://knightsmsk.github.io/HomePetResource/imgPet/Dog/joe.jpg',
+      ['https://knightsmsk.github.io/HomePetResource/imgPet/Dog/joe.jpg'],
     name: 'Joe',
     type: 'dog',
     breed: 'Jack Russell',
@@ -116,12 +116,12 @@ let data = [
     status: 'Adopted',
     ownerID: '3K74J15EPJ',
     dateTime: '2022-06-07T13:11:24.309Z',
-    topic: 'dog',
+    topic: ['dog'],
   },
   {
     id: '8',
     image_src:
-      'https://knightsmsk.github.io/HomePetResource/imgPet/Cat/milo.jpg',
+      ['https://knightsmsk.github.io/HomePetResource/imgPet/Cat/milo.jpg'],
     name: 'Milo',
     type: 'cat',
     breed: 'Thai cat',
@@ -133,7 +133,7 @@ let data = [
     status: 'Available',
     ownerID: 'CM3B0OGEI6',
     dateTime: '2021-12-07T13:11:24.309Z',
-    topic: 'cat',
+    topic: ['cat'],
   },
 ];
 
@@ -529,8 +529,6 @@ let catBreeds = [
 ];
 
 let dogBreeds = [
-  { value: 'Thai', label: 'Thai' },
-
   {
     value: 'Afghan Hound',
     label: 'Afghan Hound',
@@ -2351,6 +2349,7 @@ let dogBreeds = [
     value: 'Terceira Mastiff',
     label: 'Terceira Mastiff',
   },
+  { value: 'Thai', label: 'Thai' },
   {
     value: 'Thai Bangkaew Dog',
     label: 'Thai Bangkaew Dog',

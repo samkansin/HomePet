@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import Hero from '../components/index/Hero';
 import LastestPostList from '../components/index/LatestPostList';
 import OurSuccess from '../components/index/OurSuccess';
