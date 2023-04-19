@@ -70,7 +70,6 @@ const BlogPostCard = (props) => {
             READ MORE
           </Link>
           <div className='card-owner-time'>
-            {/* <span className="pet-owner">{props.owner}</span> */}
             <span className='time'>{`${compare.time} ${compare.unit}`}</span>
           </div>
         </div>

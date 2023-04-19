@@ -45,8 +45,8 @@ const PostDetail = () => {
         </div>
         <p className='content'>{postData.details}</p>
         <div className='post-topic'>
-          {postData.topic.map((topic) => (
-            <Link to={`/post/hashtag/${topic}`}>{`#${topic}`}</Link>
+          {postData.topic.map((topic, key) => (
+            <Link key={key} to={`/post/hashtag/${topic}`}>{`#${topic}`}</Link>
           ))}
         </div>
 
