@@ -213,6 +213,7 @@ const Post = () => {
           return topic.topic;
         }),
       };
+
       await AddTopic(selectedTopic.get());
       await AddNewPost(PetData);
       navigate('/adopt');
@@ -229,7 +230,9 @@ const Post = () => {
           <p className='Heading'>Information Pet</p>
           <div className='infor-field'>
             <label className='name-field'>
-              <p>Name</p>
+              <p>
+                Name <span className='subtitle'>(required)</span>
+              </p>
               <div
                 className={`label-name field ${
                   countName > 0 ? 'inputing' : ''
@@ -237,7 +240,7 @@ const Post = () => {
               >
                 <input
                   type='text'
-                  placeholder='Please enter name (required)'
+                  placeholder='Please enter name'
                   name='name'
                   autoComplete='off'
                   onChange={(e) => {
@@ -252,7 +255,9 @@ const Post = () => {
             </label>
             <div className='line'></div>
             <div className='petType-field' pet={petIcon}>
-              <p>Select Pet Type</p>
+              <p>
+                Select Pet Type <span className='subtitle'>(required)</span>
+              </p>
               <div className='selector-petType'>
                 <div
                   className='selector field'
@@ -328,7 +333,9 @@ const Post = () => {
         </div>
         <div className='gender_age'>
           <div className='gender'>
-            <p className='title'>Gender</p>
+            <p className='title'>
+              Gender <span className='subtitle'>(required)</span>{' '}
+            </p>
             <div className='gender-select'>
               <input type='radio' id='Male' name='gender' value='male' />
               <label htmlFor='Male'>Male</label>
@@ -339,7 +346,7 @@ const Post = () => {
           <div className='line'></div>
           <div className='age'>
             <p className='title'>
-              Age <span className='subtitle'>Year - Month</span>
+              Age <span className='subtitle'>Year - Month (required)</span>
             </p>
             <div className='age-select'>
               <Select
@@ -376,7 +383,9 @@ const Post = () => {
           </div>
         </div>
         <label className='description'>
-          <p>Description</p>
+          <p>
+            Description <span className='subtitle'>(required)</span>
+          </p>
           <div className={`desc-input ${countDetails > 0 ? 'inputing' : ''}`}>
             <textarea
               name='details'
@@ -395,7 +404,9 @@ const Post = () => {
           </div>
         </label>
         <div className='uploadImg'>
-          <p>Upload an image</p>
+          <p>
+            Upload an image <span className='subtitle'>(required)</span>
+          </p>
           <span className='subtitle'>
             We will use first image to profile of card | require image (JPG,
             PNG, JPEG, GIF, with a width and height of at least 160 pixels)
@@ -478,7 +489,7 @@ const Post = () => {
                     setLoading({ searchLoading: true });
                   }}
                   onKeyDown={(e) => {
-                    manageInput(e,true);
+                    manageInput(e, true);
                   }}
                 />
               </div>
@@ -681,7 +692,7 @@ const toastError = (message) => {
   });
 };
 
-const manageInput = (e, number=false) => {
+const manageInput = (e, number = false) => {
   const pattern = !number ? /^[a-zA-Zก-์]+$/ : /^[a-zA-Zก-์0-9]+$/;
   if (!pattern.test(e.key)) {
     e.preventDefault();
