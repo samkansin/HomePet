@@ -16,8 +16,7 @@ export const addTopic = (req, res) => {
     ManageTopics.add(req.body).then(() => {
       return res.send({ status: 'Create Topic Successfully' });
     });
-  }
-  return res.send({ status: 'Not Create Topic' });
+  } else return res.send({ status: 'Not Create Topic' });
 };
 
 export const removeTopic = (req, res) => {

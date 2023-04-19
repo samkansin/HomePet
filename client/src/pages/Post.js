@@ -45,6 +45,7 @@ const Post = () => {
   var [countDetails, setCountDetails] = useState(0);
 
   const [uploadImage, setUploadImage] = useState([]);
+  const [userImage, setUserImage] = useState([]);
 
   const selectedTopic = useSynState([]);
   const AllTopic = useSynState(useLoaderData());
@@ -143,10 +144,14 @@ const Post = () => {
 
   const handleFileImage = (e) => {
     const uploadImgs = e.target.files;
+
     const uploadImgsArray = Array.from(uploadImgs);
+    console.log(uploadImgsArray);
     const images = uploadImgsArray.map((image) => {
       return URL.createObjectURL(image);
     });
+
+    setUserImage((previousImage) => previousImage.concat(uploadImgsArray));
 
     setUploadImage((previousImage) => previousImage.concat(images));
   };
@@ -182,16 +187,15 @@ const Post = () => {
       toastError("Age's pet invalid. ERROR: year is 0 and month is 0");
     } else if (!formData.get('details')) {
       toastError('Please enter the description');
-    } else if (uploadImage.length === 0) {
+    } else if (userImage.length === 0) {
       toastError('Please upload a picture of your pet');
     } else {
       const imgData = new FormData();
-      const files = document.querySelector('.upload-image');
       const id = createID();
 
-      for (let i = 0; i < files.files.length; i++) {
-        imgData.append('files', files.files[i]);
-        handleSetListImage(i, files.files[i].name, id);
+      for (let i = 0; i < userImage.length; i++) {
+        imgData.append('files', userImage[i]);
+        handleSetListImage(i, userImage[i].name, id);
       }
 
       await uploadImageToServer(id, imgData);
