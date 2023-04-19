@@ -1,7 +1,6 @@
 import React from 'react';
 import { Link, useLoaderData } from 'react-router-dom';
 import PostOwnerUser from '../components/post-detail/PostOwnerUser';
-import { compareTime } from '../components/PetCard';
 import PostImgPet from '../components/post-detail/PostImgPet';
 import '../CSS/PostDetail.css';
 
@@ -19,7 +18,7 @@ const PostDetail = () => {
           </div>
         </div>
         <div className='post-owner'>
-          <PostOwnerUser />
+          <PostOwnerUser timePost={postData.dateTime} />
           <Link to='/chat'>Chat</Link>
         </div>
 

@@ -168,8 +168,6 @@ const Post = () => {
     const currentDate = new Date().toISOString();
     const formData = new FormData(e.target);
 
-    const files = document.querySelector('.upload-image');
-
     if (!formData.get('name')) {
       toastError('Please enter a name pet!');
     } else if (!petIcon) {

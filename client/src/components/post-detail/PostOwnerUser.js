@@ -1,8 +1,10 @@
 import React from 'react';
 import '../../CSS/PostOwnerUser.css';
+import { compareTime } from '../PetCard';
 
 const PostOwnerUser = (user) => {
   const verify = true;
+  const compare = compareTime(user.timePost);
   return (
     <div className='owner-user'>
       <div className='user-profile'>
@@ -16,7 +18,7 @@ const PostOwnerUser = (user) => {
           {user.name || 'User Full Name'}
           {verify && <i className='icon-verify'></i>}
         </p>
-        <span className='time'>2d ago</span>
+        <span className='time'>{`${compare.time} ${compare.unit}`}</span>
       </div>
     </div>
   );
