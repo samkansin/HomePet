@@ -478,7 +478,7 @@ const Post = () => {
                     setLoading({ searchLoading: true });
                   }}
                   onKeyDown={(e) => {
-                    manageInput(e);
+                    manageInput(e,true);
                   }}
                 />
               </div>
@@ -681,8 +681,8 @@ const toastError = (message) => {
   });
 };
 
-const manageInput = (e) => {
-  const pattern = /^[a-zA-Zก-์]+$/;
+const manageInput = (e, number=false) => {
+  const pattern = !number ? /^[a-zA-Zก-์]+$/ : /^[a-zA-Zก-์0-9]+$/;
   if (!pattern.test(e.key)) {
     e.preventDefault();
   }
