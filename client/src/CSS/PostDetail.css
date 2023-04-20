@@ -59,6 +59,10 @@
   gap: 1.8rem;
 }
 
+.post-detail-page .info-pet .pet-gender {
+  text-transform: capitalize;
+}
+
 .post-detail-page .post-topic {
   display: flex;
   gap: 0.938rem;
