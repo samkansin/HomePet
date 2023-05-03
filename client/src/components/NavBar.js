@@ -225,6 +225,7 @@ const NavBar = () => {
               src='https://knightsmsk.github.io/HomePetResource/default%20img/profile_default.png'
               alt=''
             />
+            <div className=""></div>
           </div>
         </div>
       </nav>

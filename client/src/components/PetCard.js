@@ -32,8 +32,19 @@ export const compareTime = (time) => {
   }
 };
 
+export const displayAge = (year, month) => {
+  if (year > 0 && month > 0) {
+    return `${year}.${month} Years`;
+  } else if (year > 0 && month === 0) {
+    return `${year} Years`;
+  } else if (month > 0 && year === 0) {
+    return `${month} Months`;
+  }
+};
+
 const BlogPostCard = (props) => {
   const compare = compareTime(props.dateTime);
+  let status = props.adopted ? 'adopted' : 'available';
   return (
     <div className='card-container'>
       <div className='pet-img'>
@@ -45,20 +56,9 @@ const BlogPostCard = (props) => {
       <div className='card-body'>
         <div className='card-age-gender-status'>
           <span className='age-gender'>
-            {props.ageYear !== 0 && props.ageMonth !== 0
-              ? `${props.ageYear}.${props.ageMonth} Years `
-              : props.ageMonth === 0
-              ? `${props.ageYear} Years `
-              : props.ageYear === 0
-              ? `${props.ageMonth} Months `
-              : null}
-            | {props.gender}
+            {displayAge(props.ageYear, props.ageMonth)} | {props.gender}
           </span>
-          {props.status === 'Adopted' ? (
-            <span className='status adopted'>{props.status}</span>
-          ) : (
-            <span className='status'>{props.status}</span>
-          )}
+          {status && <span className={`status ${status}`}>{status}</span>}
         </div>
         <div className='card-name-breed'>
           <h1 className='pet-name'>{props.name}</h1>

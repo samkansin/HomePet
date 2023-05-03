@@ -5,12 +5,10 @@ const useDebounce = (value, delay = 500) => {
 
   useEffect(() => {
     const getDelay = setTimeout(() => {
-      console.log(`setting new timeout`);
       setSearchTerm(value);
     }, delay);
 
     return () => {
-      console.log(`clearing the timeout`);
       clearTimeout(getDelay);
     };
   }, [value, delay]);

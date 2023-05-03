@@ -52,8 +52,6 @@ const Post = () => {
   const [searchInput, setSearchInput] = useState('');
   const debouncedSearch = useDebounce(searchInput, 500);
 
-  const [listImage, setListImage] = useState([]);
-
   useEffect(() => {
     SearchTopic(debouncedSearch);
     // eslint-disable-next-line
@@ -73,16 +71,6 @@ const Post = () => {
   };
   const handleYearChange = (selected) => {
     setYear(selected);
-  };
-
-  const handleSetListImage = (index, imageName, id) => {
-    const date = new Date();
-    let url = `/api/img/${date.getFullYear()}/${date
-      .toLocaleString('default', { month: 'long' })
-      .toLocaleUpperCase()}/${id}`;
-    setListImage(
-      listImage.push(`${url}/${index + 1}.${imageName.split('.')[1]}`)
-    );
   };
 
   const handleSelectTopic = (topic) => {
@@ -155,9 +143,10 @@ const Post = () => {
     setUploadImage((previousImage) => previousImage.concat(images));
   };
 
-  const fetchBreeds = async (value) => {
+  const fetchBreeds = async (type) => {
     setLoading({ breedsLoading: true });
-    const res = await fetch(`/api/${value}/breeds`);
+    console.log(type);
+    const res = await fetch(`/api/pet/breeds/${type}`);
     let breeds = await res.json();
     if (!res.ok) {
       throw Error(breeds.error);
@@ -171,8 +160,6 @@ const Post = () => {
   const handleSubmit = async (e) => {
     const currentDate = new Date().toISOString();
     const formData = new FormData(e.target);
-
-    console.log(userImage);
 
     if (!formData.get('name')) {
       toastError('Please enter a name pet!');
@@ -192,18 +179,17 @@ const Post = () => {
       toastError('Please upload a picture of your pet');
     } else {
       const imgData = new FormData();
-      const id = createID();
+      const id = createID() + createID();
 
       for (let i = 0; i < userImage.length; i++) {
         imgData.append('files', userImage[i]);
-        handleSetListImage(i, userImage[i].name, id);
       }
 
-      await uploadImageToServer(id, imgData);
+      const URL = await uploadImageToServer(imgData);
 
       const PetData = {
         id: id,
-        image_src: listImage,
+        image_src: URL.map((img) => `/api/images/${img}`),
         name: formData.get('name'),
         type: petType,
         breed: selectBreed['value'],
@@ -211,8 +197,8 @@ const Post = () => {
         ageMonth: selectMonth['value'],
         ageYear: selectYear['value'],
         gender: formData.get('gender'),
-        status: 'available',
-        owner: 'David C.',
+        adopted: false,
+        ownerID: '0HZW9WKWDNUBJ4MI73TR7J',
         dateTime: currentDate,
         topic: selectedTopic.get().map((topic) => {
           return topic.topic;
@@ -432,7 +418,7 @@ const Post = () => {
                               uploadImage.filter((e, i) => i !== index)
                             );
                             setUserImage(
-                              userImage.filter((e, i) => i != index)
+                              userImage.filter((e, i) => i !== index)
                             );
                           }
                         }}
@@ -524,10 +510,11 @@ const Post = () => {
                       position: 'relative',
                     }}
                   />
-                ) : searchInput.length >= 0 && searchInput.length <= 15 ? (
+                ) : searchInput.length >= 0 && searchInput.length <= 18 ? (
                   <>
                     {AllTopic.get().filter(
-                      (topic) => topic.topic === searchInput
+                      (topic) =>
+                        topic.topic.toLowerCase() === searchInput.toLowerCase()
                     ).length === 0 &&
                       searchInput !== '' && (
                         <li
@@ -572,7 +559,10 @@ const Post = () => {
                                         <span
                                           key={`word_${key}`}
                                           className={
-                                            word === searchInput ? 'mark' : null
+                                            word.toLowerCase() ===
+                                            searchInput.toLowerCase()
+                                              ? 'mark'
+                                              : null
                                           }
                                         >
                                           {word}
@@ -647,14 +637,17 @@ const AddNewPost = async (newPet) => {
   }
 };
 
-const uploadImageToServer = async (id, images) => {
+const uploadImageToServer = async (images) => {
   try {
-    fetch(`/api/uploads/${id}`, {
+    return fetch(`/api/uploadsImg`, {
       method: 'POST',
       body: images,
     })
       .then((res) => res.json())
-      .then((status) => console.log(status));
+      .then((status) => {
+        console.log(status.success);
+        return status.filesIds;
+      });
   } catch (error) {
     console.error('Error to upload image!', error);
   }
@@ -674,7 +667,7 @@ const TypeoFPet = [
 ];
 
 const createID = () =>
-  Math.random().toString(36).substring(2, 17).toUpperCase();
+  Math.random().toString(36).substring(2, 13).toUpperCase();
 
 const manageMonthYear = (fill) => {
   if (fill === 'year') {
@@ -713,7 +706,7 @@ const manageInput = (e, number = false) => {
 };
 
 const splitSentencesByWord = (sentence, word) => {
-  const pattern = new RegExp(`(${word})`);
+  const pattern = new RegExp(`(${word})`, 'i');
   return sentence.split(pattern);
 };
 

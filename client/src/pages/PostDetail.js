@@ -1,9 +1,10 @@
 import React from 'react';
 import { Link, useLoaderData } from 'react-router-dom';
 import PostOwnerUser from '../components/post-detail/PostOwnerUser';
+import { displayAge } from '../components/PetCard';
 import PostImgPet from '../components/post-detail/PostImgPet';
 import '../CSS/PostDetail.css';
-
+  
 const PostDetail = () => {
   const postData = useLoaderData();
   return (
@@ -32,15 +33,10 @@ const PostDetail = () => {
             <span>{`Gender: ${postData.gender}`}</span>
           </div>
           <div className='pet-age'>
-            <span>{`Age: ${
-              postData.ageYear !== 0 && postData.ageMonth !== 0
-                ? `${postData.ageYear}.${postData.ageMonth} Years `
-                : postData.ageMonth === 0
-                ? `${postData.ageYear} Years `
-                : postData.ageYear === 0
-                ? `${postData.ageMonth} Months `
-                : null
-            }`}</span>
+            <span>{`Age: ${displayAge(
+              postData.ageYear,
+              postData.ageMonth
+            )}`}</span>
           </div>
         </div>
         <p className='content'>{postData.details}</p>

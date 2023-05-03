@@ -48,8 +48,8 @@ const LatestPostList = () => {
                 ageMonth={pet.ageMonth}
                 ageYear={pet.ageYear}
                 gender={pet.gender}
-                status={pet.status}
-                owner={pet.owner}
+                adopted={pet.adopted}
+                ownerID={pet.ownerID}
                 dateTime={pet.dateTime}
               />
             );
