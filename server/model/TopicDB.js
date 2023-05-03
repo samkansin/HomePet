@@ -3,7 +3,7 @@ import * as ALLmongoose from 'mongoose';
 const mongoose = ALLmongoose.default;
 
 let topicSchema = mongoose.Schema({
-  topic: String,
+  topic: { type: String, required: true, unique: true },
   used: Number,
 });
 

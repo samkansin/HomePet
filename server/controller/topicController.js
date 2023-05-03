@@ -7,7 +7,6 @@ export const getTopicsList = (req, res) => {
       res.json(result);
     })
     .catch((error) => res.status(500).send({ error: 'Database Server Error' }));
-  // ManageTopics.list().then((result) => res.json(result));
 };
 
 export const searchTopics = (req, res) => {
@@ -24,10 +23,6 @@ export const searchTopics = (req, res) => {
   })
     .sort({ used: -1 })
     .then((result) => res.json(result));
-
-  // ManageTopics.searchAll(search, req.body.select).then((result) =>
-  //   res.json(result)
-  // );
 };
 
 export const addTopic = async (req, res) => {
@@ -44,18 +39,15 @@ export const addTopic = async (req, res) => {
         .then((result) => {
           response.push(result);
         })
-        .catch((error) =>
+        .catch((error) => {
           res
             .status(500)
-            .send({ status: `Internal Database Server Error`, error: error })
-        );
+            .send({ status: `Internal Database Server Error`, error: error });
+        });
     }
 
     res.json({ status: 'add topic successfully', topic: response });
 
-    // ManageTopics.add(req.body).then(() => {
-    //   return res.send({ status: 'Create Topic Successfully' });
-    // });
   } else return res.send({ status: 'Not have topic to add' });
 };
 
@@ -77,13 +69,4 @@ export const removeTopic = (req, res) => {
         return res.status(404).send({ error: error.name });
       });
   } else return res.send({ status: 'Not have topic to remove' });
-  // ManageTopics.remove(req.body)
-  //   .then(() => {
-  //     return res.status(200).send({ status: 'Remove Successfully' });
-  //   })
-  //   .catch(() => {
-  //     return res.status(404).send({
-  //       error: 'Topic not found',
-  //     });
-  //   });
 };

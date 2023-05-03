@@ -18,7 +18,6 @@ export const uploadImage = async (req, res) => {
       return uploadStream.id;
     });
     const filesIds = await Promise.all(promises);
-    // await updateImage(req.body, filesIds);
     res.status(200).json({ success: 'upload image successfully', filesIds });
   } catch (err) {
     console.error(err);
@@ -50,31 +49,3 @@ export const getImage = async (req, res) => {
     res.status(500).send({ error: `Internal Database Server Error` });
   }
 };
-
-// const updateImage = async ({ id }, IDlist) => {
-//   await IDlist.map((id) => `/images/${id}`);
-//   let newImage = { image_src: IDlist };
-//   try {
-//     let response = await fetch(`/api/pet/${id}`, {
-//       method: 'PUT',
-//       body: JSON.stringify(newImage),
-//       headers: new Headers({ 'Content-Type': 'application/json' }),
-//     }).then((res) => {
-//       if (!res.ok) {
-//         throw Error({ error: `Could not add source image id: ${id}` });
-//       }
-//     });
-//   } catch (error) {
-//     console.error('Error:', error);
-//   }
-// };
-
-// PetDB.updateOne(
-//   { id: id },
-//   { $set: { image_src: IDlist } },
-//   { upsert: false, new: true }
-// ).then((result) => {
-//   if (!result) {
-//     return res.status(404).send({ error: `Pet not found with id: ${id}` });
-//   }
-// });
