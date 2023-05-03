@@ -65,7 +65,6 @@ export let ManageTopics = {
     return new Promise((resolve, reject) => {
       topic.forEach((topic) => {
         let search = ManageTopics.search(topic);
-        console.log(search);
         search
           .then((data) => {
             console.log(data);

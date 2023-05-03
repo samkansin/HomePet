@@ -1,8 +1,9 @@
 let data = [
   {
     id: '1',
-    image_src:
-      ['https://knightsmsk.github.io/HomePetResource/imgPet/Cat/delta.jpg'],
+    image_src: [
+      'https://knightsmsk.github.io/HomePetResource/imgPet/Cat/delta.jpg',
+    ],
     name: 'Delta',
     type: 'cat',
     breed: 'Thai cat',
@@ -11,15 +12,16 @@ let data = [
     ageMonth: 8,
     ageYear: 0,
     gender: 'Male',
-    status: 'Available',
+    adopted: false,
     ownerID: '6QXC2EFRQY',
     dateTime: '2023-04-10T13:11:24.309Z',
     topic: ['cat'],
   },
   {
     id: '2',
-    image_src:
-      ['https://knightsmsk.github.io/HomePetResource/imgPet/Cat/khunpan.jpeg'],
+    image_src: [
+      'https://knightsmsk.github.io/HomePetResource/imgPet/Cat/khunpan.jpeg',
+    ],
     name: 'Khunpan',
     type: 'cat',
     breed: 'Thai cat',
@@ -28,15 +30,16 @@ let data = [
     ageMonth: 6,
     ageYear: 0,
     gender: 'Male',
-    status: 'Available',
+    adopted: false,
     ownerID: 'PNBX298UD9',
     dateTime: '2023-04-10T09:11:24.309Z',
     topic: ['cat'],
   },
   {
     id: '3',
-    image_src:
-      ['https://knightsmsk.github.io/HomePetResource/imgPet/Dog/boo.jpg'],
+    image_src: [
+      'https://knightsmsk.github.io/HomePetResource/imgPet/Dog/boo.jpg',
+    ],
     name: 'Boo',
     type: 'dog',
     breed: 'Thai dog',
@@ -45,15 +48,16 @@ let data = [
     ageMonth: 8,
     ageYear: 0,
     gender: 'Female',
-    status: 'Adopted',
+    adopted: false,
     ownerID: '1RMLITO815',
     dateTime: '2023-04-09T13:11:24.309Z',
     topic: ['dog'],
   },
   {
     id: '4',
-    image_src:
-      ['https://knightsmsk.github.io/HomePetResource/imgPet/Cat/mew.jpeg'],
+    image_src: [
+      'https://knightsmsk.github.io/HomePetResource/imgPet/Cat/mew.jpeg',
+    ],
     name: 'Mew',
     type: 'cat',
     breed: 'Siamese cat',
@@ -62,15 +66,16 @@ let data = [
     ageMonth: 3,
     ageYear: 0,
     gender: 'Male',
-    status: 'Available',
+    adopted: false,
     ownerID: '86YAN308E2',
     dateTime: '2023-04-09T13:11:24.309Z',
     topic: ['cat'],
   },
   {
     id: '5',
-    image_src:
-      ['https://knightsmsk.github.io/HomePetResource/imgPet/Dog/lulu.jpg'],
+    image_src: [
+      'https://knightsmsk.github.io/HomePetResource/imgPet/Dog/lulu.jpg',
+    ],
     name: 'Lulu',
     type: 'dog',
     breed: 'Pit Bull',
@@ -79,15 +84,16 @@ let data = [
     ageMonth: 0,
     ageYear: 1,
     gender: 'Male',
-    status: 'Adopted',
+    adopted: false,
     ownerID: 'NBABQ2P8YS',
     dateTime: '2023-04-01T13:11:24.309Z',
     topic: ['dog'],
   },
   {
     id: '6',
-    image_src:
-      ['https://knightsmsk.github.io/HomePetResource/imgPet/Dog/kankaew.jpeg'],
+    image_src: [
+      'https://knightsmsk.github.io/HomePetResource/imgPet/Dog/kankaew.jpeg',
+    ],
     name: 'Kankaew',
     type: 'dog',
     breed: 'Thai dog',
@@ -96,15 +102,16 @@ let data = [
     ageMonth: 2,
     ageYear: 0,
     gender: 'Male',
-    status: 'Available',
+    adopted: true,
     ownerID: '1QJ0PQJC6I',
     dateTime: '2023-01-07T13:11:24.309Z',
     topic: ['dog'],
   },
   {
     id: '7',
-    image_src:
-      ['https://knightsmsk.github.io/HomePetResource/imgPet/Dog/joe.jpg'],
+    image_src: [
+      'https://knightsmsk.github.io/HomePetResource/imgPet/Dog/joe.jpg',
+    ],
     name: 'Joe',
     type: 'dog',
     breed: 'Jack Russell',
@@ -113,15 +120,16 @@ let data = [
     ageMonth: 0,
     ageYear: 8,
     gender: 'Male',
-    status: 'Adopted',
+    adopted: false,
     ownerID: '3K74J15EPJ',
     dateTime: '2022-06-07T13:11:24.309Z',
     topic: ['dog'],
   },
   {
     id: '8',
-    image_src:
-      ['https://knightsmsk.github.io/HomePetResource/imgPet/Cat/milo.jpg'],
+    image_src: [
+      'https://knightsmsk.github.io/HomePetResource/imgPet/Cat/milo.jpg',
+    ],
     name: 'Milo',
     type: 'cat',
     breed: 'Thai cat',
@@ -130,7 +138,7 @@ let data = [
     ageMonth: 3,
     ageYear: 0,
     gender: 'Male',
-    status: 'Available',
+    adopted: true,
     ownerID: 'CM3B0OGEI6',
     dateTime: '2021-12-07T13:11:24.309Z',
     topic: ['cat'],
@@ -2499,7 +2507,6 @@ let dogBreeds = [
     label: 'Wirehaired Vizsla',
   },
 ];
-
 let Pet = {
   list: (type) =>
     new Promise((resolve, reject) => {

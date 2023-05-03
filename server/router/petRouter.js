@@ -11,8 +11,7 @@ import {
   put,
   remove,
   lastPost,
-  dogBreeds,
-  catBreeds,
+  getBreeds,
 } from '../controller/petController.js';
 
 let router = express.Router();
@@ -44,8 +43,7 @@ router.get('/pages/lastPost/:type', lastPost);
 router.get('/pet/:id', get);
 router.put('/pet/:id', put);
 router.delete('/pet/:id', remove);
-router.get('/dog/breeds', dogBreeds);
-router.get('/cat/breeds', catBreeds);
+router.get('/pet/breeds/:type', getBreeds);
 router.post('/uploads/:id', upload.array('files'), uploadImage);
 router.get('/img/:year/:month/:id/:fileName', getImageFiles);
 
