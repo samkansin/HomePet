@@ -1,7 +1,9 @@
 import TopicDB from '../model/TopicDB.js';
 
+const projection_id_v = { _id: 0, __v: 0 };
+
 export const getTopicsList = (req, res) => {
-  TopicDB.find()
+  TopicDB.find({}, projection_id_v)
     .then((result) => {
       res.json(result);
     })
@@ -14,14 +16,20 @@ export const searchTopics = (req, res) => {
   //get array of topic that user selected
   let topicUserSelected = req.body.select;
   //first condition remove topic that user selected and query topic that user search
-  TopicDB.find({
-    $and: [
-      { topic: { $nin: topicUserSelected } },
-      { topic: { $regex: search, $options: 'i' } },
-    ],
-  })
+  TopicDB.find(
+    {
+      $and: [
+        { topic: { $nin: topicUserSelected } },
+        { topic: { $regex: search, $options: 'i' } },
+      ],
+    },
+    projection_id_v
+  )
     .sort({ used: -1 })
-    .then((result) => res.json(result));
+    .then((result) => {
+      console.log(result);
+      res.json(result);
+    });
 };
 
 export const addTopic = async (req, res) => {
@@ -33,7 +41,7 @@ export const addTopic = async (req, res) => {
       await TopicDB.findOneAndUpdate(
         { topic: topic },
         { $inc: { used: 1 } },
-        { upsert: true, new: true }
+        { projection: projection_id_v, upsert: true, new: true }
       )
         .then((result) => {
           response.push(result);
@@ -58,10 +66,22 @@ export const removeTopic = (req, res) => {
       .then((response) => {
         if (response.acknowledged && response.deletedCount > 0)
           return res.status(200).send({ status: 'Delete topic successfully' });
-        else
-          return res
-            .status(200)
-            .send({ status: "Topic doesn't exist or already deleted" });
+        else {
+          TopicDB.updateMany(
+            {
+              $and: [{ topic: { $in: topics } }, { used: { $gt: 0 } }],
+            },
+            { $inc: { used: -1 } }
+          ).then((result) => {
+            if (result.modifiedCount > 0)
+              return res.json({ status: 'Delete topic successfully' });
+            else {
+              return res
+                .status(200)
+                .send({ status: "Topic doesn't exist or already deleted" });
+            }
+          });
+        }
       })
       .catch((error) => {
         return res.status(404).send({ error: error.name });
