@@ -1,5 +1,4 @@
 import mongoose from 'mongoose';
-import PetDB from '../model/PetDB.js';
 
 let bucket;
 mongoose.connection.once('open', function () {

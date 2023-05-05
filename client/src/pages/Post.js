@@ -188,7 +188,7 @@ const Post = () => {
       const URL = await uploadImageToServer(imgData);
 
       const PetData = {
-        id: id,
+        PetID: id,
         image_src: URL.map((img) => `/api/images/${img}`),
         name: formData.get('name'),
         type: petType,

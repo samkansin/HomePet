@@ -3,7 +3,7 @@ import * as ALLmongoose from 'mongoose';
 let mongoose = ALLmongoose.default;
 
 var breedSchema = mongoose.Schema({
-  id: { type: String, required: true, unique: true },
+  petType: { type: String, required: true, unique: true },
   breeds: [{ value: String, label: String }],
 });
 

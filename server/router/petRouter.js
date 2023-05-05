@@ -11,12 +11,12 @@ import {
 
 let router = express.Router();
 
-router.post('/pages/Post', createNewPet);
 router.get('/pages/Adopt/:type', showListPet);
-router.get('/pages/lastPost/:type', lastPost);
 router.get('/pet/:id', get);
+router.post('/pages/Post', createNewPet);
 router.put('/pet/:id', put);
 router.delete('/pet/:id', remove);
+router.get('/pages/lastPost/:type', lastPost);
 router.get('/pet/breeds/:type', getBreeds);
 
 export default router;

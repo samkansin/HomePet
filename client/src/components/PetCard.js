@@ -66,7 +66,7 @@ const BlogPostCard = (props) => {
         </div>
         <span className='pet-detail one-line-ellipsis'>{props.detail}</span>
         <div className='card-bottom'>
-          <Link to={`/post/${props.id}`} className='card-button'>
+          <Link to={`/post/${props.PetID}`} className='card-button'>
             READ MORE
           </Link>
           <div className='card-owner-time'>

@@ -34,7 +34,7 @@ const Adopt = () => {
             return (
               <PetCard
                 key={index}
-                id={pet.id}
+                PetID={pet.PetID}
                 image_src={pet.image_src}
                 name={pet.name}
                 type={pet.type}

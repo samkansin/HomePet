@@ -1,4 +1,3 @@
-import { ManageTopics } from '../model/topic.js';
 import TopicDB from '../model/TopicDB.js';
 
 export const getTopicsList = (req, res) => {
@@ -47,7 +46,6 @@ export const addTopic = async (req, res) => {
     }
 
     res.json({ status: 'add topic successfully', topic: response });
-
   } else return res.send({ status: 'Not have topic to add' });
 };
 

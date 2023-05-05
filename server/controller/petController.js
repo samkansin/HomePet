@@ -1,6 +1,7 @@
-import Pet, { PetBreeds } from '../model/pet.js';
 import PetDB from '../model/PetDB.js';
 import BreedDB from '../model/BreedDB.js';
+
+const projection_id_v = { _id: 0, __v: 0 };
 
 //show pet list
 export const showListPet = (req, res) => {
@@ -8,9 +9,8 @@ export const showListPet = (req, res) => {
   let filterwType =
     type !== 'null' ? { type: { $regex: type, $options: 'i' } } : {};
 
-  PetDB.find(filterwType)
+  PetDB.find(filterwType, projection_id_v)
     .sort({ dateTime: -1 })
-    .sort({ _id: -1 })
     .then((result) => {
       res.json(result);
     })
@@ -37,11 +37,9 @@ export const createNewPet = (req, res) => {
         });
         return res.status(400).send(errors);
       } else
-        res
-          .status(500)
-          .send({
-            errors: `Database Server Error ${error.name} ${error.code}`,
-          });
+        res.status(500).send({
+          errors: `Database Server Error ${error.name} ${error.code}`,
+        });
     });
 };
 
@@ -49,7 +47,7 @@ export const createNewPet = (req, res) => {
 export const get = (req, res) => {
   const id = req.params.id;
 
-  PetDB.findOne({ id: id })
+  PetDB.findOne({ PetID: id }, projection_id_v)
     .then((pet) => {
       if (!pet) {
         return res.status(404).send({ error: `Pet not found with id ${id}` });
@@ -66,22 +64,19 @@ export const get = (req, res) => {
 //update pet
 export const put = (req, res) => {
   const data = req.body || {};
-  if (!data || data.id != req.params.id)
-    return res.status(422).send({ error: 'id must be alphanumeric.' });
-
+  const { id } = req.params;
   PetDB.findOneAndUpdate(
-    { id: req.params.id },
+    { PetID: id },
     { $set: data },
     {
+      projection: projection_id_v,
       upsert: false,
       new: true,
     }
   )
     .then((pet) => {
-      if (!product) {
-        return res
-          .status(404)
-          .send({ error: `Pet not found with id ${req.params.id}` });
+      if (!pet) {
+        return res.status(404).send({ error: `Pet not found with id ${id}` });
       }
       res.json(pet);
     })
@@ -89,21 +84,19 @@ export const put = (req, res) => {
       if (error.kind === 'ObjectId') {
         return res
           .status(404)
-          .send({ error: `Object not found with id ${req.params.id}` });
+          .send({ error: `Object not found with id ${id}` });
       }
       return res
         .status(500)
-        .send({ error: `Error updating Pet with id ${req.param.id}` });
+        .send({ error: `Error updating Pet with id ${id}` });
     });
 };
 
 //delete pet
 export const remove = (req, res) => {
-  const data = req.body || {};
-  if (!data || data.id != req.params.id)
-    return res.status(422).send({ error: 'id must be alphanumeric.' });
+  const { id } = req.params;
 
-  PetDB.deleteOne({ id: data.id })
+  PetDB.deleteOne({ PetID: id })
     .then((response) => {
       if (response.acknowledged && response.deletedCount === 1)
         return res.status(200).send({ success: 'Delete post successfully' });
@@ -123,7 +116,7 @@ export const lastPost = (req, res) => {
   let filterwType =
     type !== 'null' ? { type: { $regex: type, $options: 'i' } } : {};
 
-  PetDB.find(filterwType)
+  PetDB.find(filterwType, projection_id_v)
     .sort({ dateTime: -1 })
     .then((result) => {
       res.json(result.slice(0, 4));
@@ -134,7 +127,7 @@ export const lastPost = (req, res) => {
 //get breeds
 export const getBreeds = (req, res) => {
   const { type } = req.params;
-  BreedDB.find({ id: type })
+  BreedDB.find({ petType: type.toLowerCase() }, projection_id_v)
     .then((result) => {
       res.json(result[0].breeds);
     })
