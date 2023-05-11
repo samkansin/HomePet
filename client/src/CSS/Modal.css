@@ -1,0 +1,161 @@
+body.active-modal {
+  overflow-y: hidden;
+}
+
+.modal,
+.overlay {
+  width: 100vw;
+  height: 100vh;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  position: fixed;
+}
+
+.overlay {
+  background: rgba(49, 49, 49, 0.8);
+}
+
+.modal-content {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  line-height: 1.4;
+  background: white;
+  padding: 32px 48px;
+  border-radius: 3px;
+  max-width: 650px;
+  min-width: 300px;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.modal-upper {
+  display: flex;
+  gap: 24px;
+}
+
+.modal-image {
+  display: flex;
+  align-items: top;
+}
+
+.modal-image img {
+  width: 64px;
+  height: 56px;
+}
+
+.modal-message {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.modal-message p:nth-child(3) {
+  margin-bottom: -10px;
+}
+
+.modal-input input {
+  width: 50%;
+  padding: 8px 16px;
+  margin-top: 8px;
+  border: 1px solid #000;
+  border-radius: 3px;
+  outline: none;
+  font-size: 12px;
+}
+
+.modal-button {
+  display: flex;
+  justify-content: flex-end;
+  gap: 16px;
+}
+
+.modal-button .cancel {
+  background: white;
+  border: 0px;
+  padding: 12px 24px;
+  border-radius: 3px;
+  cursor: pointer;
+  transition: 0.2s ease-in;
+}
+
+/* .modal-button .cancel:hover {
+    background: #f1f1f1;
+    color: black;
+    transition: 0.2s ease-in;
+} */
+
+.modal-button .delete {
+  background: rgb(254, 122, 122);
+  border: 1px solid rgb(254, 122, 122);
+  color: white;
+  padding: 12px 24px;
+  border-radius: 3px;
+  cursor: pointer;
+  transition: 0.2s ease-in;
+}
+
+.modal-button .delete:hover {
+  background: rgb(254, 122, 122);
+  color: white;
+  cursor: not-allowed;
+}
+
+.modal-button .delete.active {
+  background: red;
+  border: 1px solid red;
+}
+
+.modal-button .delete.active:hover {
+  background: white;
+  color: red;
+  transition: 0.2s ease-in;
+  cursor: pointer;
+}
+
+.close-modal {
+  position: absolute;
+  top: 24px;
+  right: 24px;
+  padding: 5px 7px;
+}
+
+.close-modal:hover {
+  cursor: pointer;
+}
+
+.modal-input input {
+    padding: 12px 5px 12px 15px;
+    border: 1px solid var(--input-field);
+    border-radius: 8px;
+
+    font-weight: 500;
+    width: 85%;
+    font-size: 1rem;
+}
+
+.modal-input input::placeholder {
+    color: var(--input-field);
+    font-weight: 500;
+    font-size: 1rem;
+}
+
+.modal-button .edit {
+  background: lightgreen;
+  border: 1px solid lightgreen;
+  color: green;
+  padding: 12px 32px;
+  border-radius: 3px;
+  cursor: pointer;
+  transition: 0.2s ease-in;
+}
+
+.modal-button .edit:hover {
+  background: green;
+  color: white;
+  transition: 0.2s ease-in;
+}

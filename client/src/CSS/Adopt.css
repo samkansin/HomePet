@@ -30,3 +30,23 @@
   grid-template-columns: repeat(4, 1fr);
   gap: 1rem;
 }
+
+.no-pet {
+  display: flex;
+  justify-content: center;
+}
+
+.no-pet-img {
+  display: flex;
+  justify-content: center;
+}
+
+.no-pet-img img {
+  width: 100%;
+  max-width: 300px;
+}
+
+.loading {
+  display: flex;
+  justify-content: center;
+}

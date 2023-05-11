@@ -3,6 +3,7 @@ import PetCard from '../components/PetCard';
 import { useState, useEffect } from 'react';
 import { useLoaderData } from 'react-router-dom';
 import Skeleton from '../components/Skeleton';
+import ClipLoader from 'react-spinners/ClipLoader';
 
 const Adopt = () => {
   const [loading, setLoading] = useState(false);
@@ -26,6 +27,31 @@ const Adopt = () => {
         <span>Our Pet</span>
         <i className='icon-active' />
       </div>
+      {
+        loading && PetData.length == 0 ? (
+          <div className='loading'>
+            <ClipLoader
+              color='#f3c79e'
+              loading
+              size={32}
+            />
+          </div>
+        )
+          : (
+            PetData.length === 0 && !loading && (
+              <>
+                <div className='no-pet-img'>
+                  <img
+                    src='https://knightsmsk.github.io/HomePetResource/default%20img/not-found.gif'
+                    alt=''
+                  />
+                </div>
+                <div className='no-pet'>
+                  <span>There are no posts of pets on the site.</span>
+                </div>
+              </>
+            ))
+      }
       <div className='card-list'>
         {loading ? (
           <Skeleton num={skeletonLenght} />
