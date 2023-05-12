@@ -3,6 +3,7 @@ import '../CSS/Errorpage.css';
 
 const Errorpage = () => {
   const error = useRouteError();
+  document.querySelector('html').removeAttribute('authen');
   return (
     <div className='error-container'>
       <img

@@ -1,7 +1,15 @@
-import { Form, Link, NavLink, useSearchParams } from 'react-router-dom';
-import { useEffect, useState } from 'react';
+import {
+  Form,
+  Link,
+  NavLink,
+  useSearchParams,
+  useNavigate,
+  useLocation,
+} from 'react-router-dom';
+import { useEffect, useState, useRef } from 'react';
 import '../CSS/NavBar.css';
 import '../CSS/BaseColor.css';
+import { useAuth } from '../utils/AuthProvider';
 
 const NavBar = () => {
   const [filterParams, setfilterParams] = useSearchParams();
@@ -9,6 +17,12 @@ const NavBar = () => {
     filterName: 'All',
     filterImg: 'https://knightsmsk.github.io/HomePetResource/filter/all.png',
   });
+
+  const auth = useAuth();
+  const navigate = useNavigate();
+  const location = useLocation();
+  const userMenu = useRef(null);
+  const profileMenu = useRef(null);
 
   useEffect(() => {
     let filter = filterParams.get('f') || 'All';
@@ -31,6 +45,14 @@ const NavBar = () => {
         !filterElement.contains(e.target)
       ) {
         filterElement.classList.remove('active');
+      }
+      if (profileMenu.current) {
+        if (
+          profileMenu.current.classList.contains('active') &&
+          !profileMenu.current.contains(e.target)
+        ) {
+          profileMenu.current.classList.remove('active');
+        }
       }
     });
 
@@ -220,12 +242,68 @@ const NavBar = () => {
           <div className='noti'>
             <i className='icon-noti'></i>
           </div>
-          <div className='profile'>
+
+          <div
+            className='profile'
+            ref={profileMenu}
+            onMouseOver={(e) => {
+              e.currentTarget.classList.add('active');
+            }}
+          >
             <img
               src='https://knightsmsk.github.io/HomePetResource/default%20img/profile_default.png'
               alt=''
             />
-            <div className=""></div>
+            <div
+              className='user-menu'
+              ref={userMenu}
+              onMouseOut={() => {
+                if (profileMenu.current) {
+                  if (profileMenu.current.classList.contains('active')) {
+                    profileMenu.current.classList.remove('active');
+                  }
+                }
+              }}
+            >
+              <ul className='listMenu'>
+                {!auth?.user?.email ? (
+                  <>
+                    <li className='signin'>
+                      <Link to='/authen' state={{ from: location.pathname }}>
+                        <i className='icon-log_in' /> Log in
+                      </Link>
+                    </li>
+                    <li className='signup'>
+                      <Link to='/authen/signup'>
+                        <i className='icon-register' /> Register
+                      </Link>
+                    </li>
+                  </>
+                ) : (
+                  <>
+                    <li className='editProfile'>
+                      <Link to='#'>
+                        <i className='icon-edit-profile' /> Edit Profile
+                      </Link>
+                    </li>
+                    <li className='verifyAccount'>
+                      <Link to='#'>
+                        <i className='icon-user-verify' /> Verify Account
+                      </Link>
+                    </li>
+                    <li className='Logout'>
+                      <Link
+                        onClick={() => {
+                          auth.signout(() => navigate('/'));
+                        }}
+                      >
+                        <i className='icon-logout' /> Log out
+                      </Link>
+                    </li>
+                  </>
+                )}
+              </ul>
+            </div>
           </div>
         </div>
       </nav>

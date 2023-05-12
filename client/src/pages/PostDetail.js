@@ -3,10 +3,14 @@ import { Link, useLoaderData } from 'react-router-dom';
 import PostOwnerUser from '../components/post-detail/PostOwnerUser';
 import { displayAge } from '../components/PetCard';
 import PostImgPet from '../components/post-detail/PostImgPet';
+import usePermission from '../hooks/usePermission';
+import ROLES_LIST from '../utils/rolesList';
 import '../CSS/PostDetail.css';
-  
+
 const PostDetail = () => {
   const postData = useLoaderData();
+  let { hasPermission } = usePermission();
+
   return (
     <div className='post-detail-page'>
       <div className='pages-container'>
@@ -16,6 +20,15 @@ const PostDetail = () => {
             <div className='dot' />
             <div className='dot' />
             <div className='dot' />
+            {hasPermission([ROLES_LIST.Admin, ROLES_LIST.Editor]) && (
+              <>
+                <div className='moreMenu'>
+                  <ul className='moreMenuList'>
+                    <li></li>
+                  </ul>
+                </div>
+              </>
+            )}
           </div>
         </div>
         <div className='post-owner'>

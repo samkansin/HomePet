@@ -1,0 +1,56 @@
+.authen-container {
+  display: flex;
+  height: 100vh;
+  justify-content: space-between;
+}
+
+html[authen='true'] {
+  background-color: white;
+}
+
+.authen-container .authen-img {
+  width: 100%;
+  background-size: cover;
+  background-image: url('https://knightsmsk.github.io/HomePetResource/default%20img/authen-img.png');
+  background-repeat: no-repeat;
+  background-position: 80%;
+}
+
+.authen-field .goHome {
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+  text-decoration: none;
+  color: var(--main-color);
+  font-weight: 700;
+  text-transform: uppercase;
+  font-size: 1.25rem;
+}
+
+.authen-field .goHome .icon-logo {
+  font-size: 2.5rem;
+}
+
+.authen-field {
+  margin: 1.5rem 4.625rem;
+  width: 100%;
+}
+
+.authen-field .field-container {
+  padding: 2.188rem 3.75rem;
+  height: 96.5%;
+}
+
+.authen-container .field-container form {
+  display: flex;
+  max-width: 500px;
+  margin: 0 auto;
+  width: 100%;
+  height: 100%;
+  flex-direction: column;
+  gap: 2.188rem;
+}
+
+.authen-container .field-container form.login-form {
+  justify-content: center;
+}
