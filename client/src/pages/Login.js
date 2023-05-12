@@ -31,9 +31,8 @@ const Login = () => {
       });
       if (response.ok) {
         const data = await response.json();
-        const accessToken = data?.accessToken;
-        const roles = data?.roles;
-        const user = { email, roles, accessToken };
+
+        const user = data;
         await auth.signin(user, () => navigate(from, { replace: true }));
       } else if (response.status === 401) {
         toastError('Unauthorized');
@@ -68,7 +67,7 @@ const Login = () => {
   useEffect(() => redirect(), [redirect]);
 
   return (
-    <Form onSubmit={handleSubmit} className='login-form'>
+    <Form onSubmit={handleSubmit} className='login-form authen-form'>
       <h1 className='login-title'>Hi, WelcomeBack!</h1>
       <div className='login email-field'>
         <EmailField />
@@ -90,9 +89,13 @@ export const EmailField = () => {
   return (
     <>
       <p>Email address</p>
-      <label className={'input-container'}>
+      <label
+        className={'input-container'}
+        onMouseDown={(e) => e.preventDefault()}
+      >
         <i className='icon-at'></i>
         <input
+          onMouseDown={(e) => e.stopPropagation()}
           onInput={(e) => {
             focusInputting(
               e.currentTarget.value,
@@ -125,9 +128,15 @@ export const PasswordField = ({ confirm, forLogin }) => {
         {confirm ? 'Confirm Password' : 'Password'}
         {forLogin && <Link to='forgot'>Forgot Password?</Link>}
       </p>
-      <label className={'input-container'}>
+      <label
+        className={'input-container'}
+        onMouseDown={(e) => {
+          e.preventDefault();
+        }}
+      >
         <i className='icon-password'></i>
         <input
+          onMouseDown={(e) => e.stopPropagation()}
           onInput={(e) => {
             focusInputting(
               e.currentTarget.value,
@@ -136,7 +145,7 @@ export const PasswordField = ({ confirm, forLogin }) => {
           }}
           type='password'
           name={confirm ? 'confirm' : 'password'}
-          placeholder='Enter password'
+          placeholder={`Enter ${confirm ? 'confirm password' : 'password'}`}
         />
         <i className='icon-open-password' onClick={showPassword}></i>
       </label>
@@ -163,7 +172,6 @@ export const AlreadySomething = ({ forLogin }) => {
 };
 
 const focusInputting = (target, parent) => {
-  console.log(target);
   if (target !== '' || !parent.contains('inputting')) {
     parent.add('inputting');
   } else {

@@ -9,10 +9,10 @@ export const AuthProvider = ({ children }) => {
       : {}
   );
 
-  const [loading, setLoading] = useState(false)
+  const [loading, setLoading] = useState(false);
 
   let signin = (newUser, callback) => {
-    setLoading(true)
+    setLoading(true);
     if (newUser) {
       try {
         sessionStorage.setItem('accessToken', JSON.stringify(newUser));
@@ -22,7 +22,7 @@ export const AuthProvider = ({ children }) => {
       sessionStorage.removeItem('accessToken');
       setUser({});
     }
-    setLoading(false)
+    setLoading(false);
     callback();
   };
 
@@ -32,12 +32,12 @@ export const AuthProvider = ({ children }) => {
       sessionStorage.clear();
     }
     setUser({});
-    setLoading(false)
+    setLoading(false);
     callback();
   };
 
   return (
-    <AuthContext.Provider value={{ user, setUser, signin, signout }}>
+    <AuthContext.Provider value={{ user, setUser, signin, signout, loading }}>
       {children}
     </AuthContext.Provider>
   );

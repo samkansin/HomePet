@@ -1,0 +1,121 @@
+.authen-container .field-container .register-title {
+  text-align: center;
+}
+
+.authen-container .field-container .register-title .subtitle {
+  margin-top: 10px;
+  color: var(--authen-subtitle);
+}
+
+.authen-container .field-container .progress-step {
+  display: flex;
+  justify-content: center;
+}
+
+.authen-container .field-container .progress-step .steps {
+  width: fit-content;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 2rem;
+  margin: 2.188rem 0;
+  position: relative;
+}
+
+.authen-container .field-container .progress-step .progress-bar {
+  width: 100%;
+  z-index: -1;
+  height: 2px;
+  position: absolute;
+  background-color: var(--border-progress);
+}
+
+.authen-container .field-container .progress-step .progress-bar .bar {
+  width: 0;
+  height: 100%;
+  position: absolute;
+  background-color: var(--main-color);
+  transition: all 300ms ease;
+}
+
+.authen-container .field-container .progress-step .step {
+  display: flex;
+  width: 55px;
+  height: 55px;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  border: 2px solid var(--border-progress);
+  background-color: var(--theme-color);
+  transition: all 200ms ease;
+  transition-delay: 0s;
+}
+
+.authen-container .field-container .progress-step .step {
+  font-weight: 600;
+  font-size: 1.25rem;
+  color: var(--border-progress);
+}
+
+.authen-container .field-container .progress-step .step.doing {
+  color: var(--theme-color);
+}
+
+.authen-container .field-container .progress-step .step.doing {
+  background-color: var(--main-color);
+  border-color: transparent;
+  transition-delay: 100ms;
+}
+
+.register.password-field:focus-within .validatePassword {
+  position: static;
+  opacity: 1;
+  pointer-events: auto;
+  transition: 0.2s ease;
+}
+
+.register.password-field .validatePassword {
+  display: flex;
+  opacity: 0;
+  pointer-events: none;
+  position: absolute;
+  flex-direction: column;
+  list-style: none;
+  gap: 1rem;
+  padding: 1rem;
+}
+
+.register.password-field .validatePassword li {
+  display: flex;
+  gap: 1rem;
+}
+
+.register.password-field .validatePassword li span {
+  color: var(--error-password);
+  display: flex;
+  align-items: center;
+  max-width: 210px;
+  width: 100%;
+  transition: 0.2s ease;
+}
+
+.register.password-field .validatePassword li span.pass {
+  color: var(--valid-password);
+  transition: 0.2s ease;
+}
+
+.register.password-field .validatePassword li span i {
+  font-size: 1.5rem;
+}
+
+.register.password-field .validatePassword li span.pass i::before {
+  content: '\e81c';
+}
+
+.register-form.authen-form {
+  margin-bottom: 2.188rem !important;
+}
+
+.register.submit-authen {
+  margin-bottom: 2.188rem;
+}

@@ -1,6 +1,5 @@
-const Loading = ({loading}) => {
+const Loading = ({ loading }) => {
   document.querySelector('html').setAttribute('loading', loading);
-
   return (
     <img
       className='Loading'

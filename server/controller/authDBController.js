@@ -55,7 +55,17 @@ const handleLogin = async (req, res) => {
     foundUser = await User.findOneAndUpdate(
       { email },
       { refreshToken },
-      { upsert: false }
+      {
+        projection: {
+          _id: 0,
+          password: 0,
+          roles: 0,
+          __v: 0,
+          refreshToken: 0,
+        },
+        upsert: false,
+        new: true,
+      }
     );
 
     res.cookie('jwt', refreshToken, {
@@ -66,9 +76,7 @@ const handleLogin = async (req, res) => {
       maxAge: 24 * 60 * 60 * 1000,
     });
 
-    console.log({ accessToken, roles });
-
-    res.json({ roles, accessToken });
+    res.json({ ...foundUser._doc, roles, accessToken });
   } else {
     res.sendStatus(401);
   }

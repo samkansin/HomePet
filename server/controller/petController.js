@@ -1,5 +1,6 @@
 import PetDB from '../model/PetDB.js';
 import BreedDB from '../model/BreedDB.js';
+import UserDB from '../model/UserDB.js';
 
 const projection_id_v = { _id: 0, __v: 0 };
 
@@ -18,17 +19,19 @@ export const showListPet = (req, res) => {
 };
 
 //add pet to first child
-export const createNewPet = (req, res) => {
+export const createNewPet = async (req, res) => {
+  const userID = await UserDB.findOne({ uid: req.body.owner });
+  req.body.owner = userID._id;
   PetDB.create(req.body)
-    .then((doc) => {
+    .then(async (doc) => {
       res.json('Post create successfully');
     })
     .catch((error) => {
       if (error.name === 'MongoServerError' && error.code === 11000) {
         return res.status(400).send({
-          error: `A duplicate key error on: ${Object.keys(
-            error.keyPattern[0]
-          )}`,
+          error: `A duplicate key error on: ${
+            Object.keys(error.keyPattern)[0]
+          }`,
         });
       } else if (error.name === 'ValidationError') {
         let errors = {};
@@ -44,10 +47,11 @@ export const createNewPet = (req, res) => {
 };
 
 //find pet
-export const get = (req, res) => {
+export const get = async (req, res) => {
   const id = req.params.id;
-
   PetDB.findOne({ PetID: id }, projection_id_v)
+    .populate({ path: 'owner', select: 'uid displayName profileImg' })
+    .exec()
     .then((pet) => {
       if (!pet) {
         return res.status(404).send({ error: `Pet not found with id ${id}` });

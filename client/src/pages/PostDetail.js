@@ -2,7 +2,7 @@ import PostOwnerUser from '../components/post-detail/PostOwnerUser';
 import usePermission from '../hooks/usePermission';
 import ROLES_LIST from '../utils/rolesList';
 
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { Link, useLoaderData, useNavigate } from 'react-router-dom';
 import { displayAge } from '../components/PetCard';
 import PostImgPet from '../components/post-detail/PostImgPet';
@@ -11,9 +11,21 @@ import { toast } from 'react-toastify';
 import '../CSS/Modal.css';
 
 const PostDetail = () => {
-  const postData = useLoaderData().post;
+  const postData = useLoaderData();
   const navigate = useNavigate();
-  let { hasPermission } = usePermission();
+  let { hasPermission } = usePermission({ id: true });
+  const moreMenu = useRef();
+
+  document.addEventListener('click', (e) => {
+    if (moreMenu.current) {
+      if (
+        moreMenu.current.classList.contains('active') &&
+        !moreMenu.current.contains(e.target)
+      ) {
+        moreMenu.current.classList.remove('active');
+      }
+    }
+  });
 
   const [modal, setModal] = useState(false);
 
@@ -68,19 +80,59 @@ const PostDetail = () => {
       <div className='pages-container'>
         <div className='page-title'>
           <span>Pet Details</span>
-          <div className='more'>
-            <div className='dot' />
-            <div className='dot' />
-            <div className='dot' />
-            {hasPermission([ROLES_LIST.Admin, ROLES_LIST.Editor]) && (
-              <>
-                <div className='moreMenu'>
-                  <ul className='moreMenuList'>
-                    <li></li>
-                  </ul>
-                </div>
-              </>
-            )}
+          <div className='more' ref={moreMenu}>
+            <div
+              className='other'
+              onClick={(e) => {
+                e.currentTarget.parentNode.classList.toggle('active');
+              }}
+            >
+              <div className='dot' />
+              <div className='dot' />
+              <div className='dot' />
+            </div>
+            <div
+              className={`moreMenu ${
+                hasPermission(postData?.owner?.uid) ? '' : 'menuPost'
+              }`}
+            >
+              <ul className='moreMenuList'>
+                {hasPermission(postData?.owner?.uid) ? (
+                  <>
+                    <li>
+                      <Link to='#'>
+                        <i className='icon-edit-post' />
+                        Edit
+                      </Link>
+                    </li>
+                    <li>
+                      <Link to='#'>
+                        <i className='icon-delete-post' />
+                        Delete
+                      </Link>
+                    </li>
+                  </>
+                ) : (
+                  <>
+                    <li>
+                      <Link to='#'>
+                        <i className='icon-report-post' /> Report
+                      </Link>
+                    </li>
+                    <li>
+                      <Link to='#'>
+                        <i className='icon-post-bookmark' /> Bookmark
+                      </Link>
+                    </li>
+                    <li>
+                      <Link to='#'>
+                        <i className='icon-report-user' /> Report User
+                      </Link>
+                    </li>
+                  </>
+                )}
+              </ul>
+            </div>
           </div>
         </div>
         <div className='post-owner'>
@@ -169,12 +221,12 @@ export const LoadPostData = async ({ params }) => {
   if (!response.ok) {
     throw Error(post.error);
   }
-  const res = await fetch('/api/topic');
-  if (!res.ok) {
-    throw Error('Could not fetch topic');
-  }
-  let AllTopic = await res.json();
-  return { post, AllTopic };
+  // const res = await fetch('/api/topic');
+  // if (!res.ok) {
+  //   throw Error('Could not fetch topic');
+  // }
+  // let AllTopic = await res.json();
+  return post;
 };
 
 const DropdownMenu = [

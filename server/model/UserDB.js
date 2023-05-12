@@ -3,6 +3,7 @@ import { validatorEmail } from '../util/util.js';
 
 const mongoose = ALLmongoose.default;
 const userSchema = mongoose.Schema({
+  uid: { type: String, required: true, unique: true },
   fullName: { type: String, required: true },
   displayName: { type: String },
   profileImg: { type: String },

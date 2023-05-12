@@ -10,11 +10,12 @@ const MainLayout = () => {
   const [loading, setLoading] = useState(true);
   document.querySelector('html').setAttribute('authen', false);
   setTimeout(() => {
+    document.querySelector('html').setAttribute('loading', false);
     setLoading(false);
   }, 1000);
 
   return loading ? (
-    <Loading />
+    <Loading loading={loading} />
   ) : (
     <>
       <NavBar />

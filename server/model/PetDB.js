@@ -14,7 +14,7 @@ var petSchema = mongoose.Schema({
   ageMonth: Number,
   ageYear: Number,
   dateTime: String,
-  OwnerRef: {
+  owner: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'User',
   },

@@ -28,7 +28,8 @@ import RequireAuth from './components/RequireAuth';
 import useFetchPrivate from './hooks/useFetchPrivate';
 import usePermission from './hooks/usePermission';
 import ROLES_LIST from './utils/rolesList';
-
+import ToRegisterPage from './pages/ToRegisterPage';
+import Register from './pages/Register';
 
 function HomePetApp() {
   const fetchPrivate = useFetchPrivate();
@@ -42,12 +43,12 @@ function HomePetApp() {
           <Route path='adopt' element={<Adopt />} loader={petsLoader} />
           <Route element={<RequireAuth allowedRoles={[ROLES_LIST.User]} />}>
             <Route path='post' element={<Post />} loader={LoadTopicData} />
+            <Route
+              path='post/:id'
+              element={<PostDetail />}
+              loader={LoadPostData}
+            />
           </Route>
-          <Route
-            path='post/:id'
-            element={<PostDetail />}
-            loader={LoadPostData}
-          />
         </Route>
         <Route
           path='/authen'
@@ -55,6 +56,9 @@ function HomePetApp() {
           errorElement={<Errorpage />}
         >
           <Route index element={<Login />} />
+          <Route element={<ToRegisterPage />}>
+            <Route path='signup' element={<Register />} />
+          </Route>
         </Route>
       </>
     )

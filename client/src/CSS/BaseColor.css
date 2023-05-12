@@ -35,6 +35,12 @@
   --menu-icon-color: #5e5e5e;
   --top-line-menu: #e9e9e9;
   --menu-text-color: #868686;
+
+  /*! Authen Subtitle  */
+  --authen-subtitle: #ffc178;
+  --border-progress: #ffe1be;
+  --error-password: #d17b7b;
+  --valid-password: #4bb94f;
 }
 
 html {

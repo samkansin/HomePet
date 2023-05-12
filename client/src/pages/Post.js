@@ -13,10 +13,13 @@ import '../CSS/Post.css';
 import Select from 'react-select';
 import ClipLoader from 'react-spinners/ClipLoader';
 import NotFound from '../components/NotFound';
+import { useAuth } from '../utils/AuthProvider';
 
 const Post = () => {
   const navigate = useNavigate();
   const searchInputElement = useRef();
+
+  const auth = useAuth();
   const [{ petIcon, petType }, setPetType] = useState({
     petIcon: '',
     petType: 'Select Pet Type',
@@ -179,7 +182,7 @@ const Post = () => {
       toastError('Please upload a picture of your pet');
     } else {
       const imgData = new FormData();
-      const id = createID() + createID();
+      const id = createID();
 
       for (let i = 0; i < userImage.length; i++) {
         imgData.append('files', userImage[i]);
@@ -198,7 +201,7 @@ const Post = () => {
         ageYear: selectYear['value'],
         gender: formData.get('gender'),
         adopted: false,
-        ownerID: '0HZW9WKWDNUBJ4MI73TR7J',
+        owner: auth.user.uid,
         dateTime: currentDate,
         topic: selectedTopic.get().map((topic) => {
           return topic.topic;
@@ -666,7 +669,8 @@ const TypeoFPet = [
   { icon: 'cat', name: 'cat' },
 ];
 
-const createID = () =>
+export const createID = () =>
+  Math.random().toString(36).substring(2, 13).toUpperCase() +
   Math.random().toString(36).substring(2, 13).toUpperCase();
 
 const manageMonthYear = (fill) => {

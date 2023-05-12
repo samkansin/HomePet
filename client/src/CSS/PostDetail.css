@@ -19,21 +19,94 @@
 }
 
 .post-detail-page .page-title .more {
-  display: flex;
-  gap: 0.25rem;
+  position: relative;
+
   cursor: pointer;
   float: right;
-  height: 24px;
-  width: 48px;
+}
+
+.post-detail-page .page-title .more .other {
+  display: flex;
+  gap: 0.25rem;
   align-items: center;
   justify-content: center;
+  height: 24px;
 }
 
 .post-detail-page .page-title .more .dot {
-  width: 4px;
-  height: 4px;
+  width: 5px;
+  height: 5px;
   border-radius: 50%;
   background-color: black;
+}
+.post-detail-page .page-title .more .moreMenu.menuPost {
+  width: 160px;
+}
+
+.post-detail-page .page-title .more.active .moreMenu {
+  pointer-events: auto;
+  z-index: 1;
+  opacity: 1;
+  transition: 0.2s ease;
+}
+.post-detail-page .page-title .more .moreMenu {
+  pointer-events: none;
+  z-index: 99;
+  opacity: 0;
+  position: absolute;
+  width: 140px;
+  top: 1.5rem;
+  border-radius: 10px 2px 10px 10px;
+  right: 0;
+  padding: 8px;
+  background-color: var(--theme-color);
+  box-shadow: 0px 2px 15px rgba(0, 0, 0, 0.15);
+  transition: 0.2s ease;
+}
+
+.post-detail-page .page-title .more .moreMenu .moreMenuList li {
+  list-style: none;
+}
+
+.post-detail-page .page-title .more .moreMenu .moreMenuList li > a > i {
+  color: var(--menu-icon-color);
+  font-size: 1.4rem;
+}
+
+.post-detail-page .page-title .more .moreMenu .moreMenuList li > a {
+  color: black;
+  display: flex;
+  gap: 5px;
+  font-size: 1rem;
+  align-items: center;
+  text-decoration: none;
+  font-weight: 500;
+  padding: 8px;
+  transition: 0.2s ease;
+}
+
+.post-detail-page .page-title .more .moreMenu .moreMenuList li:hover > a {
+  background-color: var(--select-hover);
+  color: var(--main-color);
+  transition: 0.2s ease;
+  border-radius: 8px;
+}
+
+.post-detail-page .page-title .more .moreMenu .moreMenuList li:hover > a > i {
+  color: var(--main-color);
+  transition: 0.2s ease;
+}
+
+.post-detail-page .page-title .more .moreMenu .moreMenuList li:hover {
+  border-color: transparent;
+}
+
+.post-detail-page .page-title .more .moreMenu .moreMenuList li:hover ~ li {
+  border-color: transparent;
+}
+
+.post-detail-page .page-title .more .moreMenu .moreMenuList li ~ li {
+  border-top: 1px solid var(--top-line-menu);
 }
 
 .post-detail-page .post-owner {

@@ -1,4 +1,4 @@
-.login-form .login-title {
+.authen-form h1 {
   text-align: center;
   font-size: 2.25rem;
 }
@@ -16,7 +16,7 @@
 }
 
 .authen-container .field-container .input-container {
-  padding: 15px;
+  padding: 13px;
   border: 1px solid var(--input-field);
   border-radius: 8px;
   cursor: pointer;
