@@ -20,6 +20,7 @@ import PostDetail, { LoadPostData } from './pages/PostDetail';
 import Errorpage from './pages/Errorpage';
 import Chat from './pages/Chat';
 import Login from './pages/Login';
+import PostEdit from './pages/PostEdit';
 
 //? Authentication Component and utils
 import { AuthProvider } from './utils/AuthProvider';
@@ -27,8 +28,7 @@ import RequireAuth from './components/RequireAuth';
 import useFetchPrivate from './hooks/useFetchPrivate';
 import usePermission from './hooks/usePermission';
 import ROLES_LIST from './utils/rolesList';
-import { getLastestPost } from './components/index/LatestPostList';
-import PostEdit from './pages/PostEdit';
+
 
 function HomePetApp() {
   const fetchPrivate = useFetchPrivate();
