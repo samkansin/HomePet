@@ -22,6 +22,14 @@ const userSchema = mongoose.Schema({
     Editor: { type: Number },
     Admin: { type: Number },
   },
+  Bookmark: [
+    {
+      petRef: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Post',
+      },
+    },
+  ],
   verify: Boolean,
   refreshToken: { type: String },
 });
