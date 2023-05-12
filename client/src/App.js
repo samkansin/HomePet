@@ -27,6 +27,8 @@ import RequireAuth from './components/RequireAuth';
 import useFetchPrivate from './hooks/useFetchPrivate';
 import usePermission from './hooks/usePermission';
 import ROLES_LIST from './utils/rolesList';
+import { getLastestPost } from './components/index/LatestPostList';
+import PostEdit from './pages/PostEdit';
 
 function HomePetApp() {
   const fetchPrivate = useFetchPrivate();
