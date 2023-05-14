@@ -42,6 +42,7 @@ function HomePetApp() {
           <Route index element={<Index />} loader={getLastestPost} />
           <Route path='adopt' element={<Adopt />} loader={petsLoader} />
           <Route element={<RequireAuth allowedRoles={[ROLES_LIST.User]} />}>
+            <Route path='chat' element={<Chat />} />
             <Route path='post' element={<Post />} loader={LoadTopicData} />
             <Route
               path='post/:id'
@@ -56,6 +57,7 @@ function HomePetApp() {
           errorElement={<Errorpage />}
         >
           <Route index element={<Login />} />
+
           <Route element={<ToRegisterPage />}>
             <Route path='signup' element={<Register />} />
           </Route>

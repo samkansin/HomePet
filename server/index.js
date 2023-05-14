@@ -14,6 +14,8 @@ import userRouter from './router/userRouter.js';
 import topicRouter from './router/topicRouter.js';
 import uploadRouter from './router/uploadRouter.js';
 import authRouter from './router/authRouter.js';
+import chatRouter from './router/chatRouter.js';
+import messageRouter from './router/messageRouter.js';
 
 const app = express();
 dotenv.config();
@@ -35,6 +37,9 @@ app.get('/secret', verifyToken, (req, res) =>
 );
 
 app.use('/api/user', verifyToken, userRouter);
+
+app.use('/chat', chatRouter);
+app.use('/message', messageRouter);
 
 app.get('/', (req, res) => {
   res.status(401).send({ error: 'Invalid Endport' });

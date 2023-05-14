@@ -640,7 +640,8 @@ const AddNewPost = async (newPet) => {
   }
 };
 
-const uploadImageToServer = async (images) => {
+export const uploadImageToServer = async (images) => {
+  console.log(images);
   try {
     return fetch(`/api/uploadsImg`, {
       method: 'POST',

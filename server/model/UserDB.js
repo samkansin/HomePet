@@ -4,9 +4,10 @@ import { validatorEmail } from '../util/util.js';
 const mongoose = ALLmongoose.default;
 const userSchema = mongoose.Schema({
   uid: { type: String, required: true, unique: true },
-  fullName: { type: String, required: true },
+  fullName: String,
   displayName: { type: String },
   profileImg: { type: String },
+  phone: String,
   email: {
     type: String,
     validate: {

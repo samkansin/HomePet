@@ -20,6 +20,13 @@ const signToken = (email, name, roles) => {
   );
 };
 
+export const checkDuplicateEmail = async (req, res) => {
+  const { email } = req.params;
+  const duplicate = await User.findOne({ email });
+  if (duplicate) return res.sendStatus(409);
+  else return res.sendStatus(200);
+};
+
 const handleLogin = async (req, res) => {
   const { email, password } = req.body;
   if (!email || !password)

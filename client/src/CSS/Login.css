@@ -3,15 +3,14 @@
   font-size: 2.25rem;
 }
 
-.email-field,
-.password-field {
+.authen-form .input-field,
+.input-field {
   display: flex;
   flex-direction: column;
   gap: 8px;
 }
 
-.email-field p,
-.password-field p {
+.authen-form .input-field p {
   font-weight: 500;
 }
 
@@ -49,8 +48,10 @@
   transition: 0.2s ease-in;
 }
 
-.authen-container .field-container .input-container .icon-at,
-.authen-container .field-container .input-container .icon-password {
+.authen-container
+  .field-container
+  .input-container
+  i[class^='icon-']:not(.icon-open-password) {
   color: var(--input-field);
   transition: 0.2s ease-out;
 }
@@ -63,31 +64,41 @@
   font-size: 0.7rem;
 }
 
-.authen-container .field-container .input-container:focus-within .icon-at,
-.authen-container .field-container .input-container:focus-within .icon-password,
-.authen-container .field-container .input-container.inputting .icon-at,
-.authen-container .field-container .input-container.inputting .icon-password {
+.authen-container
+  .field-container
+  .input-container:focus-within
+  i[class^='icon-'],
+.authen-container
+  .field-container
+  .input-container.inputting
+  i[class^='icon-'] {
   color: var(--main-color);
   transition: 0.2s ease-in;
 }
 
-.authen-container .field-container .password-field .input-container input {
+.authen-container
+  .field-container
+  .authen-form
+  .input-field
+  .input-container
+  input {
   width: 88%;
 }
 
-.authen-container .field-container .password-field p {
+.authen-container .field-container .authen-form .login.password.input-field p {
   display: flex;
   justify-content: space-between;
 }
 
-.authen-container .field-container .password-field p > a {
+.authen-container .field-container .authen-form .input-field p > a {
   text-decoration: none;
   color: var(--main-color);
 }
 
 .authen-container
   .field-container
-  .password-field
+  .authen-form
+  .input-field
   .input-container
   .icon-open-password {
   cursor: pointer;

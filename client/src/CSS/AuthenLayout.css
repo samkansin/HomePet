@@ -38,7 +38,10 @@ html[authen='true'] {
 
 .authen-field .field-container {
   padding: 2.188rem 3.75rem;
+  display: flex;
+  align-items: center;
   height: 96.5%;
+  transition: 0.2s ease;
 }
 
 .authen-container .field-container form {
@@ -48,8 +51,4 @@ html[authen='true'] {
   width: 100%;
   flex-direction: column;
   gap: 2.188rem;
-}
-
-.authen-container .field-container form.login-form {
-  justify-content: center;
 }

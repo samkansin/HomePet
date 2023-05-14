@@ -1,16 +1,11 @@
 import User from '../model/UserDB.js';
 import bcrypt from 'bcrypt';
 
-export const checkDuplicateEmail = async (req, res) => {
-  const { email } = req.params;
-  const duplicate = await User.findOne({ email });
-  if (duplicate) return res.sendStatus(409);
-  else return res.sendStatus(200);
-};
+
 
 export const create = async (req, res) => {
-  const { email, fullName, password } = req.body;
-  if (!email || !fullName || !password) {
+  const { email, password } = req.body;
+  if (!email || !password) {
     return res
       .status(400)
       .json({ warning: 'Email, full name and password are required.' });
@@ -27,7 +22,7 @@ export const create = async (req, res) => {
     const hashPassword = await bcrypt.hash(password, 10);
     const result = await User.create({ ...req.body, password: hashPassword });
     console.log(result);
-    res.status(201).json({ success: `New user ${fullName} created` });
+    res.status(201).json({ success: `New user ${email} created` });
   } catch (error) {
     res.status(500).json({ message: error.message });
   }
@@ -56,10 +51,6 @@ export const updateInfo = async (req, res) => {
   const { email } = req.params;
   if (!data || !email) {
     return res.status(422).send({ error: 'email must be alphanumeric' });
-  }
-
-  if (data.fullName) {
-    delete data.fullName;
   }
 
   try {

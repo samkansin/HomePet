@@ -20,10 +20,9 @@ const Login = () => {
     if (!email || !password) {
       return toastWarning('Please enter your email or password');
     }
-
     try {
       setLoading(true);
-      toastLoading('Please wait...');
+      const id = toastLoading('Please wait...');
       const response = await fetch('/auth', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -35,15 +34,14 @@ const Login = () => {
         const user = data;
         await auth.signin(user, () => navigate(from, { replace: true }));
       } else if (response.status === 401) {
-        toastError('Unauthorized');
+        toastUpdateLoading('Unauthorized', id, 'error');
       } else {
-        toastError('login error');
+        toastUpdateLoading('Login Error', id, 'error');
       }
     } catch (error) {
       toastError(`Error. Try again later: (${error})!`);
     } finally {
       setLoading(false);
-      toastUpdateLoading('Successfully logged in');
     }
   };
 
@@ -69,11 +67,16 @@ const Login = () => {
   return (
     <Form onSubmit={handleSubmit} className='login-form authen-form'>
       <h1 className='login-title'>Hi, WelcomeBack!</h1>
-      <div className='login email-field'>
+      <div className='login email input-field'>
         <EmailField />
       </div>
-      <div className='login password-field'>
-        <PasswordField confirm={false} forLogin={true} />
+      <div className='login password input-field'>
+        <PasswordField
+          confirm={false}
+          forLogin={true}
+          name='password'
+          placeholder='Enter password'
+        />
       </div>
       <div className='submit-authen'>
         <button type='submit'>Login</button>
@@ -85,70 +88,75 @@ const Login = () => {
 
 export default Login;
 
+export const InputField = ({ name, placeholder, type, icon, maxlength }) => {
+  return (
+    <label className='input-container' onMouseDown={(e) => e.preventDefault()}>
+      {icon && <i className={icon} />}
+      <input
+        onMouseDown={(e) => e.stopPropagation()}
+        onInput={(e) => {
+          focusInputting(
+            e.currentTarget.value,
+            e.currentTarget.parentNode.classList
+          );
+        }}
+        type={type}
+        autoComplete='off'
+        className={name}
+        name={name}
+        placeholder={placeholder}
+        maxLength={maxlength && maxlength}
+      />
+      {type === 'password' && (
+        <i className='icon-open-password' onClick={showPassword}></i>
+      )}
+    </label>
+  );
+};
+
 export const EmailField = () => {
   return (
     <>
       <p>Email address</p>
-      <label
-        className={'input-container'}
-        onMouseDown={(e) => e.preventDefault()}
-      >
-        <i className='icon-at'></i>
-        <input
-          onMouseDown={(e) => e.stopPropagation()}
-          onInput={(e) => {
-            focusInputting(
-              e.currentTarget.value,
-              e.currentTarget.parentNode.classList
-            );
-          }}
-          autoComplete='off'
-          className='email'
-          type='email'
-          name='email'
-          placeholder='Enter email'
-        />
-      </label>
+      <InputField
+        name='email'
+        placeholder='Enter email'
+        type='email'
+        icon='icon-at'
+      />
     </>
   );
 };
 
-export const PasswordField = ({ confirm, forLogin }) => {
-  const showPassword = (e) => {
-    e.target.classList.toggle('show');
-    if (!e.target.classList.contains('show')) {
-      e.target.previousElementSibling.setAttribute('type', 'password');
-    } else {
-      e.target.previousElementSibling.setAttribute('type', 'text');
-    }
-  };
+const showPassword = (e) => {
+  e.target.classList.toggle('show');
+  if (!e.target.classList.contains('show')) {
+    e.target.previousElementSibling.setAttribute('type', 'password');
+  } else {
+    e.target.previousElementSibling.setAttribute('type', 'text');
+  }
+};
+
+export const PasswordField = ({
+  confirm,
+  forLogin,
+  name,
+  placeholder,
+  type,
+  icon,
+}) => {
   return (
     <>
       <p>
         {confirm ? 'Confirm Password' : 'Password'}
         {forLogin && <Link to='forgot'>Forgot Password?</Link>}
       </p>
-      <label
-        className={'input-container'}
-        onMouseDown={(e) => {
-          e.preventDefault();
-        }}
-      >
-        <i className='icon-password'></i>
-        <input
-          onMouseDown={(e) => e.stopPropagation()}
-          onInput={(e) => {
-            focusInputting(
-              e.currentTarget.value,
-              e.currentTarget.parentNode.classList
-            );
-          }}
-          type='password'
-          name={confirm ? 'confirm' : 'password'}
-          placeholder={`Enter ${confirm ? 'confirm password' : 'password'}`}
-        />
-        <i className='icon-open-password' onClick={showPassword}></i>
-      </label>
+      <InputField
+        name={name}
+        placeholder={placeholder}
+        type='password'
+        icon='icon-password'
+      />
     </>
   );
 };
@@ -179,10 +187,10 @@ const focusInputting = (target, parent) => {
   }
 };
 
-const toastWarning = (message) => {
+export const toastWarning = (message, autoClose) => {
   toast.warn(message, {
     position: 'top-center',
-    autoClose: 4000,
+    autoClose: typeof autoClose === 'boolean' ? autoClose : 4000,
     hideProgressBar: false,
     closeOnClick: true,
     pauseOnHover: true,
@@ -192,10 +200,10 @@ const toastWarning = (message) => {
   });
 };
 
-const toastError = (message) => {
+export const toastError = (message, autoClose) => {
   toast.error(message, {
     position: 'top-center',
-    autoClose: 4000,
+    autoClose: typeof autoClose === 'boolean' ? autoClose : 4000,
     hideProgressBar: false,
     closeOnClick: true,
     pauseOnHover: true,
@@ -205,17 +213,18 @@ const toastError = (message) => {
   });
 };
 
-const toastLoading = (message) => {
-  toast.loading(message, {
+export const toastLoading = (message) => {
+  return toast.loading(message, {
     position: 'top-center',
-    theme: 'dark',
+    theme: 'light',
   });
 };
 
-const toastUpdateLoading = (message) => {
-  toast.update(toastLoading, {
+export const toastUpdateLoading = (message, id, type) => {
+  toast.update(id, {
     render: message,
-    type: 'success',
+    type: type || 'success',
+    autoClose: 2000,
     isLoading: false,
   });
 };

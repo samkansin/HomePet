@@ -250,10 +250,16 @@ const NavBar = () => {
               e.currentTarget.classList.add('active');
             }}
           >
-            <img
-              src='https://knightsmsk.github.io/HomePetResource/default%20img/profile_default.png'
-              alt=''
-            />
+            <div
+              className='profile-img'
+              style={{
+                backgroundImage: `${
+                  auth?.user?.uid
+                    ? `url(${auth.user?.profileImg})`
+                    : 'url("https://knightsmsk.github.io/HomePetResource/default%20img/profile_default.png")'
+                }`,
+              }}
+            ></div>
             <div
               className='user-menu'
               ref={userMenu}

@@ -4,6 +4,7 @@ import {
   handleLogin,
   handleLogout,
   handleRefreshToken,
+  checkDuplicateEmail,
 } from '../controller/authDBController.js';
 
 const router = express.Router();
@@ -11,6 +12,7 @@ const router = express.Router();
 router.post('/', handleLogin);
 router.get('/', handleLogout);
 router.get('/refresh', handleRefreshToken);
+router.get('/check/:email', checkDuplicateEmail);
 router.post('/register', create);
 
 export default router;
