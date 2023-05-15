@@ -8,11 +8,8 @@ import '../CSS/Chat.css';
 
 const Chat = () => {
   const auth = useAuth();
-  const [chats, setChats] = useState([]);
-  // const [currentChat, setCurrentChat] = useState(chats[0]);
   const [onlineUser, setOnlineUsers] = useState([]);
   const [sendMessage, setSendMessage] = useState(null);
-  const [receiveMessage, setReceiveMessage] = useState(null);
   const receive = useSyncState(null);
   const Chats = useSyncState([]);
   const current = useSyncState([]);
@@ -45,6 +42,7 @@ const Chat = () => {
         if (data) {
           const update = async () => {
             let status = await updateTimeChat(data.chatID);
+            console.log(status)
           };
 
           await update();
@@ -243,6 +241,7 @@ const getChats = async (setChats, uid, current) => {
   const data = await userChats(uid);
   if (data) {
     setChats.set(data);
-    if (current.get().length === 0) current.set(data[0]);
+    console.log(current.get());
+    if (current.get()) if (current.get().length === 0) current.set(data[0]);
   }
 };

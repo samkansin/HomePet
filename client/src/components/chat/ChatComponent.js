@@ -2,7 +2,6 @@ import { useEffect, useState } from 'react';
 import ProfileUser from '../ProfileUser';
 import { getMessages } from './Conversation';
 import useFetchPrivate from '../../hooks/useFetchPrivate';
-import Loading from '../Loading';
 
 const ChatComponent = ({ chat, currentUser, online }) => {
   const [userData, setUserData] = useState(null);
@@ -11,6 +10,7 @@ const ChatComponent = ({ chat, currentUser, online }) => {
 
   useEffect(() => {
     const userId = chat.members.find((id) => id !== currentUser);
+
     const getUserData = async () => {
       const { response, data } = await callFetch(`/api/user/wid/${userId}`);
       if (response.ok) {
@@ -30,7 +30,7 @@ const ChatComponent = ({ chat, currentUser, online }) => {
       if (data) setCurrentMessage(data[data.length - 1]);
     };
     fetchMessage();
-  }, [chat]);
+  }, [chat, currentUser, callFetch]);
 
   return (
     <>

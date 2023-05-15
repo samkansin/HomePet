@@ -26,15 +26,11 @@ import PostEdit from './pages/PostEdit';
 //? Authentication Component and utils
 import { AuthProvider } from './utils/AuthProvider';
 import RequireAuth from './components/RequireAuth';
-import useFetchPrivate from './hooks/useFetchPrivate';
-import usePermission from './hooks/usePermission';
 import ROLES_LIST from './utils/rolesList';
 import ToRegisterPage from './pages/ToRegisterPage';
 import Register from './pages/Register';
 
 function HomePetApp() {
-  const fetchPrivate = useFetchPrivate();
-  const { hasPermission } = usePermission();
 
   const HomePetRouter = createBrowserRouter(
     createRoutesFromElements(

@@ -5,7 +5,6 @@ import React, { useEffect, useRef, useState } from 'react';
 import { Link, useLoaderData, useNavigate } from 'react-router-dom';
 import { displayAge } from '../components/PetCard';
 import PostImgPet from '../components/post-detail/PostImgPet';
-import PostEdit from './PostEdit';
 
 import '../CSS/PostDetail.css';
 import { toast } from 'react-toastify';
@@ -14,7 +13,9 @@ import '../CSS/Modal.css';
 const PostDetail = (PetData) => {
   const postData = useLoaderData();
   const navigate = useNavigate();
-  let { hasPermission } = usePermission({ id: true });
+  // let { hasPermission } = usePermission({ id: true });
+  const hasPermission = usePermission({ id: true }).hasPermission;
+
   const auth = useAuth();
   const moreMenu = useRef();
 
@@ -77,6 +78,49 @@ const PostDetail = (PetData) => {
     }
   }, [deleteInput]);
 
+  return postData.length ? (
+    postData.map((postData, index) => (
+      <Post
+        key={`post-topic-${index}`}
+        postData={postData}
+        moreMenu={moreMenu}
+        toggleModal={toggleModal}
+        hasPermission={hasPermission}
+        auth={auth}
+        handleInputChange={handleInputChange}
+        handleDelete={handleDelete}
+        navigate={navigate}
+        modal={modal}
+      />
+    ))
+  ) : (
+    <Post
+      postData={postData}
+      moreMenu={moreMenu}
+      toggleModal={toggleModal}
+      hasPermission={hasPermission}
+      auth={auth}
+      handleInputChange={handleInputChange}
+      handleDelete={handleDelete}
+      navigate={navigate}
+      modal={modal}
+    />
+  );
+};
+
+export default PostDetail;
+
+const Post = ({
+  postData,
+  moreMenu,
+  toggleModal,
+  auth,
+  handleInputChange,
+  handleDelete,
+  navigate,
+  modal,
+  hasPermission,
+}) => {
   return (
     <div className='post-detail-page'>
       <div className='pages-container'>
@@ -140,14 +184,13 @@ const PostDetail = (PetData) => {
         <div className='post-owner'>
           <PostOwnerUser timePost={postData.dateTime} owner={postData?.owner} />
           {auth?.user?.uid !== postData?.owner?.uid && (
-            <Link
-              to='#'
+            <div className='goto'
               onClick={() => {
                 createChatRoom(postData?.owner, auth.user, navigate);
               }}
             >
               Chat
-            </Link>
+            </div>
           )}
         </div>
 
@@ -223,8 +266,6 @@ const PostDetail = (PetData) => {
   );
 };
 
-export default PostDetail;
-
 export const LoadPostData = async ({ params }) => {
   const { id } = params;
   const response = await fetch(`/api/pet/${id}`);
@@ -252,7 +293,7 @@ const createChatRoom = async (owner, user, navigate) => {
       }
     } catch (error) {}
   } else {
-    navigate('/login', { replace: true });
+    navigate('/authen', { replace: true });
   }
 };
 

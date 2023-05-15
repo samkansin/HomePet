@@ -21,9 +21,6 @@ const Conversation = ({
 
   const auth = useAuth();
 
-  const userConOwner = useRef();
-  const userCon = useRef();
-
   useEffect(() => {
     const userId = chat?.members?.find((id) => id !== currentUser);
     const getUserData = async () => {

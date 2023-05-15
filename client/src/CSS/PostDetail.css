@@ -115,7 +115,7 @@
   justify-content: space-between;
 }
 
-.post-detail-page .post-owner a {
+.post-detail-page .post-owner .goto {
   text-decoration: none;
   padding: 0.5rem 1.875rem;
   background-color: var(--select-hover);
@@ -123,9 +123,10 @@
   font-weight: 600;
   color: var(--main-color);
   transition: 0.2s ease;
+  cursor: pointer;
 }
 
-.post-detail-page .post-owner a:hover {
+.post-detail-page .post-owner .goto:hover {
   background-color: var(--main-color);
   color: var(--theme-color);
 }

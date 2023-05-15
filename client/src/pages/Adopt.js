@@ -28,7 +28,7 @@ const Adopt = () => {
         <i className='icon-active' />
       </div>
       {
-        loading && PetData.length == 0 ? (
+        loading && PetData.length === 0 ? (
           <div className='loading'>
             <ClipLoader
               color='#f3c79e'

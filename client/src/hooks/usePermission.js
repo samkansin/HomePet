@@ -5,10 +5,10 @@ const usePermission = (id) => {
   if (!id) {
     const hasPermission = (allowedRoles) =>
       user?.roles?.some((role) => allowedRoles.includes(role));
-    return {hasPermission};
+    return { hasPermission };
   } else {
     const hasPermission = (id) => user?.uid === id;
-    return {hasPermission};
+    return { hasPermission };
   }
 };
 

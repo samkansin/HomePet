@@ -5,7 +5,7 @@ export const createChatRoom = async (req, res) => {
     const findRoom = await ChatDB.find({
       members: { $all: [req.body.senderId, req.body.receiverId] },
     });
-    if (findRoom) {
+    if (findRoom.length !== 0) {
       res.sendStatus(200);
     } else {
       const newChat = new ChatDB({
