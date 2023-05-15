@@ -45,6 +45,11 @@ function HomePetApp() {
           <Route element={<RequireAuth allowedRoles={[ROLES_LIST.User]} />}>
             <Route path='chat' element={<Chat />} />
             <Route path='post' element={<Post />} loader={LoadTopicData} />
+            <Route
+              path='post/:id/edit'
+              element={<PostEdit />}
+              loader={LoadPostData}
+            />
           </Route>
           <Route
             path='post/:id'

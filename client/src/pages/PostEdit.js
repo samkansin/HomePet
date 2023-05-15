@@ -20,8 +20,8 @@ const PostEdit = () => {
   const [oldPostData, setOldPostData] = useState(useLoaderData());
 
   const [{ petIcon, petType }, setPetType] = useState({
-    petIcon: oldPostData.post.type,
-    petType: oldPostData.post.type,
+    petIcon: oldPostData.type,
+    petType: oldPostData.type,
   });
 
   document.addEventListener('click', (e) => {
@@ -39,13 +39,13 @@ const PostEdit = () => {
     }
   });
 
-  const [petName, setPetName] = useState(oldPostData.post.name);
-  const [petGender, setPetGender] = useState(oldPostData.post.gender);
-  const [details, setDetails] = useState(oldPostData.post.details);
+  const [petName, setPetName] = useState(oldPostData.name);
+  const [petGender, setPetGender] = useState(oldPostData.gender);
+  const [details, setDetails] = useState(oldPostData.details);
 
-  const [selectBreed, setBreed] = useState(oldPostData.post.breed);
-  const [selectMonth, setMonth] = useState(oldPostData.post.ageMonth);
-  const [selectYear, setYear] = useState(oldPostData.post.ageYear);
+  const [selectBreed, setBreed] = useState(oldPostData.breed);
+  const [selectMonth, setMonth] = useState(oldPostData.ageMonth);
+  const [selectYear, setYear] = useState(oldPostData.ageYear);
 
   var [countName, setCountName] = useState(petName.length);
   var [countDetails, setCountDetails] = useState(details.length);
@@ -53,7 +53,7 @@ const PostEdit = () => {
   const [uploadImage, setUploadImage] = useState([]);
   const [userImage, setUserImage] = useState([]);
 
-  const selectedTopic = useSynState(oldPostData.post.topic);
+  const selectedTopic = useSynState(oldPostData.topic);
   const AllTopic = useSynState([]);
   const [searchInput, setSearchInput] = useState('');
   const debouncedSearch = useDebounce(searchInput, 500);
@@ -211,13 +211,12 @@ const PostEdit = () => {
         // image_src: URL.map((img) => `/api/images/${img}`),
         name: petName,
         type: petType,
-        breed: selectBreed['value'],
+        breed: selectBreed['value'] || '',
         details: details,
-        ageMonth: selectMonth['value'],
-        ageYear: selectYear['value'],
+        ageMonth: selectMonth['value'] || '',
+        ageYear: selectYear['value'] || '',
         gender: petGender,
         adopted: false,
-        ownerID: '0HZW9WKWDNUBJ4MI73TR7J',
         dateTime: currentDate,
         // topic: selectedTopic.get().map((topic) => {
         //   return topic.topic;
@@ -225,7 +224,7 @@ const PostEdit = () => {
       };
 
       // await AddTopic(selectedTopic.get());
-      await EditPost(PetData, oldPostData.post.PetID);
+      await EditPost(PetData, oldPostData.PetID);
       toastSuccess('Edit post successfully!');
       navigate('/adopt', { replace: true });
     }
@@ -238,9 +237,9 @@ const PostEdit = () => {
   };
 
   if (modal) {
-    document.body.classList.add('active-modal')
+    document.body.classList.add('active-modal');
   } else {
-    document.body.classList.remove('active-modal')
+    document.body.classList.remove('active-modal');
   }
 
   return (
@@ -257,8 +256,9 @@ const PostEdit = () => {
                 Name <span className='subtitle'>(required)</span>
               </p>
               <div
-                className={`label-name field ${countName > 0 ? 'inputing' : ''
-                  }`}
+                className={`label-name field ${
+                  countName > 0 ? 'inputing' : ''
+                }`}
               >
                 <input
                   type='text'
@@ -349,7 +349,11 @@ const PostEdit = () => {
                   options={breeds}
                   menuPortalTarget={document.body}
                   isSearchable
-                  defaultValue={selectBreed ? { label: selectBreed, value: selectBreed } : undefined}
+                  defaultValue={
+                    selectBreed
+                      ? { label: selectBreed, value: selectBreed }
+                      : undefined
+                  }
                 />
               </>
             )}
@@ -361,9 +365,23 @@ const PostEdit = () => {
               Gender <span className='subtitle'>(required)</span>{' '}
             </p>
             <div className='gender-select'>
-              <input type='radio' id='Male' name='gender' value='male' checked={petGender === 'male'} onChange={() => setPetGender('male')} />
+              <input
+                type='radio'
+                id='Male'
+                name='gender'
+                value='male'
+                checked={petGender === 'male'}
+                onChange={() => setPetGender('male')}
+              />
               <label htmlFor='Male'>Male</label>
-              <input type='radio' id='Female' name='gender' value='female' checked={petGender === 'female'} onChange={() => setPetGender('female')} />
+              <input
+                type='radio'
+                id='Female'
+                name='gender'
+                value='female'
+                checked={petGender === 'female'}
+                onChange={() => setPetGender('female')}
+              />
               <label htmlFor='Female'>Female</label>
             </div>
           </div>
@@ -631,23 +649,31 @@ const PostEdit = () => {
           </div>
         </div>
         {modal && (
-          <div className="modal">
-            <div onClick={toggleModal} className="overlay"></div>
-            <div className="modal-content">
-              <div className="modal-upper">
-                <div className="modal-image">
-                  <img src="https://cdn.pixabay.com/photo/2012/04/12/22/25/warning-sign-30915__340.png" alt="alert" />
+          <div className='modal'>
+            <div onClick={toggleModal} className='overlay'></div>
+            <div className='modal-content'>
+              <div className='modal-upper'>
+                <div className='modal-image'>
+                  <img
+                    src='https://cdn.pixabay.com/photo/2012/04/12/22/25/warning-sign-30915__340.png'
+                    alt='alert'
+                  />
                 </div>
-                <div className="modal-message">
+                <div className='modal-message'>
                   <h1>Save edit post?</h1>
                   <p>
-                    This post will be edited and you won't be able to recover it anymore. This process <b>cannot</b> be undone.
+                    This post will be edited and you won't be able to recover it
+                    anymore. This process <b>cannot</b> be undone.
                   </p>
                 </div>
               </div>
-              <div className="modal-button">
-                <button onClick={toggleModal} className="cancel">Cancel</button>
-                <button type='submit' className='edit'>Save</button>
+              <div className='modal-button'>
+                <button onClick={toggleModal} className='cancel'>
+                  Cancel
+                </button>
+                <button type='submit' className='edit'>
+                  Save
+                </button>
               </div>
               <i className='icon-close close-modal' onClick={toggleModal}></i>
             </div>
@@ -679,6 +705,7 @@ const AddTopic = async (newTopic) => {
 };
 
 const EditPost = async (newPet, id) => {
+  console.log(newPet, id);
   try {
     let response = await fetch(`/api/pet/${id}`, {
       method: 'PUT',

@@ -102,13 +102,13 @@ const PostDetail = (PetData) => {
                 {hasPermission(postData?.owner?.uid) ? (
                   <>
                     <li>
-                      <Link to='#'>
+                      <Link to={`/post/${postData.PetID}/edit`}>
                         <i className='icon-edit-post' />
                         Edit
                       </Link>
                     </li>
                     <li>
-                      <Link to='#'>
+                      <Link to='#' onClick={toggleModal}>
                         <i className='icon-delete-post' />
                         Delete
                       </Link>

@@ -69,6 +69,8 @@ export const get = async (req, res) => {
 export const put = (req, res) => {
   const data = req.body || {};
   const { id } = req.params;
+  console.log(data);
+
   PetDB.findOneAndUpdate(
     { PetID: id },
     { $set: data },
