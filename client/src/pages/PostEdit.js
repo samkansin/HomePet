@@ -178,6 +178,7 @@ const PostEdit = () => {
   };
 
   const handleSubmit = async (e) => {
+    e.preventDefault();
     const currentDate = new Date().toISOString();
     const formData = new FormData(e.target);
 
@@ -705,7 +706,9 @@ const AddTopic = async (newTopic) => {
 };
 
 const EditPost = async (newPet, id) => {
-  console.log(newPet, id);
+  const manage = Object.fromEntries(
+    Object.entries(newPet).filter(([_, value]) => value)
+  );
   try {
     let response = await fetch(`/api/pet/${id}`, {
       method: 'PUT',
