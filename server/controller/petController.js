@@ -119,7 +119,11 @@ export const remove = (req, res) => {
 export const getPetFormTag = async (req, res) => {
   const { tag } = req.params;
   try {
-    let petByTag = await PetDB.find({ topic: tag }).sort({ dateTime: -1 });
+    let petByTag = await PetDB.find({ topic: tag })
+      .sort({ dateTime: -1 })
+      .populate({ path: 'owner', select: 'uid displayName profileImg' })
+      .exec();
+
     if (petByTag) {
       res.json(petByTag);
     } else {

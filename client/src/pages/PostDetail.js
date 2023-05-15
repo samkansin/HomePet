@@ -10,7 +10,7 @@ import '../CSS/PostDetail.css';
 import { toast } from 'react-toastify';
 import '../CSS/Modal.css';
 
-const PostDetail = (PetData) => {
+const PostDetail = () => {
   const postData = useLoaderData();
   const navigate = useNavigate();
   // let { hasPermission } = usePermission({ id: true });
