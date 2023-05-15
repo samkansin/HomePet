@@ -5,11 +5,13 @@ import React, { useEffect, useRef, useState } from 'react';
 import { Link, useLoaderData, useNavigate } from 'react-router-dom';
 import { displayAge } from '../components/PetCard';
 import PostImgPet from '../components/post-detail/PostImgPet';
+import PostEdit from './PostEdit';
+
 import '../CSS/PostDetail.css';
 import { toast } from 'react-toastify';
 import '../CSS/Modal.css';
 
-const PostDetail = () => {
+const PostDetail = (PetData) => {
   const postData = useLoaderData();
   const navigate = useNavigate();
   let { hasPermission } = usePermission({ id: true });
@@ -136,12 +138,12 @@ const PostDetail = () => {
           </div>
         </div>
         <div className='post-owner'>
-          <PostOwnerUser timePost={postData.dateTime} owner={postData.owner} />
-          {auth?.user?.uid !== postData.owner.uid && (
+          <PostOwnerUser timePost={postData.dateTime} owner={postData?.owner} />
+          {auth?.user?.uid !== postData?.owner?.uid && (
             <Link
               to='#'
               onClick={() => {
-                createChatRoom(postData.owner, auth.user, navigate);
+                createChatRoom(postData?.owner, auth.user, navigate);
               }}
             >
               Chat

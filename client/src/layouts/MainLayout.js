@@ -12,7 +12,7 @@ const MainLayout = () => {
   setTimeout(() => {
     document.querySelector('html').setAttribute('loading', false);
     setLoading(false);
-  }, 1000);
+  }, 1500);
 
   return loading ? (
     <Loading loading={loading} />

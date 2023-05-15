@@ -114,6 +114,20 @@ export const remove = (req, res) => {
     });
 };
 
+export const getPetFormTag = async (req, res) => {
+  const { tag } = req.params;
+  try {
+    let petByTag = await PetDB.find({ topic: tag }).sort({ dateTime: -1 });
+    if (petByTag) {
+      res.json(petByTag);
+    } else {
+      res.status(404).send({ error: `Not found post by tag : ${tag}` });
+    }
+  } catch (error) {
+    res.status(500).send({ error: 'Error to get post by tag' });
+  }
+};
+
 //get last pet
 export const lastPost = (req, res) => {
   const { type } = req.params;

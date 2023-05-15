@@ -9,8 +9,8 @@ const PostOwnerUser = (user) => {
       <div className='user-profile'>
         <img
           src={
-            user?.owner.uid
-              ? user.owner.profileImg
+            user?.owner?.uid
+              ? user?.owner?.profileImg
               : 'https://knightsmsk.github.io/HomePetResource/default%20img/profile_default.png'
           }
           alt=''
@@ -18,8 +18,8 @@ const PostOwnerUser = (user) => {
       </div>
       <div className='username-time'>
         <p className='name'>
-          {user.owner.displayName || 'User Full Name'}
-          {user?.owner.verify && <i className='icon-verify'></i>}
+          {user?.owner?.displayName || 'User Full Name'}
+          {user?.owner?.verify && <i className='icon-verify'></i>}
         </p>
         <span className='time'>{`${compare.time} ${compare.unit}`}</span>
       </div>

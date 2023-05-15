@@ -20,6 +20,7 @@ import PostDetail, { LoadPostData } from './pages/PostDetail';
 import Errorpage from './pages/Errorpage';
 import Chat from './pages/Chat';
 import Login from './pages/Login';
+import PostTag, { LoaderPostByTag } from './pages/PostTag';
 import PostEdit from './pages/PostEdit';
 
 //? Authentication Component and utils
@@ -44,12 +45,17 @@ function HomePetApp() {
           <Route element={<RequireAuth allowedRoles={[ROLES_LIST.User]} />}>
             <Route path='chat' element={<Chat />} />
             <Route path='post' element={<Post />} loader={LoadTopicData} />
-            <Route
-              path='post/:id'
-              element={<PostDetail />}
-              loader={LoadPostData}
-            />
           </Route>
+          <Route
+            path='post/:id'
+            element={<PostDetail />}
+            loader={LoadPostData}
+          />
+          <Route
+            path='post/hashtag/:tag'
+            element={<PostTag />}
+            loader={LoaderPostByTag}
+          />
         </Route>
         <Route
           path='/authen'

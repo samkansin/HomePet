@@ -7,6 +7,7 @@ import {
   remove,
   lastPost,
   getBreeds,
+  getPetFormTag,
 } from '../controller/petController.js';
 
 let router = express.Router();
@@ -18,5 +19,6 @@ router.put('/pet/:id', put);
 router.delete('/pet/:id', remove);
 router.get('/pages/lastPost/:type', lastPost);
 router.get('/pet/breeds/:type', getBreeds);
+router.get('/post/hashtag/:tag', getPetFormTag);
 
 export default router;
