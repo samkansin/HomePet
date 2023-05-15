@@ -1,14 +1,26 @@
 import ChatDB from '../model/ChatDB.js';
 
 export const createChatRoom = async (req, res) => {
-  const newChat = new ChatDB({
-    members: [req.body.senderId, req.body.receiverId],
-  });
-
   try {
-    const result = await newChat.save();
-    res.json(result);
+    const findRoom = await ChatDB.find({
+      members: { $all: [req.body.senderId, req.body.receiverId] },
+    });
+    if (findRoom) {
+      res.sendStatus(200);
+    } else {
+      const newChat = new ChatDB({
+        members: [req.body.senderId, req.body.receiverId],
+      });
+
+      try {
+        const result = await newChat.save();
+        res.json(result);
+      } catch (error) {
+        res.status(500).json(error);
+      }
+    }
   } catch (error) {
+    console.log(error);
     res.status(500).json(error);
   }
 };

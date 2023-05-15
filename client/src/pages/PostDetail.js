@@ -1,7 +1,6 @@
 import PostOwnerUser from '../components/post-detail/PostOwnerUser';
 import usePermission from '../hooks/usePermission';
-import ROLES_LIST from '../utils/rolesList';
-
+import { useAuth } from '../utils/AuthProvider';
 import React, { useEffect, useRef, useState } from 'react';
 import { Link, useLoaderData, useNavigate } from 'react-router-dom';
 import { displayAge } from '../components/PetCard';
@@ -14,6 +13,7 @@ const PostDetail = () => {
   const postData = useLoaderData();
   const navigate = useNavigate();
   let { hasPermission } = usePermission({ id: true });
+  const auth = useAuth();
   const moreMenu = useRef();
 
   document.addEventListener('click', (e) => {
@@ -136,8 +136,17 @@ const PostDetail = () => {
           </div>
         </div>
         <div className='post-owner'>
-          <PostOwnerUser timePost={postData.dateTime} />
-          <Link to='/chat'>Chat</Link>
+          <PostOwnerUser timePost={postData.dateTime} owner={postData.owner} />
+          {auth?.user?.uid !== postData.owner.uid && (
+            <Link
+              to='#'
+              onClick={() => {
+                createChatRoom(postData.owner, auth.user, navigate);
+              }}
+            >
+              Chat
+            </Link>
+          )}
         </div>
 
         <div className='info-pet'>
@@ -221,12 +230,28 @@ export const LoadPostData = async ({ params }) => {
   if (!response.ok) {
     throw Error(post.error);
   }
-  // const res = await fetch('/api/topic');
-  // if (!res.ok) {
-  //   throw Error('Could not fetch topic');
-  // }
-  // let AllTopic = await res.json();
   return post;
+};
+
+const createChatRoom = async (owner, user, navigate) => {
+  if (user?.uid) {
+    try {
+      let res = await fetch('/chat', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ senderId: user.uid, receiverId: owner.uid }),
+      });
+      if (res.ok) {
+        const room = res.json();
+        console.log(room);
+        navigate('/chat');
+      } else {
+        console.log(res);
+      }
+    } catch (error) {}
+  } else {
+    navigate('/login', { replace: true });
+  }
 };
 
 const DropdownMenu = [

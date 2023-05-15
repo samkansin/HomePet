@@ -20,6 +20,7 @@ const Post = () => {
   const searchInputElement = useRef();
 
   const auth = useAuth();
+  console.log(auth.user);
   const [{ petIcon, petType }, setPetType] = useState({
     petIcon: '',
     petType: 'Select Pet Type',
