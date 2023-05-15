@@ -13,10 +13,10 @@ export const addMessage = async (req, res) => {
 };
 
 export const getMessage = async (req, res) => {
-  const { chatId } = req.params;
+  const { chatID } = req.params;
 
   try {
-    const result = await MessageDB.find({ chatId });
+    const result = await MessageDB.find({ chatID });
     if (result) {
       res.json(result);
     }

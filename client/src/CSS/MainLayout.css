@@ -25,3 +25,7 @@ img.Loading {
   right: 0;
   margin: auto;
 }
+
+.icon-verify {
+  color: var(--main-color);
+}

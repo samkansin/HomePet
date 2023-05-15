@@ -8,22 +8,18 @@ let useFetchPrivate = () => {
   const setAuthorizationHeader = (params, accessToken) => {
     if (!params) {
       params = {
-        credential: 'include',
+        credentials: "include",
         headers: {
-          'Content-Type': 'application/json',
+          "Content-Type": "application/json",
           Authorization: `Bearer ${accessToken}`,
         },
       };
     } else {
-      if (!params.headers || !params.header['Authorization']) {
-        Object.assign(params, {
-          headers: { Authorization: `Bearer ${accessToken}` },
-        });
-      }
-      Object.assign(params, {
-        credential: 'include',
-        headers: { 'Content-Type': 'application/json' },
-      });
+        if (!params.headers || !params.headers["Authorization"]) {
+            Object.assign(params, { headers: { Authorization: `Bearer ${accessToken}` }});
+        }
+        Object.assign(params, { credentials: "include",})
+        params.headers = {...params.headers, "Content-Type": "application/json"};
     }
     return params;
   };

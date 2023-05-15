@@ -15,8 +15,28 @@ export const createChatRoom = async (req, res) => {
 
 export const userChats = async (req, res) => {
   try {
-    const chat = await ChatDB.find({ members: { $in: [req.params.uid] } });
+    const chat = await ChatDB.find({ members: { $in: [req.params.uid] } }).sort(
+      { updatedAt: -1 }
+    );
     if (chat) res.json(chat);
+  } catch (error) {
+    res.status(500).json(error);
+  }
+};
+
+export const upDateTimeChats = async (req, res) => {
+  try {
+    const chat = await ChatDB.findOneAndUpdate(
+      { _id: req.params.chatID },
+      { $set: { updatedAt: new Date().toISOString() } },
+      { new: true }
+    );
+    if (!chat) {
+      return res
+        .status(404)
+        .send({ error: `Chat not found with id ${req.params.chatID}` });
+    }
+    res.json(chat);
   } catch (error) {
     res.status(500).json(error);
   }

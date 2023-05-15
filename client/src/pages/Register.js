@@ -426,7 +426,11 @@ const collectSecondStep = (
     if (phone) {
       var fullName = `${prefixName} ${firstName} ${lastName}`;
       if (!displayName) {
-        displayName = fullName;
+        const prename = `${firstName} ${lastName}`;
+        displayName =
+          prename.length > 20
+            ? `${firstName} ${lastName.substring(0, 3)}`
+            : prename;
       }
       setDataRegister((prevData) => ({
         ...prevData,

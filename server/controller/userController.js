@@ -1,8 +1,6 @@
 import User from '../model/UserDB.js';
 import bcrypt from 'bcrypt';
 
-
-
 export const create = async (req, res) => {
   const { email, password } = req.body;
   if (!email || !password) {
@@ -42,6 +40,22 @@ export const get = (req, res) => {
     .catch((err) => {
       return res.status(500).send({
         error: `Error retrieving user with email ${email}`,
+      });
+    });
+};
+
+export const getWithID = (req, res) => {
+  const { id } = req.params;
+  User.findOne({ uid: id })
+    .then((user) => {
+      if (!user) {
+        return res.status(404).send({ error: `User not found with id: ${id}` });
+      }
+      res.json(user);
+    })
+    .catch((err) => {
+      return res.status(500).send({
+        error: `Error retrieving user with id ${id}`,
       });
     });
 };

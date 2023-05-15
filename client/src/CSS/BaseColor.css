@@ -41,6 +41,20 @@
   --border-progress: #ffe1be;
   --error-password: #d17b7b;
   --valid-password: #4bb94f;
+
+  /*! Chat  */
+  --status-online: #7ede87;
+  --status-offline: #cacaca;
+  --status-message: #ee8546;
+  --bg-chat-room: #fceae0;
+  --bg-chat-header: #e99461;
+  --bg-chat-body: #fff3e5;
+  --bg-chat-receiver: #ffdbbd;
+  --bg-chat-noti: #f7dfcb;
+  --chat-noti-text-color: #bf6028;
+  --bg-chat-owner: #feba81;
+  --bg-chat-send-box: #ffcdae;
+  --chat-placeholder-color: #b04807;
 }
 
 html {
