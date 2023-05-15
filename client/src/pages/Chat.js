@@ -26,7 +26,6 @@ const Chat = () => {
     }
   }, [sendMessage]);
 
-
   useEffect(() => {
     socket.current = io('http://localhost:8080');
     socket.current.emit('new-user-add', auth.user.uid);
@@ -91,7 +90,7 @@ const Chat = () => {
         >
           <i className='icon-pinned'></i>
           <span>Pinned</span>
-          <span className='length'>2</span>
+          <span className='length'>0</span>
         </div>
         <div
           className='menu all-chat active'
@@ -113,7 +112,7 @@ const Chat = () => {
         >
           <i className='icon-all'></i>
           <span>All</span>
-          <span className='length'>3</span>
+          <span className='length'>{Chats.get().length || 0}</span>
         </div>
       </div>
 
